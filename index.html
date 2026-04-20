@@ -320,6 +320,25 @@ td strong { font-weight: 800; color: var(--charcoal); }
 .conv-val.org { color: var(--orange); }
 .conv-lbl { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
 
+/* ── HQ PLAYBOOKS ────────────────────────────────────────── */
+.playbooks { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 12px; box-shadow: var(--shadow-sm); }
+.playbook-grid { display: grid; grid-template-columns: 1fr; }
+.playbook-link {
+  display: flex; align-items: center; gap: 10px; padding: 11px 14px;
+  border-bottom: 1px solid #eef4fa; text-decoration: none;
+  color: var(--blue-dark); font-size: 12.5px; font-weight: 700; line-height: 1.4;
+  transition: background 0.12s;
+}
+.playbook-link:last-child { border-bottom: none; }
+.playbook-link:hover { background: var(--offwhite); color: var(--blue-deep); }
+.pl-icon { font-size: 13px; flex-shrink: 0; opacity: 0.5; }
+.pl-arrow { font-size: 11px; color: var(--text-muted); flex-shrink: 0; margin-left: auto; padding-left: 6px; }
+.rule-script-link {
+  display: inline-flex; align-items: center; gap: 4px;
+  margin-top: 6px; font-size: 11px; font-weight: 800;
+  color: var(--orange); text-decoration: underline; text-underline-offset: 2px;
+}
+
 /* ── FOOTER ───────────────────────────────────────────────── */
 .footer { background: linear-gradient(135deg, var(--blue-deep), var(--blue-dark)); display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; flex-wrap: wrap; gap: 4px; }
 .footer .left { font-size: 11px; color: rgba(255,255,255,0.65); font-weight: 600; }
@@ -348,6 +367,9 @@ td strong { font-weight: 800; color: var(--charcoal); }
   .bonus-totals { flex-direction: row; justify-content: space-between; align-items: center; }
   .stages-grid { grid-template-columns: 1fr 1fr 1fr; }
   .conv-grid { grid-template-columns: repeat(4, 1fr); }
+  .playbook-grid { grid-template-columns: 1fr 1fr; }
+  .playbook-link:nth-child(odd) { border-right: 1px solid #eef4fa; }
+  .playbook-link:nth-last-child(-n+2) { border-bottom: none; }
 }
 
 /* ── DESKTOP (≥ 1024px) ───────────────────────────────────── */
@@ -449,6 +471,11 @@ td strong { font-weight: 800; color: var(--charcoal); }
   .bonus-totals { flex-direction: row; justify-content: space-between; padding: 4px 9px; gap: 0; }
   .total-item { font-size: 7.5px; }
   .total-fine { font-size: 6.5px; }
+  .playbooks { margin-bottom: 7px; box-shadow: none; }
+  .playbook-grid { grid-template-columns: 1fr 1fr; }
+  .playbook-link { padding: 4px 8px; font-size: 7px; }
+  .pl-icon { font-size: 9px; }
+  .pl-arrow { font-size: 7px; }
   .post-open { margin-bottom: 7px; box-shadow: none; }
   .post-open-head { padding: 4px 10px; }
   .post-open-head .po-title { font-size: 7.5px; }
@@ -574,7 +601,9 @@ td strong { font-weight: 800; color: var(--charcoal); }
         <li>Follow up through <strong>Day 28</strong> on every lead</li>
         <li>In-person <strong>always</strong> converts higher than digital</li>
       </ul>
-      <div class="rule-care">Use the <strong><a href="https://app.musicologie.com/help-articles/founders-membership-presales-program?search=C.A.R.E.#search" target="_blank" style="color:var(--blue-light);text-decoration:underline;text-underline-offset:2px;">C.A.R.E. framework</a></strong> on every call.</div>
+      <div class="rule-care">Use the <strong><a href="https://app.musicologie.com/help-articles/founders-membership-presales-program?search=C.A.R.E.#search" target="_blank" style="color:var(--blue-light);text-decoration:underline;text-underline-offset:2px;">C.A.R.E. framework</a></strong> on every call.
+        <a href="https://app.musicologie.com/help-articles/founders-presales-phone-call-script?search=presales#search" target="_blank" class="rule-script-link">Founders Presales Phone Call Script ↗</a>
+      </div>
     </div>
   </div>
 
@@ -659,7 +688,9 @@ td strong { font-weight: 800; color: var(--charcoal); }
         <div class="stat-row"><span class="stat-label">Total leads from full budget</span><span class="stat-val blue">~1,000</span></div>
         <div class="card-note">
           <strong>Google = minimal / bonus only.</strong> Meta is the volume engine.<br>
-          <em>Spend ramps toward end of campaign — conversion is highest as opening nears. Week 1 = launch spike. Mid-campaign may dip. Back half ramps with budget.</em>
+          <em>Spend ramps toward end of campaign — conversion is highest as opening nears. Week 1 = launch spike. Mid-campaign may dip. Back half ramps with budget.</em><br><br>
+          <a href="https://app.musicologie.com/help-articles/a-franchisees-guide-to-the-founders-presale-digital-ads-campaign?search=presales#search" target="_blank" style="color:var(--blue-dark);font-weight:700;text-decoration:underline;text-underline-offset:2px;display:block;margin-bottom:4px;">A Franchisee's Guide to the Founders Presale Digital Ads Campaign ↗</a>
+          <a href="https://app.musicologie.com/help-articles/presales--grand-opening-marketing-campaign?search=presales#search" target="_blank" style="color:var(--blue-dark);font-weight:700;text-decoration:underline;text-underline-offset:2px;display:block;">Presales &amp; Grand Opening Marketing Campaign ↗</a>
         </div>
       </div>
     </div>
@@ -741,11 +772,40 @@ td strong { font-weight: 800; color: var(--charcoal); }
     </div>
   </div>
 
+  <!-- HQ PLAYBOOKS -->
+  <div class="playbooks">
+    <div class="card-head" style="background:linear-gradient(90deg,var(--blue-deep),var(--blue-dark));">HQ Playbooks — Tap to Open</div>
+    <div class="playbook-grid">
+      <a class="playbook-link" href="https://app.musicologie.com/help-articles/founders-membership-presales-program?search=presales#search" target="_blank">
+        <span class="pl-icon">📋</span><span class="pl-title">Founders Membership Presales Program</span><span class="pl-arrow">↗</span>
+      </a>
+      <a class="playbook-link" href="https://app.musicologie.com/help-articles/founders-presales-phone-call-script?search=presales#search" target="_blank">
+        <span class="pl-icon">📞</span><span class="pl-title">Founders Presales Phone Call Script</span><span class="pl-arrow">↗</span>
+      </a>
+      <a class="playbook-link" href="https://app.musicologie.com/help-articles/a-franchisees-guide-to-the-founders-presale-digital-ads-campaign?search=presales#search" target="_blank">
+        <span class="pl-icon">📣</span><span class="pl-title">A Franchisee's Guide to the Founders Presale Digital Ads Campaign</span><span class="pl-arrow">↗</span>
+      </a>
+      <a class="playbook-link" href="https://app.musicologie.com/help-articles/presales--grand-opening-marketing-campaign?search=presales#search" target="_blank">
+        <span class="pl-icon">🚀</span><span class="pl-title">Presales &amp; Grand Opening Marketing Campaign</span><span class="pl-arrow">↗</span>
+      </a>
+      <a class="playbook-link" href="https://app.musicologie.com/help-articles/key-performance-indicators-kpis?search=presales#search" target="_blank">
+        <span class="pl-icon">📊</span><span class="pl-title">Key Performance Indicators (KPIs)</span><span class="pl-arrow">↗</span>
+      </a>
+      <a class="playbook-link" href="https://app.musicologie.com/help-articles/how-to-grand-opening-week?search=presales#search" target="_blank">
+        <span class="pl-icon">🎉</span><span class="pl-title">How To: Grand Opening Week</span><span class="pl-arrow">↗</span>
+      </a>
+    </div>
+  </div>
+
   <!-- POST-OPEN STAGE TARGETS -->
   <div class="post-open">
     <div class="post-open-head">
       <div class="po-title">Post-Open Growth Stages</div>
-      <div class="po-sub">What success looks like after June 22, 2026</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        <div class="po-sub">What success looks like after June 22, 2026</div>
+        <a href="https://app.musicologie.com/help-articles/key-performance-indicators-kpis?search=presales#search" target="_blank" style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.65);text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Key Performance Indicators (KPIs) ↗</a>
+        <a href="https://app.musicologie.com/help-articles/how-to-grand-opening-week?search=presales#search" target="_blank" style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.65);text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">How To: Grand Opening Week ↗</a>
+      </div>
     </div>
     <div class="post-open-body">
       <div class="stages-grid">
