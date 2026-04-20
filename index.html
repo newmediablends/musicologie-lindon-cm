@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Julie Suazo — Presales Targets, KPIs & Bonus · Musicologie Lindon</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&display=swap');
+
+/* ── Brand tokens ───────────────────────────────────────── */
+:root {
+  --orange:     #f38c68;
+  --blue-light: #78b2e9;
+  --blue-dark:  #4c87c9;
+  --charcoal:   #333333;
+  --offwhite:   #fafafa;
+  --rule-bg:    #f0f7fd;
+  --border:     #dce8f5;
+  --muted:      #6b8aaa;
+  --white:      #ffffff;
+}
+
+@page { size: letter; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito Sans', 'Helvetica Neue', Arial, sans-serif;
+  background: var(--white);
+  color: var(--charcoal);
+  font-size: 9.5px;
+  line-height: 1.45;
+}
+
+@media print {
+  body {
+    width: 8.5in;
+    height: 11in;
+    overflow: hidden;
+    font-size: 9.5px;
+  }
+}
+
+/* ── HEADER BAR ─────────────────────────────────────────── */
+.header-bar {
+  background: var(--blue-dark);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 22px 11px 20px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.header-bar img { height: 28px; }
+.header-bar-right { text-align: right; }
+.header-bar-right .studio {
+  font-size: 9px;
+  color: rgba(255,255,255,0.75);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.header-bar-right .doc-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -0.2px;
+}
+
+/* ── GOAL STRIP ─────────────────────────────────────────── */
+.goal-strip {
+  background: var(--orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 5px 22px;
+  flex-wrap: wrap;
+}
+.goal-strip .goal-label {
+  font-size: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.85);
+}
+.goal-strip .goal-value {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -0.3px;
+}
+.goal-strip .goal-sep {
+  width: 1px;
+  height: 18px;
+  background: rgba(255,255,255,0.4);
+}
+
+/* ── BODY ───────────────────────────────────────────────── */
+.body { padding: 10px 20px 0; }
+
+/* ── 30-MIN RULE ────────────────────────────────────────── */
+.rule-box {
+  background: var(--rule-bg);
+  border: 1.5px solid var(--blue-light);
+  border-left: 5px solid var(--blue-dark);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 14px;
+  margin-bottom: 10px;
+}
+.rule-num {
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--blue-dark);
+  line-height: 1;
+  min-width: 68px;
+  text-align: center;
+}
+.rule-num span { font-size: 13px; }
+.rule-text h3 {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--blue-dark);
+  margin-bottom: 2px;
+}
+.rule-text p { font-size: 8.5px; color: #4a6680; }
+
+/* ── GRID ───────────────────────────────────────────────── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 9px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 9px; margin-bottom: 9px; }
+
+/* ── CARD ───────────────────────────────────────────────── */
+.card {
+  border: 1.5px solid var(--border);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.card-head {
+  background: var(--blue-dark);
+  color: var(--white);
+  font-size: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.9px;
+  padding: 4px 10px;
+}
+.card-head.orange { background: var(--orange); }
+.card-head.light-blue { background: var(--blue-light); }
+.card-body { padding: 8px 10px; }
+
+/* ── STAT ROWS ──────────────────────────────────────────── */
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 2px 0;
+  border-bottom: 1px solid #eef3f9;
+  gap: 6px;
+}
+.stat-row:last-child { border-bottom: none; }
+.stat-label { font-size: 9px; color: #4a6680; flex: 1; }
+.stat-val { font-size: 9.5px; font-weight: 700; color: var(--charcoal); text-align: right; white-space: nowrap; }
+.stat-val.orange { color: var(--orange); }
+.stat-val.blue { color: var(--blue-dark); }
+
+/* big number pair */
+.big-pair { display: flex; justify-content: space-between; margin-bottom: 7px; }
+.big-unit { text-align: center; }
+.big-unit .num {
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--blue-dark);
+  line-height: 1;
+}
+.big-unit .lbl { font-size: 8px; color: var(--muted); margin-top: 1px; }
+
+/* ── TABLE ──────────────────────────────────────────────── */
+table { width: 100%; border-collapse: collapse; font-size: 9px; }
+th {
+  font-size: 7.5px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.6px;
+  color: var(--muted); text-align: left;
+  border-bottom: 1px solid var(--border);
+  padding: 2px 4px 3px 0;
+}
+td { padding: 3px 4px 3px 0; border-bottom: 1px solid #f0f4f9; vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+td strong { font-weight: 700; }
+
+.tag {
+  display: inline-block; font-size: 7px; font-weight: 700;
+  padding: 1px 6px; border-radius: 10px;
+  text-transform: uppercase; letter-spacing: 0.4px;
+}
+.tag-blue  { background: #dceeff; color: var(--blue-dark); }
+.tag-orange { background: #fde8df; color: #c05030; }
+
+/* ── BONUS SECTION ──────────────────────────────────────── */
+.bonus-section {
+  background: var(--blue-dark);
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 9px;
+}
+.bonus-head {
+  background: var(--blue-light);
+  padding: 5px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.bonus-head .title {
+  font-size: 8px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.9px;
+  color: var(--white);
+}
+.bonus-head .contract-ref { font-size: 7.5px; color: rgba(255,255,255,0.75); }
+.bonus-tiers {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.bonus-tier {
+  padding: 10px 14px;
+  border-right: 1px solid rgba(255,255,255,0.12);
+}
+.bonus-tier:last-child { border-right: none; }
+.tier-label {
+  font-size: 7.5px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.8px;
+  color: var(--blue-light);
+  margin-bottom: 4px;
+}
+.tier-amount {
+  font-size: 22px; font-weight: 800;
+  color: var(--white); line-height: 1.1;
+  margin-bottom: 4px;
+}
+.tier-amount .sub { font-size: 11px; }
+.tier-desc { font-size: 8.5px; color: rgba(255,255,255,0.72); line-height: 1.4; }
+.tier-desc strong { color: var(--white); }
+.bonus-totals {
+  background: rgba(0,0,0,0.18);
+  padding: 5px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.bonus-totals .total-item { font-size: 8.5px; color: rgba(255,255,255,0.8); }
+.bonus-totals .total-item strong { color: var(--orange); }
+
+/* ── FOOTER ─────────────────────────────────────────────── */
+.footer {
+  background: var(--blue-dark);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 20px;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.footer .left { font-size: 8px; color: rgba(255,255,255,0.7); }
+.footer .right { font-size: 7.5px; color: rgba(255,255,255,0.5); }
+
+/* ── RESPONSIVE ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  body { font-size: 13px; }
+
+  .header-bar { padding: 14px 16px; }
+  .header-bar img { height: 36px; }
+  .header-bar-right .studio { font-size: 11px; }
+  .header-bar-right .doc-title { font-size: 16px; }
+
+  .goal-strip { gap: 10px; padding: 8px 16px; justify-content: flex-start; }
+  .goal-strip .goal-label { font-size: 10px; }
+  .goal-strip .goal-value { font-size: 15px; }
+  .goal-strip .goal-sep { display: none; }
+
+  .body { padding: 12px 14px 0; }
+
+  .rule-box { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .rule-num { font-size: 42px; min-width: auto; }
+  .rule-num span { font-size: 16px; }
+  .rule-text h3 { font-size: 14px; }
+  .rule-text p { font-size: 12px; }
+
+  .grid-2 { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: 1fr; }
+
+  .card-head { font-size: 11px; padding: 6px 12px; }
+  .card-body { padding: 10px 12px; }
+
+  .stat-label { font-size: 12px; }
+  .stat-val { font-size: 12px; }
+
+  .big-unit .num { font-size: 36px; }
+  .big-unit .lbl { font-size: 11px; }
+
+  table { font-size: 12px; }
+  th { font-size: 10px; }
+  td { padding: 5px 4px 5px 0; }
+
+  .bonus-tiers { grid-template-columns: 1fr; }
+  .bonus-tier { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.12); }
+  .bonus-tier:last-child { border-bottom: none; }
+  .tier-label { font-size: 10px; }
+  .tier-amount { font-size: 28px; }
+  .tier-amount .sub { font-size: 14px; }
+  .tier-desc { font-size: 12px; }
+  .bonus-totals { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .bonus-totals .total-item { font-size: 12px; }
+
+  .footer { padding: 8px 14px; }
+  .footer .left { font-size: 11px; }
+  .footer .right { font-size: 10px; }
+}
+
+@media (max-width: 480px) {
+  .header-bar-right .doc-title { font-size: 14px; }
+  .goal-value { font-size: 13px !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER BAR -->
+<div class="header-bar">
+  <img src="data:image/png;base64,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" alt="Musicologie">
+  <div class="header-bar-right">
+    <div class="studio">Musicologie Lindon · 139 S State Street, Suite 8</div>
+    <div class="doc-title">Julie Suazo — Presales Targets, KPIs &amp; Bonus</div>
+  </div>
+</div>
+
+<!-- GOAL STRIP -->
+<div class="goal-strip">
+  <div class="goal-label">The Goal</div>
+  <div class="goal-value">200 Net New Founding Members</div>
+  <div class="goal-sep"></div>
+  <div class="goal-label">Opens</div>
+  <div class="goal-value">June 15, 2026</div>
+  <div class="goal-sep"></div>
+  <div class="goal-label">Lead Window</div>
+  <div class="goal-value">April 20 – June 2 · 43 Days</div>
+  <div class="goal-sep"></div>
+  <div class="goal-label">Avg. Close Cycle</div>
+  <div class="goal-value">13–14 Days</div>
+</div>
+
+<!-- BODY -->
+<div class="body">
+
+  <!-- 30-MIN RULE -->
+  <div class="rule-box">
+    <div class="rule-num">30<span>min</span></div>
+    <div class="rule-text">
+      <h3>The Non-Negotiable Rule — Call Every New Lead Within 30 Minutes</h3>
+      <p>Conversion drops sharply after 30 minutes. Leave a voicemail if no answer and let automations run. Follow up through Day 28 on every lead. In-person always converts higher than digital — protect Julie's table event time above all else.</p>
+    </div>
+  </div>
+
+  <!-- ROW 1: Math + Scenarios -->
+  <div class="grid-2">
+
+    <div class="card">
+      <div class="card-head">Presales Math</div>
+      <div class="card-body">
+        <div class="big-pair">
+          <div class="big-unit">
+            <div class="num">1,000</div>
+            <div class="lbl">Leads needed · 20% baseline</div>
+          </div>
+          <div class="big-unit">
+            <div class="num">~23</div>
+            <div class="lbl">Leads per day required</div>
+          </div>
+        </div>
+        <div class="stat-row"><span class="stat-label">Effective lead window</span><span class="stat-val">43 days (Apr 20 – Jun 2)</span></div>
+        <div class="stat-row"><span class="stat-label">Avg. lead-to-close cycle</span><span class="stat-val">13–14 days</span></div>
+        <div class="stat-row"><span class="stat-label">Week 1 expected leads</span><span class="stat-val">150–200</span></div>
+        <div class="stat-row"><span class="stat-label">Meta conversion rate</span><span class="stat-val">~20%</span></div>
+        <div class="stat-row"><span class="stat-label">In-person conversion rate</span><span class="stat-val orange">35–40%</span></div>
+        <div class="stat-row"><span class="stat-label">Blended rate (80/20 mix)</span><span class="stat-val blue">~26%</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head light-blue">Conversion Scenarios</div>
+      <div class="card-body">
+        <table>
+          <thead><tr><th>Conversion Rate</th><th>Leads Needed</th><th>Per Day</th><th>Path</th></tr></thead>
+          <tbody>
+            <tr><td>20% baseline</td><td><strong>1,000</strong></td><td>~23/day</td><td><span class="tag tag-blue">Meta only</span></td></tr>
+            <tr><td>25%</td><td><strong>800</strong></td><td>~19/day</td><td><span class="tag tag-blue">Meta + events</span></td></tr>
+            <tr><td>26% blended</td><td><strong>769</strong></td><td>~18/day</td><td><span class="tag tag-orange">80/20 mix</span></td></tr>
+            <tr><td>30%</td><td><strong>667</strong></td><td>~16/day</td><td><span class="tag tag-orange">Strong in-person</span></td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:7px;padding-top:6px;border-top:1px solid #eef3f9;font-size:8.5px;color:#4a6680;line-height:1.4">
+          <strong style="color:var(--blue-dark)">Key insight:</strong> Form-fills are warm, self-selected leads. Conversion is in their future. The 30-minute call closes a door that is already open.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ROW 2: Daily · Weekly · Lead Mix -->
+  <div class="grid-3">
+
+    <div class="card">
+      <div class="card-head orange">Daily — Non-Negotiable</div>
+      <div class="card-body">
+        <div class="stat-row"><span class="stat-label"><strong>Call every new lead</strong></span><span class="stat-val orange">Within 30 min</span></div>
+        <div class="stat-row"><span class="stat-label">Follow-up calls to warm leads</span><span class="stat-val">5 calls/day</span></div>
+        <div class="stat-row"><span class="stat-label">FB / Nextdoor post or comment</span><span class="stat-val">1/day</span></div>
+        <div class="stat-row"><span class="stat-label">Studio inbox — respond to all</span><span class="stat-val">Same day</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">Weekly — Minimum Targets</div>
+      <div class="card-body">
+        <div class="stat-row"><span class="stat-label"><strong>Table events / in-person</strong></span><span class="stat-val blue">1–2/week</span></div>
+        <div class="stat-row"><span class="stat-label">Partnership contacts (donut drops)</span><span class="stat-val">1/week</span></div>
+        <div class="stat-row"><span class="stat-label">Flyer drops to new locations</span><span class="stat-val">1/week</span></div>
+        <div class="stat-row"><span class="stat-label">Social media posts</span><span class="stat-val">1/week</span></div>
+        <div class="stat-row"><span class="stat-label">Withdrawal calls (cold leads)</span><span class="stat-val">10/week</span></div>
+        <div class="stat-row"><span class="stat-label">Yard sign check + refresh</span><span class="stat-val">Ongoing</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head light-blue">Lead Source Mix</div>
+      <div class="card-body">
+        <table>
+          <thead><tr><th>Source</th><th>Mix</th><th>Conv.</th></tr></thead>
+          <tbody>
+            <tr><td>Meta ads</td><td>80%</td><td>~20%</td></tr>
+            <tr><td><strong>In-person / events</strong></td><td>20%</td><td><strong style="color:var(--orange)">35–40%</strong></td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:8px;padding-top:6px;border-top:1px solid #eef3f9;font-size:8.5px;color:#4a6680;line-height:1.4">
+          <strong style="color:var(--blue-dark)">Priority:</strong> Table events punch above their weight. Every in-person hour is Julie's highest-leverage activity.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BONUS SECTION -->
+  <div class="bonus-section">
+    <div class="bonus-head">
+      <div class="title">Julie's Bonus Structure</div>
+      <div class="contract-ref">Signed Employment Contract · Dropbox Sign · 12/29/2025</div>
+    </div>
+    <div class="bonus-tiers">
+      <div class="bonus-tier">
+        <div class="tier-label">Milestone 1 — Pre-Opening</div>
+        <div class="tier-amount">$1,000</div>
+        <div class="tier-desc">Lump sum when <strong>125 net new students</strong> are enrolled prior to opening day (June 15, 2026).</div>
+      </div>
+      <div class="bonus-tier">
+        <div class="tier-label">Milestone 2 — Presales</div>
+        <div class="tier-amount">$25<span class="sub"> / net new</span></div>
+        <div class="tier-desc">For every <strong>net new student above 125</strong> enrolled before opening. Paid at confirmed enrollment.</div>
+      </div>
+      <div class="bonus-tier">
+        <div class="tier-label">Milestone 3 — Post-Open</div>
+        <div class="tier-amount">$25<span class="sub"> / net new</span></div>
+        <div class="tier-desc">Per <strong>net new student</strong> monthly after opening. Continues through <strong>300 net new students</strong> total. Calculated monthly.</div>
+      </div>
+    </div>
+    <div class="bonus-totals">
+      <div class="total-item">At 200 founders: $1,000 + (75 &times; $25) = <strong>$2,875 presales bonus</strong></div>
+      <div class="total-item">At 300 net new: $1,000 + (175 &times; $25) = <strong>$5,375 total bonus</strong></div>
+      <div class="total-item" style="font-size:7.5px;color:rgba(255,255,255,0.45)">"Net new" applies in all bonus scenarios</div>
+    </div>
+  </div>
+
+</div><!-- /body -->
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="left">Musicologie Lindon · 139 S State Street Suite 8, Lindon UT 84042 · Opens June 15, 2026 · Simply Delightful Music Lessons</div>
+  <div class="right">&#128299; Generated by Stone · April 20, 2026</div>
+</div>
+
+</body>
+</html>
