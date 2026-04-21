@@ -552,7 +552,7 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
       </div>
       <div class="t-stat">
         <div class="t-val" id="tracker-pace">—</div>
-        <div id="tracker-pace-badge" class="t-badge" style="visibility:hidden">—</div>
+        <div id="tracker-pace-badge" class="t-badge" style="display:none"></div>
         <div class="t-lbl">Avg/Day · Target: 3/day</div>
       </div>
       <div class="t-stat">
@@ -561,7 +561,7 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
       </div>
       <div class="t-stat">
         <div class="t-val" id="goal-weekly">—</div>
-        <div id="weekly-pace-badge" class="t-badge" style="visibility:hidden">—</div>
+        <div id="weekly-pace-badge" class="t-badge" style="display:none"></div>
         <div class="t-lbl">Wkly Rate · Target: 21/wk</div>
       </div>
     </div>
@@ -1283,10 +1283,10 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
       var onPace = avg3 >= DAILY_TARGET;
       paceBadgeEl.textContent = onPace ? '▲ On Track' : '▼ Behind';
       paceBadgeEl.className = 't-badge ' + (onPace ? 'on-track' : 'behind');
-      paceBadgeEl.style.visibility = '';
+      paceBadgeEl.style.display = '';
     } else {
       paceEl.textContent = '—';
-      paceBadgeEl.style.visibility = 'hidden';
+      paceBadgeEl.style.display = 'none';
     }
 
     // Tile 3: projected total at current pace
@@ -1309,10 +1309,10 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
       var wkOnPace = weeklyRate >= WEEKLY_TARGET;
       weeklyBadgeEl.textContent = wkOnPace ? '▲ On Track' : '▼ Behind';
       weeklyBadgeEl.className = 't-badge ' + (wkOnPace ? 'on-track' : 'behind');
-      weeklyBadgeEl.style.visibility = '';
+      weeklyBadgeEl.style.display = '';
     } else {
       weeklyEl.textContent = '—';
-      weeklyBadgeEl.style.visibility = 'hidden';
+      weeklyBadgeEl.style.display = 'none';
     }
 
     var ring = document.getElementById('ring-progress');
