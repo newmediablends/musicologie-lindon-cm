@@ -445,6 +445,13 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
   .footer .left { font-size: 7.5px; }
 }
 
+/* ── PACE BADGES ──────────────────────────────────────── */
+.t-badge { font-size: 7.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; padding: 2px 8px; border-radius: 10px; margin: 4px auto 0; display: inline-block; line-height: 1.5; }
+.t-badge.on-track { background: rgba(80,210,120,0.18); color: #5dd48a; }
+.t-badge.behind   { background: rgba(243,140,104,0.18); color: var(--orange); }
+.t-val.projected-good  { color: #5dd48a; }
+.t-val.projected-short { color: var(--orange); }
+
 /* ── COUNT UPDATE UI ──────────────────────────────────── */
 .tracker-update-wrap { text-align: center; margin-top: 14px; }
 .tracker-update-btn {
@@ -544,16 +551,18 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
         <div class="t-lbl">Days Remaining</div>
       </div>
       <div class="t-stat">
-        <div class="t-val" id="tracker-pace">2.9/day</div>
-        <div class="t-lbl">Enrollments/Day</div>
+        <div class="t-val" id="tracker-pace">—</div>
+        <div id="tracker-pace-badge" class="t-badge" style="visibility:hidden">—</div>
+        <div class="t-lbl">Avg/Day · Target: 3/day</div>
       </div>
       <div class="t-stat">
-        <div class="t-val" id="tracker-togo">200</div>
-        <div class="t-lbl">Members to Target</div>
+        <div class="t-val" id="tracker-projected">—</div>
+        <div class="t-lbl">Projected at Pace</div>
       </div>
       <div class="t-stat">
         <div class="t-val" id="goal-weekly">—</div>
-        <div class="t-lbl">Enrollments/Wk</div>
+        <div id="weekly-pace-badge" class="t-badge" style="visibility:hidden">—</div>
+        <div class="t-lbl">Wkly Rate · Target: 21/wk</div>
       </div>
     </div>
     <div class="tracker-update-wrap">
@@ -1152,7 +1161,41 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
 <script>
 (function () {
   var TARGET = 200;
+  var DAILY_TARGET = 3;
+  var WEEKLY_TARGET = 21;
   var CIRCUMFERENCE = 628.3;
+
+  function getHistory() {
+    try { return JSON.parse(localStorage.getItem('cm_enroll_history') || '[]'); } catch(e) { return []; }
+  }
+  function saveHistory(h) {
+    try { localStorage.setItem('cm_enroll_history', JSON.stringify(h)); } catch(e) {}
+  }
+  function recordSnapshot(count) {
+    var today = new Date(); today.setHours(0,0,0,0);
+    var ds = today.toISOString().slice(0,10);
+    var h = getHistory();
+    var idx = -1;
+    for (var i = 0; i < h.length; i++) { if (h[i].date === ds) { idx = i; break; } }
+    if (idx >= 0) { h[idx].count = count; } else { h.push({date: ds, count: count}); }
+    h.sort(function(a,b){ return a.date < b.date ? -1 : 1; });
+    if (h.length > 10) h = h.slice(-10);
+    saveHistory(h);
+  }
+  function get3DayAvg(count) {
+    var h = getHistory();
+    if (h.length < 2) return null;
+    var today = new Date(); today.setHours(0,0,0,0);
+    var cutoffStr = new Date(today - 3 * 86400000).toISOString().slice(0,10);
+    var base = null;
+    for (var i = 0; i < h.length - 1; i++) {
+      if (h[i].date <= cutoffStr) base = h[i];
+    }
+    if (!base) base = h[0];
+    var days = Math.round((today - new Date(base.date + 'T00:00:00')) / 86400000);
+    if (days === 0) return null;
+    return (count - base.count) / days;
+  }
 
   // ── Paste your Apps Script web app URL here after deploying ──
   var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzuMTqzkQqhEQTIvmdJqPUhvXNqZ3vjFMYN9DBKw20wwlbX7AtlA6oTk1byZUCm9W2FtQ/exec';
@@ -1213,8 +1256,6 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
     var endDate = new Date('2026-06-28T00:00:00');
     var today = new Date(); today.setHours(0,0,0,0);
     var daysRemaining = Math.max(0, Math.round((endDate - today) / 86400000));
-    var toGo = TARGET - count;
-    var pace = daysRemaining > 0 ? Math.ceil(toGo / daysRemaining) : '—';
     var pct = Math.min(100, (count / TARGET) * 100);
 
     var earned = count < 125 ? 0 : 1000 + ((count - 125) * 25);
@@ -1229,10 +1270,50 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
     document.getElementById('bs-main-line').textContent = mainLine;
     document.getElementById('bs-sub-line').textContent = subLine;
     document.getElementById('tracker-days').textContent = daysRemaining;
-    document.getElementById('tracker-pace').textContent = pace + '/day';
-    document.getElementById('tracker-togo').textContent = toGo;
-    document.getElementById('goal-weekly').textContent = daysRemaining > 0
-      ? Math.ceil(toGo / (daysRemaining / 7)) + '/wk' : '—';
+
+    recordSnapshot(count);
+    var avg3 = get3DayAvg(count);
+    var hasAvg = avg3 !== null;
+
+    // Tile 2: 3-day avg vs 3/day target
+    var paceEl = document.getElementById('tracker-pace');
+    var paceBadgeEl = document.getElementById('tracker-pace-badge');
+    if (hasAvg) {
+      paceEl.textContent = avg3.toFixed(1) + '/day';
+      var onPace = avg3 >= DAILY_TARGET;
+      paceBadgeEl.textContent = onPace ? '▲ On Track' : '▼ Behind';
+      paceBadgeEl.className = 't-badge ' + (onPace ? 'on-track' : 'behind');
+      paceBadgeEl.style.visibility = '';
+    } else {
+      paceEl.textContent = '—';
+      paceBadgeEl.style.visibility = 'hidden';
+    }
+
+    // Tile 3: projected total at current pace
+    var projEl = document.getElementById('tracker-projected');
+    if (hasAvg && daysRemaining > 0) {
+      var projected = Math.round(count + avg3 * daysRemaining);
+      projEl.textContent = projected;
+      projEl.className = 't-val ' + (projected >= TARGET ? 'projected-good' : 'projected-short');
+    } else {
+      projEl.textContent = '—';
+      projEl.className = 't-val';
+    }
+
+    // Tile 4: weekly rate vs 21/wk target
+    var weeklyEl = document.getElementById('goal-weekly');
+    var weeklyBadgeEl = document.getElementById('weekly-pace-badge');
+    if (hasAvg) {
+      var weeklyRate = avg3 * 7;
+      weeklyEl.textContent = weeklyRate.toFixed(1) + '/wk';
+      var wkOnPace = weeklyRate >= WEEKLY_TARGET;
+      weeklyBadgeEl.textContent = wkOnPace ? '▲ On Track' : '▼ Behind';
+      weeklyBadgeEl.className = 't-badge ' + (wkOnPace ? 'on-track' : 'behind');
+      weeklyBadgeEl.style.visibility = '';
+    } else {
+      weeklyEl.textContent = '—';
+      weeklyBadgeEl.style.visibility = 'hidden';
+    }
 
     var ring = document.getElementById('ring-progress');
     var countEl = document.getElementById('tracker-count');
