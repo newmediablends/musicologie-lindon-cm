@@ -120,13 +120,20 @@ body {
 
 /* ── COLLAPSIBLE (details/summary) ───────────────────────── */
 details.zone { cursor: default; }
-details.zone > summary { list-style: none; cursor: pointer; padding: 13px 14px; display: flex; align-items: flex-start; gap: 10px; user-select: none; }
+details.zone > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: auto 1fr auto; align-items: stretch; user-select: none; padding: 0; }
 details.zone > summary::-webkit-details-marker { display: none; }
-details.zone > summary:hover { background: var(--offwhite); }
-.summary-titles { flex: 1; min-width: 0; }
-.summary-title { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.9px; color: var(--charcoal); display: block; margin-bottom: 3px; }
-.summary-info { font-size: 12px; font-weight: 600; color: var(--text-muted); line-height: 1.4; display: block; }
-.summary-chevron { font-size: 11px; color: var(--text-muted); flex-shrink: 0; margin-top: 2px; transition: transform 0.2s; }
+details.zone > summary:hover { background: rgba(247,250,253,0.8); }
+.summary-stat { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 13px 14px; min-width: 74px; text-align: center; border-right: 1px solid var(--border); flex-shrink: 0; background: rgba(0,0,0,0.018); }
+.zone-blue .summary-stat { border-right-color: rgba(76,135,201,0.22); background: rgba(76,135,201,0.05); }
+.zone-gray .summary-stat { border-right-color: var(--border); background: rgba(176,196,216,0.1); }
+.stat-big { font-size: 24px; font-weight: 900; line-height: 1; letter-spacing: -0.8px; color: var(--blue-dark); }
+.stat-big.orange { color: var(--orange); }
+.stat-big.sm { font-size: 17px; letter-spacing: -0.3px; }
+.stat-unit { font-size: 8.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-top: 4px; line-height: 1.3; }
+.summary-titles { padding: 12px 14px; display: flex; flex-direction: column; justify-content: center; min-width: 0; }
+.summary-title { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.7px; color: var(--charcoal); display: block; margin-bottom: 3px; }
+.summary-info { font-size: 11px; font-weight: 600; color: var(--text-muted); line-height: 1.45; display: block; }
+.summary-chevron { font-size: 11px; color: var(--text-muted); flex-shrink: 0; transition: transform 0.2s; display: flex; align-items: center; padding: 0 14px; }
 details[open] > summary .summary-chevron { transform: rotate(180deg); }
 .section-divider { height: 1px; background: var(--border); margin: 0 14px; }
 
@@ -587,9 +594,13 @@ td strong { font-weight: 800; color: var(--charcoal); }
   <!-- 7. NUMBERS BEHIND 200 (collapsible, blue zone) -->
   <details class="zone zone-blue">
     <summary>
+      <div class="summary-stat">
+        <div class="stat-big orange">30</div>
+        <div class="stat-unit">families/day</div>
+      </div>
       <div class="summary-titles">
         <span class="summary-title">The Numbers Behind 200</span>
-        <span class="summary-info">30 families/day target · ~15/day floor · ~1,000 leads needed</span>
+        <span class="summary-info">~15/day floor · ~1,000 leads needed · 69-day window</span>
       </div>
       <span class="summary-chevron">▾</span>
     </summary>
@@ -619,9 +630,13 @@ td strong { font-weight: 800; color: var(--charcoal); }
   <!-- 8. CONVERSION SCENARIOS (collapsible, blue zone) -->
   <details class="zone zone-blue">
     <summary>
+      <div class="summary-stat">
+        <div class="stat-big">20%</div>
+        <div class="stat-unit">digital conv.</div>
+      </div>
       <div class="summary-titles">
         <span class="summary-title">Conversion Scenarios</span>
-        <span class="summary-info">Digital: 1 in 5 (20%) · In-person: 1 in 3 (35–40%)</span>
+        <span class="summary-info">Digital: 1 in 5 · In-person: 1 in 3 (35–40%)</span>
       </div>
       <span class="summary-chevron">▾</span>
     </summary>
@@ -652,9 +667,13 @@ td strong { font-weight: 800; color: var(--charcoal); }
   <!-- 9. MARKETING BUDGET (collapsible, blue zone) -->
   <details class="zone zone-blue">
     <summary>
+      <div class="summary-stat">
+        <div class="stat-big">$30K</div>
+        <div class="stat-unit">total budget</div>
+      </div>
       <div class="summary-titles">
         <span class="summary-title">Marketing Budget</span>
-        <span class="summary-info">$30K Total · $22.5K Digital / $7.5K Community · ~1,000 leads at $30 CPL</span>
+        <span class="summary-info">$22.5K Digital · $7.5K Community · ~$30 CPL · ~1,000 leads</span>
       </div>
       <span class="summary-chevron">▾</span>
     </summary>
@@ -692,9 +711,13 @@ td strong { font-weight: 800; color: var(--charcoal); }
   <!-- 10. WEEKLY TARGETS (collapsible, gray zone) -->
   <details class="zone zone-gray">
     <summary>
+      <div class="summary-stat">
+        <div class="stat-big">10</div>
+        <div class="stat-unit">calls/week</div>
+      </div>
       <div class="summary-titles">
         <span class="summary-title">Weekly Targets</span>
-        <span class="summary-info">1–2 table events · 10 withdrawal calls · 1 partnership drop per week</span>
+        <span class="summary-info">1–2 table events · 1 partnership drop · 10 withdrawal calls</span>
       </div>
       <span class="summary-chevron">▾</span>
     </summary>
@@ -712,9 +735,13 @@ td strong { font-weight: 800; color: var(--charcoal); }
   <!-- 11. LEAD SOURCE MIX (collapsible, gray zone) -->
   <details class="zone zone-gray">
     <summary>
+      <div class="summary-stat">
+        <div class="stat-big">80%</div>
+        <div class="stat-unit">Meta ads</div>
+      </div>
       <div class="summary-titles">
         <span class="summary-title">Lead Source Mix</span>
-        <span class="summary-info">Meta 80% at ~20% conv. · In-person 20% at 35–40% conv.</span>
+        <span class="summary-info">In-person 20% · converts at 35–40% · 2× the digital rate</span>
       </div>
       <span class="summary-chevron">▾</span>
     </summary>
@@ -736,9 +763,13 @@ td strong { font-weight: 800; color: var(--charcoal); }
   <!-- 12. BONUS DETAIL (collapsible, blue zone) -->
   <details class="zone zone-blue">
     <summary>
+      <div class="summary-stat">
+        <div class="stat-big orange sm">$2,875</div>
+        <div class="stat-unit">at 200 founders</div>
+      </div>
       <div class="summary-titles">
         <span class="summary-title">Bonus Structure — Full Detail</span>
-        <span class="summary-info">$1,000 at 125 members · $25/member above 125 · $5,375 total at 300</span>
+        <span class="summary-info">$1,000 at 125 members · $25/member above 125 · $5,375 at 300</span>
       </div>
       <span class="summary-chevron">▾</span>
     </summary>
@@ -778,9 +809,13 @@ td strong { font-weight: 800; color: var(--charcoal); }
   <!-- 13. POST-OPEN GROWTH STAGES (collapsible, gray zone) -->
   <details class="zone zone-gray">
     <summary>
+      <div class="summary-stat">
+        <div class="stat-big">450</div>
+        <div class="stat-unit">S3 target</div>
+      </div>
       <div class="summary-titles">
         <span class="summary-title">Post-Open Growth Stages</span>
-        <span class="summary-info">S1: 150 students · S2: 300 · S3: 450 · Target ≤6% churn</span>
+        <span class="summary-info">S1: 150 · S2: 300 · S3: 450 students · ≤6% churn target</span>
       </div>
       <span class="summary-chevron">▾</span>
     </summary>
@@ -827,9 +862,13 @@ td strong { font-weight: 800; color: var(--charcoal); }
   <!-- 14. TEACHER ROSTER (collapsible, gray zone) -->
   <details class="zone zone-gray">
     <summary>
+      <div class="summary-stat">
+        <div class="stat-big">8</div>
+        <div class="stat-unit">teachers</div>
+      </div>
       <div class="summary-titles">
         <span class="summary-title">Teacher Roster — Day 1 Ready</span>
-        <span class="summary-info">8 Teachers · Guitar, Piano, Voice, Violin, Brass, Strings · All hired and ready</span>
+        <span class="summary-info">Guitar · Piano · Voice · Violin · Brass · Strings · All hired</span>
       </div>
       <span class="summary-chevron">▾</span>
     </summary>
@@ -863,9 +902,13 @@ td strong { font-weight: 800; color: var(--charcoal); }
   <!-- 15. MEMBERSHIP MIX (collapsible, gray zone) -->
   <details class="zone zone-gray">
     <summary>
+      <div class="summary-stat">
+        <div class="stat-big">60%</div>
+        <div class="stat-unit">private target</div>
+      </div>
       <div class="summary-titles">
         <span class="summary-title">Membership Mix — System vs. Lindon Target</span>
-        <span class="summary-info">System: 80% Private · Lindon Target: 60% Private / 40% Group</span>
+        <span class="summary-info">System: 80% Private · Lindon: 60% Private / 40% Group</span>
       </div>
       <span class="summary-chevron">▾</span>
     </summary>
