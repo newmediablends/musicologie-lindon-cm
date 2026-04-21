@@ -120,10 +120,10 @@ body {
 
 /* ── COLLAPSIBLE (details/summary) ───────────────────────── */
 details.zone { cursor: default; }
-details.zone > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: auto 1fr auto; align-items: stretch; user-select: none; padding: 0; }
+details.zone > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 92px 1fr auto; align-items: stretch; user-select: none; padding: 0; }
 details.zone > summary::-webkit-details-marker { display: none; }
 details.zone > summary:hover { background: rgba(247,250,253,0.8); }
-.summary-stat { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 13px 14px; min-width: 74px; text-align: center; border-right: 1px solid var(--border); flex-shrink: 0; background: rgba(0,0,0,0.018); }
+.summary-stat { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 13px 10px; text-align: center; border-right: 1px solid var(--border); background: rgba(0,0,0,0.018); }
 .zone-blue .summary-stat { border-right-color: rgba(76,135,201,0.22); background: rgba(76,135,201,0.05); }
 .zone-gray .summary-stat { border-right-color: var(--border); background: rgba(176,196,216,0.1); }
 .stat-big { font-size: 24px; font-weight: 900; line-height: 1; letter-spacing: -0.8px; color: var(--blue-dark); }
