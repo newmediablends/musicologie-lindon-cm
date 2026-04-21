@@ -66,6 +66,7 @@ body {
 .goal-item { padding: 12px 16px; border-right: 1px solid rgba(255,255,255,0.2); border-bottom: 1px solid rgba(255,255,255,0.2); }
 .goal-item:nth-child(2n) { border-right: none; }
 .goal-item:nth-last-child(-n+2) { border-bottom: none; }
+.goal-item.goal-span { grid-column: 1 / -1; border-right: none; }
 .goal-label { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(255,255,255,0.75); margin-bottom: 3px; }
 .goal-value { font-size: 15px; font-weight: 800; color: var(--white); letter-spacing: -0.3px; line-height: 1.2; }
 
@@ -81,10 +82,10 @@ body {
 }
 .tracker::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--orange), var(--blue-light)); }
 .tracker::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 80% 50%, rgba(76,135,201,0.08) 0%, transparent 60%); pointer-events: none; }
-.tracker-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; gap: 10px; position: relative; z-index: 1; }
-.tracker-eyebrow { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--blue-light); margin-bottom: 2px; }
-.tracker-first { font-size: 10px; color: var(--orange); font-weight: 700; font-style: italic; text-align: right; line-height: 1.45; max-width: 190px; opacity: 0.88; text-wrap: balance; }
-.tracker-ring-wrap { position: relative; width: 220px; height: 220px; margin: 0 auto 20px; }
+.tracker-top { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 10px; gap: 5px; position: relative; z-index: 1; }
+.tracker-eyebrow { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--blue-light); }
+.tracker-first { font-size: 9.5px; color: var(--orange); font-weight: 700; font-style: italic; text-align: center; line-height: 1.45; max-width: 280px; opacity: 0.88; }
+.tracker-ring-wrap { position: relative; width: 200px; height: 200px; margin: 0 auto 14px; }
 .tracker-ring-svg { width: 100%; height: 100%; transform: rotate(-90deg); overflow: visible; }
 .ring-track { fill: none; stroke: rgba(255,255,255,0.09); stroke-width: 13; }
 .ring-progress { fill: none; stroke: url(#ring-grad); stroke-width: 13; stroke-linecap: round; stroke-dasharray: 628.3; stroke-dashoffset: 628.3; filter: drop-shadow(0 0 8px rgba(243,140,104,0.55)); transition: stroke-dashoffset 1.8s cubic-bezier(0.25,0.46,0.45,0.94); }
@@ -94,8 +95,8 @@ body {
 .tracker-sublabel { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.35); margin-top: 6px; position: relative; z-index: 1; }
 .tracker-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; position: relative; z-index: 1; }
 .t-stat { background: rgba(255,255,255,0.06); border-radius: var(--radius-sm); padding: 10px 8px; text-align: center; }
-.t-stat .t-val { font-size: 20px; font-weight: 900; color: var(--white); line-height: 1; letter-spacing: -0.5px; margin-bottom: 4px; }
-.t-stat .t-lbl { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: rgba(255,255,255,0.38); line-height: 1.3; }
+.t-stat .t-val { font-size: 17px; font-weight: 900; color: var(--white); line-height: 1; letter-spacing: -0.5px; margin-bottom: 4px; }
+.t-stat .t-lbl { font-size: 8.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: rgba(255,255,255,0.38); line-height: 1.3; }
 
 /* ── BONUS MOTIVATOR STRIP ────────────────────────────────── */
 .bonus-strip {
@@ -316,12 +317,15 @@ td strong { font-weight: 800; color: var(--charcoal); }
   .header-logo img { height: 50px; }
   .header-right .studio { font-size: 11px; }
   .header-right .doc-title { font-size: 20px; }
-  .goal-strip { grid-template-columns: repeat(4, 1fr); }
+  .goal-strip { grid-template-columns: repeat(5, 1fr); }
   .goal-item { border-bottom: none; }
+  .goal-item.goal-span { grid-column: auto; }
   .goal-item:nth-child(2n) { border-right: 1px solid rgba(255,255,255,0.2); }
   .goal-item:last-child { border-right: none; }
   .goal-value { font-size: 16px; }
   .page-body { padding: 20px 20px 32px; }
+  .tracker-top { flex-direction: row; justify-content: space-between; align-items: flex-start; text-align: left; }
+  .tracker-first { text-align: right; max-width: 200px; }
   .tracker-ring-wrap { width: 264px; height: 264px; }
   .tracker-current { font-size: 88px; letter-spacing: -5px; }
   .tracker-slash-goal { font-size: 22px; }
@@ -470,6 +474,10 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
   <div class="goal-item">
     <div class="goal-label">Avg. Close Cycle</div>
     <div class="goal-value">13–14 Days</div>
+  </div>
+  <div class="goal-item goal-span">
+    <div class="goal-label">Weekly Signup Target</div>
+    <div class="goal-value" id="goal-weekly">—</div>
   </div>
 </div>
 
@@ -733,12 +741,12 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
   <details class="zone zone-blue">
     <summary>
       <div class="summary-stat">
-        <div class="stat-big orange">30</div>
-        <div class="stat-unit">leads/day</div>
+        <div class="stat-big orange">3</div>
+        <div class="stat-unit">closes/day</div>
       </div>
       <div class="summary-titles">
-        <span class="summary-title">Leads Needed to Hit 200</span>
-        <span class="summary-info">~15 leads/day floor · ~1,000 leads total · 69-day window</span>
+        <span class="summary-title">Daily Target — The Numbers Behind 200</span>
+        <span class="summary-info">3 closes/day · 15 leads minimum · 30 leads is the campaign target</span>
       </div>
       <span class="summary-chevron">▾</span>
     </summary>
@@ -746,22 +754,26 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
     <div class="zone-body">
       <div class="big-pair">
         <div class="big-unit">
-          <div class="num orange">30</div>
-          <div class="lbl">New Leads/Day — Campaign Target</div>
+          <div class="num orange">3</div>
+          <div class="lbl">Closes/Day — Hit This and You Win</div>
         </div>
         <div class="big-divider"></div>
         <div class="big-unit">
-          <div class="num">~15</div>
-          <div class="lbl">New Leads/Day — Bare Minimum</div>
+          <div class="num">15</div>
+          <div class="lbl">Leads/Day — Minimum to Get 3 Closes</div>
         </div>
       </div>
-      <div class="stat-row"><span class="stat-label">Total leads needed to hit 200 founders</span><span class="stat-val">~1,000</span></div>
-      <div class="stat-row"><span class="stat-label">Days to hit the goal</span><span class="stat-val">69 days (Apr 20 – Jun 28)</span></div>
+      <div class="card-note" style="margin-bottom:12px;">
+        <strong>The daily picture:</strong> At a 20% digital conversion rate, 15 leads = 3 closes. That's your floor. 30 leads/day is the campaign target and gives you more cushion. In-person converts at 35–40%, so every table event punches above its weight — you need fewer leads but still aim for 15+ daily from digital to stay on pace.
+      </div>
+      <div class="stat-row"><span class="stat-label">Campaign target — leads/day</span><span class="stat-val orange">30/day</span></div>
+      <div class="stat-row"><span class="stat-label">Minimum floor — leads/day</span><span class="stat-val">15/day</span></div>
+      <div class="stat-row"><span class="stat-label">Daily close target</span><span class="stat-val blue">3 founders/day</span></div>
+      <div class="stat-row"><span class="stat-label">Total leads needed to hit 200</span><span class="stat-val">~1,000</span></div>
       <div class="stat-row"><span class="stat-label">Avg. days from interest to signup</span><span class="stat-val">13–14 days</span></div>
       <div class="stat-row"><span class="stat-label">Expected new leads in Week 1</span><span class="stat-val">150–200</span></div>
-      <div class="stat-row"><span class="stat-label">Digital lead conversion rate</span><span class="stat-val">~20%</span></div>
+      <div class="stat-row"><span class="stat-label">Digital conversion rate</span><span class="stat-val">~20%</span></div>
       <div class="stat-row"><span class="stat-label">In-person conversion rate</span><span class="stat-val orange">35–40%</span></div>
-      <div class="stat-row"><span class="stat-label">Average across both channels</span><span class="stat-val blue">~26%</span></div>
     </div>
   </details>
 
@@ -850,12 +862,12 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
   <details class="zone zone-gray">
     <summary>
       <div class="summary-stat">
-        <div class="stat-big">10</div>
-        <div class="stat-unit">calls/week</div>
+        <div class="stat-big">1–2</div>
+        <div class="stat-unit">table events</div>
       </div>
       <div class="summary-titles">
         <span class="summary-title">Weekly Targets</span>
-        <span class="summary-info">1–2 table events · 1 partnership drop · 10 withdrawal calls</span>
+        <span class="summary-info">1–2 table events · 1 partnership drop · call every withdrawal same day</span>
       </div>
       <span class="summary-chevron">▾</span>
     </summary>
@@ -865,8 +877,11 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
       <div class="stat-row"><span class="stat-label">Partnership contacts (donut drops)</span><span class="stat-val">1/week</span></div>
       <div class="stat-row"><span class="stat-label">Flyer drops to new locations</span><span class="stat-val">1/week</span></div>
       <div class="stat-row"><span class="stat-label">Social media posts</span><span class="stat-val">1/week</span></div>
-      <div class="stat-row"><span class="stat-label">Withdrawal calls (cold leads)</span><span class="stat-val">10/week</span></div>
+      <div class="stat-row"><span class="stat-label"><strong>Withdrawal calls</strong> — call every founder who cancels or goes cold</span><span class="stat-val orange">Same day</span></div>
       <div class="stat-row"><span class="stat-label">Yard sign check + refresh</span><span class="stat-val">Ongoing</span></div>
+      <div class="card-note" style="margin-top:10px;">
+        <strong>Withdrawal calls:</strong> When a founding member cancels or a warm lead goes cold, call them the same day. The goal is to understand why and re-enroll if possible. A cancelled founder who comes back counts as net new. Follow the <a href="https://app.musicologie.com/help-articles/founders-presales-phone-call-script?search=presales#search" target="_blank" style="color:var(--blue-dark);font-weight:800;">Presales Phone Call Script ↗</a> as your guide.
+      </div>
     </div>
   </details>
 
@@ -874,12 +889,12 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
   <details class="zone zone-gray">
     <summary>
       <div class="summary-stat">
-        <div class="stat-big">80%</div>
+        <div class="stat-big">75%</div>
         <div class="stat-unit">Meta ads</div>
       </div>
       <div class="summary-titles">
         <span class="summary-title">Lead Source Mix</span>
-        <span class="summary-info">In-person 20% · converts at 35–40% · 2× the digital rate</span>
+        <span class="summary-info">In-person 25% · converts at 35–40% · 2× the digital rate</span>
       </div>
       <span class="summary-chevron">▾</span>
     </summary>
@@ -888,8 +903,8 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
       <table>
         <thead><tr><th>Source</th><th>Mix</th><th>Conv. Rate</th></tr></thead>
         <tbody>
-          <tr><td>Meta ads</td><td>80%</td><td>~20%</td></tr>
-          <tr><td><strong>In-person / events</strong></td><td>20%</td><td><strong style="color:var(--orange)">35–40%</strong></td></tr>
+          <tr><td>Meta ads</td><td>75%</td><td>~20%</td></tr>
+          <tr><td><strong>In-person / events</strong></td><td>25%</td><td><strong style="color:var(--orange)">35–40%</strong></td></tr>
         </tbody>
       </table>
       <div class="card-note">
@@ -1150,7 +1165,11 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
   // Stat values
   document.getElementById('tracker-days').textContent = daysRemaining;
   document.getElementById('tracker-pace').textContent = pace + '/day';
-  document.getElementById('tracker-togo').textContent = toGo + ' to go';
+  document.getElementById('tracker-togo').textContent = toGo;
+
+  // Weekly target
+  var weeklyTarget = daysRemaining > 0 ? Math.ceil(toGo / (daysRemaining / 7)) : '—';
+  document.getElementById('goal-weekly').textContent = weeklyTarget + (typeof weeklyTarget === 'number' ? ' founders/week' : '');
 
   // ── Confetti (fires if milestone reached) ──────────────
   if (CURRENT_COUNT >= 125) {
