@@ -1165,25 +1165,18 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
   var WEEKLY_TARGET = 21;
   var CIRCUMFERENCE = 628.3;
 
-  function getHistory() {
-    try { return JSON.parse(localStorage.getItem('cm_enroll_history') || '[]'); } catch(e) { return []; }
-  }
-  function saveHistory(h) {
-    try { localStorage.setItem('cm_enroll_history', JSON.stringify(h)); } catch(e) {}
-  }
-  function recordSnapshot(count) {
+  var serverHistory = [];
+
+  function updateLocalHistory(count) {
     var today = new Date(); today.setHours(0,0,0,0);
     var ds = today.toISOString().slice(0,10);
-    var h = getHistory();
     var idx = -1;
-    for (var i = 0; i < h.length; i++) { if (h[i].date === ds) { idx = i; break; } }
-    if (idx >= 0) { h[idx].count = count; } else { h.push({date: ds, count: count}); }
-    h.sort(function(a,b){ return a.date < b.date ? -1 : 1; });
-    if (h.length > 10) h = h.slice(-10);
-    saveHistory(h);
+    for (var i = 0; i < serverHistory.length; i++) { if (serverHistory[i].date === ds) { idx = i; break; } }
+    if (idx >= 0) { serverHistory[idx].count = count; }
+    else { serverHistory.push({date: ds, count: count}); serverHistory.sort(function(a,b){ return a.date < b.date ? -1 : 1; }); }
   }
   function get3DayAvg(count) {
-    var h = getHistory();
+    var h = serverHistory;
     if (h.length < 2) return null;
     var today = new Date(); today.setHours(0,0,0,0);
     var cutoffStr = new Date(today - 3 * 86400000).toISOString().slice(0,10);
@@ -1271,7 +1264,7 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
     document.getElementById('bs-sub-line').textContent = subLine;
     document.getElementById('tracker-days').textContent = daysRemaining;
 
-    recordSnapshot(count);
+    updateLocalHistory(count);
     var avg3 = get3DayAvg(count);
     var hasAvg = avg3 !== null;
 
@@ -1389,6 +1382,7 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
       .then(function (r) { return r.json(); })
       .then(function (d) {
         liveCount = typeof d.count === 'number' ? d.count : 0;
+        serverHistory = Array.isArray(d.history) ? d.history : [];
         render(liveCount);
       })
       .catch(function () { render(0); });
