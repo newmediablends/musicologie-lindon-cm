@@ -31,9 +31,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 html { font-size: 16px; -webkit-text-size-adjust: 100%; }
-
 body {
   font-family: 'Nunito Sans', 'Helvetica Neue', Arial, sans-serif;
   background: var(--offwhite);
@@ -45,54 +43,30 @@ body {
 /* ── HEADER ───────────────────────────────────────────────── */
 .header-bar {
   background: linear-gradient(135deg, var(--blue-deep) 0%, var(--blue-dark) 60%, var(--blue-mid) 100%);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 20px;
-  gap: 12px;
-  flex-wrap: wrap;
-  position: relative;
-  overflow: hidden;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px; gap: 12px; flex-wrap: wrap;
+  position: relative; overflow: hidden;
 }
 .header-bar::after {
-  content: '';
-  position: absolute;
-  inset: 0;
+  content: ''; position: absolute; inset: 0;
   background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   pointer-events: none;
 }
 .header-logo { display: flex; align-items: center; flex-shrink: 0; }
-.header-logo img {
-  height: 36px; width: auto; max-width: 220px;
-  object-fit: contain; object-position: left center; display: block;
-}
+.header-logo img { height: 36px; width: auto; max-width: 220px; object-fit: contain; object-position: left center; display: block; }
 .header-right { text-align: right; flex: 1; min-width: 0; }
-.header-right .studio {
-  font-size: 10px; font-weight: 700; letter-spacing: 1.2px;
-  text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 3px;
-}
-.header-right .doc-title {
-  font-size: 17px; font-weight: 800; color: var(--white);
-  letter-spacing: -0.3px; line-height: 1.2;
-}
+.header-right .studio { font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 3px; }
+.header-right .doc-title { font-size: 17px; font-weight: 800; color: var(--white); letter-spacing: -0.3px; line-height: 1.2; }
 
 /* ── GOAL STRIP ───────────────────────────────────────────── */
 .goal-strip {
   background: linear-gradient(135deg, #e8784e 0%, var(--orange) 50%, #f5a080 100%);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: grid; grid-template-columns: 1fr 1fr;
 }
-.goal-item {
-  padding: 12px 16px;
-  border-right: 1px solid rgba(255,255,255,0.2);
-  border-bottom: 1px solid rgba(255,255,255,0.2);
-}
+.goal-item { padding: 12px 16px; border-right: 1px solid rgba(255,255,255,0.2); border-bottom: 1px solid rgba(255,255,255,0.2); }
 .goal-item:nth-child(2n) { border-right: none; }
 .goal-item:nth-last-child(-n+2) { border-bottom: none; }
-.goal-label {
-  font-size: 9px; font-weight: 800; text-transform: uppercase;
-  letter-spacing: 1.2px; color: rgba(255,255,255,0.75); margin-bottom: 3px;
-}
+.goal-label { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(255,255,255,0.75); margin-bottom: 3px; }
 .goal-value { font-size: 15px; font-weight: 800; color: var(--white); letter-spacing: -0.3px; line-height: 1.2; }
 
 /* ── PAGE BODY ────────────────────────────────────────────── */
@@ -101,149 +75,126 @@ body {
 /* ── FOUNDING MEMBER TRACKER ──────────────────────────────── */
 .tracker {
   background: linear-gradient(135deg, var(--charcoal) 0%, #1e2d3d 100%);
-  border-radius: var(--radius);
-  padding: 20px 20px 16px;
-  margin-bottom: 14px;
-  position: relative;
-  overflow: hidden;
+  border-radius: var(--radius); padding: 20px 20px 16px;
+  margin-bottom: 14px; position: relative; overflow: hidden;
   box-shadow: 0 4px 24px rgba(30,45,61,0.30);
 }
-.tracker::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0;
-  height: 3px; background: linear-gradient(90deg, var(--orange), var(--blue-light));
-}
-.tracker::after {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 80% 50%, rgba(76,135,201,0.08) 0%, transparent 60%);
-  pointer-events: none;
-}
-.tracker-top {
-  display: flex; justify-content: space-between; align-items: flex-start;
-  margin-bottom: 14px; gap: 10px; position: relative; z-index: 1;
-}
-.tracker-eyebrow {
-  font-size: 9px; font-weight: 800; text-transform: uppercase;
-  letter-spacing: 2px; color: var(--blue-light); margin-bottom: 2px;
-}
-.tracker-first {
-  font-size: 10px; color: var(--orange); font-weight: 700;
-  font-style: italic; text-align: right; line-height: 1.45;
-  max-width: 190px; opacity: 0.88;
-}
-.tracker-main {
-  display: flex; align-items: baseline; gap: 6px;
-  margin-bottom: 4px; position: relative; z-index: 1;
-}
-.tracker-current {
-  font-size: 80px; font-weight: 900; color: var(--white);
-  line-height: 1; letter-spacing: -5px;
-}
+.tracker::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--orange), var(--blue-light)); }
+.tracker::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 80% 50%, rgba(76,135,201,0.08) 0%, transparent 60%); pointer-events: none; }
+.tracker-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; gap: 10px; position: relative; z-index: 1; }
+.tracker-eyebrow { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--blue-light); margin-bottom: 2px; }
+.tracker-first { font-size: 10px; color: var(--orange); font-weight: 700; font-style: italic; text-align: right; line-height: 1.45; max-width: 190px; opacity: 0.88; }
+.tracker-main { display: flex; align-items: baseline; gap: 6px; margin-bottom: 4px; position: relative; z-index: 1; }
+.tracker-current { font-size: 80px; font-weight: 900; color: var(--white); line-height: 1; letter-spacing: -5px; }
 .tracker-slash { font-size: 36px; font-weight: 300; color: rgba(255,255,255,0.22); margin: 0 2px; }
 .tracker-goal { font-size: 36px; font-weight: 700; color: rgba(255,255,255,0.28); letter-spacing: -1px; line-height: 1; }
-.tracker-sublabel {
-  font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.38);
-  margin-bottom: 14px; position: relative; z-index: 1;
-}
-.tracker-bar-wrap {
-  background: rgba(255,255,255,0.08); border-radius: 6px;
-  height: 10px; overflow: hidden; margin-bottom: 14px;
-  position: relative; z-index: 1;
-}
-.tracker-bar-fill {
-  height: 100%; border-radius: 6px;
-  background: linear-gradient(90deg, var(--orange) 0%, #f5b090 100%);
-  min-width: 4px;
-}
-.tracker-stats {
-  display: grid; grid-template-columns: 1fr 1fr 1fr;
-  gap: 8px; position: relative; z-index: 1;
-}
-.t-stat {
-  background: rgba(255,255,255,0.06); border-radius: var(--radius-sm);
-  padding: 10px 8px; text-align: center;
-}
-.t-stat .t-val {
-  font-size: 20px; font-weight: 900; color: var(--white);
-  line-height: 1; letter-spacing: -0.5px; margin-bottom: 4px;
-}
-.t-stat .t-lbl {
-  font-size: 9px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.8px; color: rgba(255,255,255,0.38); line-height: 1.3;
-}
+.tracker-sublabel { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.38); margin-bottom: 14px; position: relative; z-index: 1; }
+.tracker-bar-wrap { background: rgba(255,255,255,0.08); border-radius: 6px; height: 10px; overflow: hidden; margin-bottom: 14px; position: relative; z-index: 1; }
+.tracker-bar-fill { height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--orange) 0%, #f5b090 100%); min-width: 4px; }
+.tracker-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; position: relative; z-index: 1; }
+.t-stat { background: rgba(255,255,255,0.06); border-radius: var(--radius-sm); padding: 10px 8px; text-align: center; }
+.t-stat .t-val { font-size: 20px; font-weight: 900; color: var(--white); line-height: 1; letter-spacing: -0.5px; margin-bottom: 4px; }
+.t-stat .t-lbl { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: rgba(255,255,255,0.38); line-height: 1.3; }
 
-/* ── ADVANTAGE STRIP ──────────────────────────────────────── */
-.advantage-strip { display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
-.adv-pill {
-  flex: 1; min-width: 220px; border-radius: var(--radius-sm);
-  padding: 10px 14px; display: flex; gap: 10px; align-items: flex-start;
+/* ── BONUS MOTIVATOR STRIP ────────────────────────────────── */
+.bonus-strip {
+  background: linear-gradient(135deg, rgba(243,140,104,0.12) 0%, rgba(243,140,104,0.06) 100%);
+  border: 1.5px solid rgba(243,140,104,0.35);
+  border-radius: var(--radius); padding: 14px 16px;
+  margin-bottom: 14px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
 }
-.adv-pill.orange-tint {
-  background: rgba(243,140,104,0.10);
-  border: 1.5px solid rgba(243,140,104,0.28);
+.bs-icon { font-size: 22px; flex-shrink: 0; }
+.bs-body { flex: 1; min-width: 0; }
+.bs-label { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: var(--orange); margin-bottom: 3px; }
+.bs-line { font-size: 14px; font-weight: 800; color: var(--charcoal); line-height: 1.35; }
+.bs-sub { font-size: 11px; font-weight: 600; color: var(--text-muted); margin-top: 2px; }
+.bs-amount { text-align: right; flex-shrink: 0; }
+.bs-earned { font-size: 28px; font-weight: 900; color: var(--orange); line-height: 1; letter-spacing: -1px; }
+.bs-earned-lbl { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); margin-top: 2px; }
+
+/* ── ZONE SYSTEM ──────────────────────────────────────────── */
+.zone { border-radius: var(--radius); margin-bottom: 12px; overflow: hidden; border: 1.5px solid var(--border); background: var(--white); box-shadow: var(--shadow-sm); }
+.zone-orange { border-left: 4px solid var(--orange); }
+.zone-blue   { border-left: 4px solid var(--blue-dark); }
+.zone-gray   { border-left: 4px solid #b0c4d8; }
+
+/* ── COLLAPSIBLE (details/summary) ───────────────────────── */
+details.zone { cursor: default; }
+details.zone > summary { list-style: none; cursor: pointer; padding: 13px 14px; display: flex; align-items: flex-start; gap: 10px; user-select: none; }
+details.zone > summary::-webkit-details-marker { display: none; }
+details.zone > summary:hover { background: var(--offwhite); }
+.summary-titles { flex: 1; min-width: 0; }
+.summary-title { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.9px; color: var(--charcoal); display: block; margin-bottom: 3px; }
+.summary-info { font-size: 12px; font-weight: 600; color: var(--text-muted); line-height: 1.4; display: block; }
+.summary-chevron { font-size: 11px; color: var(--text-muted); flex-shrink: 0; margin-top: 2px; transition: transform 0.2s; }
+details[open] > summary .summary-chevron { transform: rotate(180deg); }
+.section-divider { height: 1px; background: var(--border); margin: 0 14px; }
+
+/* ── OPEN ZONE (non-collapsible) ──────────────────────────── */
+.zone-head { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+.zone-head .zh-label { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 2px; }
+.zone-orange .zone-head .zh-label { color: var(--orange); }
+.zone-blue   .zone-head .zh-label { color: var(--blue-dark); }
+.zone-head .zh-title { font-size: 15px; font-weight: 800; color: var(--charcoal); line-height: 1.2; }
+.zone-body { padding: 14px; }
+
+/* ── DAILY ACTIONS ────────────────────────────────────────── */
+.daily-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
+.daily-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 11px 12px; border-radius: var(--radius-sm);
+  background: var(--offwhite); border: 1px solid var(--border);
 }
-.adv-pill.blue-tint {
-  background: rgba(76,135,201,0.07);
-  border: 1.5px solid rgba(76,135,201,0.22);
+.daily-item.urgent { background: rgba(243,140,104,0.07); border-color: rgba(243,140,104,0.3); }
+.daily-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+.daily-dot.orange { background: var(--orange); }
+.daily-dot.blue { background: var(--blue-dark); }
+.daily-label { font-size: 13px; font-weight: 700; color: var(--charcoal); line-height: 1.35; flex: 1; }
+.daily-label a { color: var(--blue-dark); text-decoration: underline; text-underline-offset: 2px; }
+.daily-val { font-size: 13px; font-weight: 900; color: var(--charcoal); white-space: nowrap; flex-shrink: 0; }
+.daily-val.orange { color: var(--orange); }
+.daily-val.blue { color: var(--blue-dark); }
+
+/* ── 30-MIN RULE ──────────────────────────────────────────── */
+.rule-inner { display: flex; align-items: stretch; }
+.rule-callout {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 20px 18px; background: rgba(243,140,104,0.08);
+  border-right: 1px solid rgba(243,140,104,0.2); flex-shrink: 0; min-width: 80px;
 }
+.rule-eyebrow { font-size: 8px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--orange); margin-bottom: 4px; }
+.rule-num { font-size: 56px; font-weight: 900; color: var(--orange); line-height: 1; letter-spacing: -3px; }
+.rule-unit { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 3px; color: var(--text-muted); margin-top: 2px; }
+.rule-content { padding: 16px; display: flex; flex-direction: column; justify-content: center; gap: 10px; flex: 1; }
+.rule-headline { font-size: 14px; font-weight: 900; color: var(--charcoal); line-height: 1.3; }
+.rule-bullets { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.rule-bullets li { font-size: 12.5px; color: var(--text-body); line-height: 1.4; padding-left: 14px; position: relative; }
+.rule-bullets li::before { content: '→'; position: absolute; left: 0; color: var(--orange); font-size: 10px; top: 2px; }
+.rule-bullets li strong { color: var(--charcoal); font-weight: 800; }
+.rule-script { margin-top: 6px; padding-top: 8px; border-top: 1px solid var(--border); }
+.rule-script a { font-size: 11px; font-weight: 800; color: var(--blue-dark); text-decoration: underline; text-underline-offset: 2px; }
+
+/* ── ADVANTAGE PILLS ──────────────────────────────────────── */
+.advantage-strip { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+.adv-pill { flex: 1; min-width: 220px; border-radius: var(--radius-sm); padding: 10px 14px; display: flex; gap: 10px; align-items: flex-start; }
+.adv-pill.orange-tint { background: rgba(243,140,104,0.10); border: 1.5px solid rgba(243,140,104,0.28); }
+.adv-pill.blue-tint { background: rgba(76,135,201,0.07); border: 1.5px solid rgba(76,135,201,0.22); }
 .adv-icon { font-size: 18px; line-height: 1; flex-shrink: 0; margin-top: 1px; }
-.adv-eyebrow {
-  font-size: 8px; font-weight: 800; text-transform: uppercase;
-  letter-spacing: 1.5px; margin-bottom: 3px;
-}
+.adv-eyebrow { font-size: 8px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 3px; }
 .adv-pill.orange-tint .adv-eyebrow { color: var(--orange); }
 .adv-pill.blue-tint .adv-eyebrow { color: var(--blue-dark); }
 .adv-body { font-size: 12px; font-weight: 600; color: var(--charcoal); line-height: 1.45; }
 
-/* ── 30-MIN RULE ──────────────────────────────────────────── */
-.rule-box {
-  background: linear-gradient(135deg, var(--charcoal) 0%, #1e2d3d 100%);
-  border-radius: var(--radius); display: flex; align-items: stretch;
-  margin-bottom: 14px; overflow: hidden;
-  box-shadow: 0 4px 20px rgba(30,45,61,0.25); position: relative;
-}
-.rule-box::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0;
-  height: 3px; background: linear-gradient(90deg, var(--orange), var(--blue-light));
-}
-.rule-callout {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 20px 22px; background: rgba(243,140,104,0.12);
-  border-right: 1px solid rgba(255,255,255,0.08); flex-shrink: 0; min-width: 90px;
-}
-.rule-eyebrow { font-size: 8px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--orange); margin-bottom: 4px; }
-.rule-num { font-size: 64px; font-weight: 900; color: var(--orange); line-height: 1; letter-spacing: -4px; }
-.rule-unit { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 3px; color: rgba(255,255,255,0.5); margin-top: 2px; }
-.rule-content { padding: 18px 20px; display: flex; flex-direction: column; justify-content: center; gap: 10px; flex: 1; }
-.rule-headline { font-size: 14px; font-weight: 900; color: var(--white); line-height: 1.3; letter-spacing: -0.2px; }
-.rule-bullets { display: grid; grid-template-columns: 1fr 1fr; gap: 5px 16px; list-style: none; }
-.rule-bullets li {
-  font-size: 11.5px; color: rgba(255,255,255,0.65); line-height: 1.4;
-  padding-left: 12px; position: relative;
-}
-.rule-bullets li::before { content: '→'; position: absolute; left: 0; color: var(--orange); font-size: 10px; top: 1px; }
-.rule-bullets li strong { color: rgba(255,255,255,0.9); font-weight: 700; }
-.rule-care {
-  padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.08);
-  font-size: 11px; color: rgba(255,255,255,0.48); font-weight: 600;
-}
-.rule-care strong { color: var(--blue-light); font-weight: 800; }
-
-/* ── GRIDS ────────────────────────────────────────────────── */
-.grid-2 { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 12px; }
-.grid-3 { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 12px; }
-
-/* ── CARD ─────────────────────────────────────────────────── */
-.card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); }
+/* ── CARD (inside zone-body) ──────────────────────────────── */
+.card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); margin-bottom: 12px; }
+.card:last-child { margin-bottom: 0; }
 .card-head { background: var(--blue-dark); color: var(--white); font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.1px; padding: 7px 14px; }
 .card-head.orange { background: linear-gradient(90deg, #e8784e, var(--orange)); }
 .card-head.light-blue { background: var(--blue-mid); }
 .card-body { padding: 14px; }
 
 /* ── BIG NUMBER PAIR ──────────────────────────────────────── */
-.big-pair {
-  display: flex; justify-content: space-around; align-items: center;
-  margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1.5px solid var(--border); gap: 10px;
-}
+.big-pair { display: flex; justify-content: space-around; align-items: center; margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1.5px solid var(--border); gap: 10px; }
 .big-unit { text-align: center; }
 .big-unit .num { font-size: 36px; font-weight: 900; color: var(--blue-dark); line-height: 1; letter-spacing: -2px; }
 .big-unit .num.orange { color: var(--orange); }
@@ -280,17 +231,17 @@ td strong { font-weight: 800; color: var(--charcoal); }
 .b-dot.blue { background: var(--blue-dark); }
 .b-dot.org { background: var(--orange); }
 
-/* ── BONUS SECTION ────────────────────────────────────────── */
-.bonus-section { background: linear-gradient(160deg, var(--blue-deep) 0%, #2d5c90 100%); border-radius: var(--radius); overflow: hidden; margin-bottom: 12px; box-shadow: var(--shadow-md); }
+/* ── BONUS DETAIL ─────────────────────────────────────────── */
+.bonus-section { background: linear-gradient(160deg, var(--blue-deep) 0%, #2d5c90 100%); border-radius: var(--radius-sm); overflow: hidden; }
 .bonus-head { background: linear-gradient(90deg, var(--blue-dark), var(--blue-mid)); padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px; border-bottom: 1px solid rgba(255,255,255,0.12); }
 .bonus-head .title { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.1px; color: var(--white); }
 .bonus-head .contract-ref { font-size: 11px; color: rgba(255,255,255,0.65); font-weight: 600; }
 .bonus-tiers { display: grid; grid-template-columns: 1fr; }
-.bonus-tier { padding: 18px 18px 16px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.bonus-tier { padding: 16px 18px; border-bottom: 1px solid rgba(255,255,255,0.1); }
 .bonus-tier:last-child { border-bottom: none; }
 .tier-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--blue-light); margin-bottom: 6px; }
-.tier-amount { font-size: 36px; font-weight: 900; color: var(--white); line-height: 1; margin-bottom: 8px; letter-spacing: -1.5px; }
-.tier-amount .sub { font-size: 16px; font-weight: 700; letter-spacing: 0; }
+.tier-amount { font-size: 32px; font-weight: 900; color: var(--white); line-height: 1; margin-bottom: 8px; letter-spacing: -1.5px; }
+.tier-amount .sub { font-size: 14px; font-weight: 700; letter-spacing: 0; }
 .tier-desc { font-size: 13px; color: rgba(255,255,255,0.72); line-height: 1.5; }
 .tier-desc strong { color: var(--white); font-weight: 800; }
 .bonus-totals { background: rgba(0,0,0,0.22); padding: 12px 18px; display: flex; flex-direction: column; gap: 6px; }
@@ -299,11 +250,6 @@ td strong { font-weight: 800; color: var(--charcoal); }
 .total-fine { font-size: 11px; color: rgba(255,255,255,0.38); font-weight: 500; margin-top: 2px; }
 
 /* ── POST-OPEN STAGES ─────────────────────────────────────── */
-.post-open { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 12px; box-shadow: var(--shadow-sm); }
-.post-open-head { background: linear-gradient(90deg, var(--charcoal), #3a5066); padding: 8px 14px; display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
-.post-open-head .po-title { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.1px; color: var(--white); }
-.post-open-head .po-sub { font-size: 10px; color: rgba(255,255,255,0.5); font-weight: 600; }
-.post-open-body { padding: 14px; }
 .stages-grid { display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: 12px; }
 .stage-row { display: flex; align-items: center; gap: 12px; padding: 10px 12px; background: var(--offwhite); border-radius: var(--radius-sm); border: 1px solid var(--border); }
 .stage-badge { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; font-weight: 900; color: var(--white); }
@@ -321,24 +267,13 @@ td strong { font-weight: 800; color: var(--charcoal); }
 .conv-val.org { color: var(--orange); }
 .conv-lbl { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
 
-/* ── HQ PLAYBOOKS ────────────────────────────────────────── */
-.playbooks { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 12px; box-shadow: var(--shadow-sm); }
+/* ── HQ PLAYBOOKS ─────────────────────────────────────────── */
 .playbook-grid { display: grid; grid-template-columns: 1fr; }
-.playbook-link {
-  display: flex; align-items: center; gap: 10px; padding: 11px 14px;
-  border-bottom: 1px solid #eef4fa; text-decoration: none;
-  color: var(--blue-dark); font-size: 12.5px; font-weight: 700; line-height: 1.4;
-  transition: background 0.12s;
-}
+.playbook-link { display: flex; align-items: center; gap: 10px; padding: 11px 14px; border-bottom: 1px solid #eef4fa; text-decoration: none; color: var(--blue-dark); font-size: 12.5px; font-weight: 700; line-height: 1.4; transition: background 0.12s; }
 .playbook-link:last-child { border-bottom: none; }
 .playbook-link:hover { background: var(--offwhite); color: var(--blue-deep); }
 .pl-icon { font-size: 13px; flex-shrink: 0; opacity: 0.5; }
 .pl-arrow { font-size: 11px; color: var(--text-muted); flex-shrink: 0; margin-left: auto; padding-left: 6px; }
-.rule-script-link {
-  display: inline-flex; align-items: center; gap: 4px;
-  margin-top: 6px; font-size: 11px; font-weight: 800;
-  color: var(--orange); text-decoration: underline; text-underline-offset: 2px;
-}
 
 /* ── FOOTER ───────────────────────────────────────────────── */
 .footer { background: linear-gradient(135deg, var(--blue-deep), var(--blue-dark)); display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; flex-wrap: wrap; gap: 4px; }
@@ -359,9 +294,7 @@ td strong { font-weight: 800; color: var(--charcoal); }
   .tracker-current { font-size: 96px; }
   .tracker-stats { gap: 12px; }
   .t-stat .t-val { font-size: 24px; }
-  .rule-bullets { grid-template-columns: 1fr 1fr; }
-  .grid-2 { grid-template-columns: 1fr 1fr; }
-  .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .daily-grid { grid-template-columns: 1fr 1fr; }
   .bonus-tiers { grid-template-columns: 1fr 1fr 1fr; }
   .bonus-tier { border-bottom: none; border-right: 1px solid rgba(255,255,255,0.1); }
   .bonus-tier:last-child { border-right: none; }
@@ -386,17 +319,11 @@ td strong { font-weight: 800; color: var(--charcoal); }
   .tracker-current { font-size: 112px; letter-spacing: -6px; }
   .tracker-goal { font-size: 44px; }
   .tracker-slash { font-size: 44px; }
-  .rule-box { margin-bottom: 18px; }
-  .rule-num { font-size: 72px; }
-  .rule-callout { min-width: 110px; padding: 24px 26px; }
+  .rule-num { font-size: 64px; }
+  .rule-callout { min-width: 100px; padding: 24px 22px; }
   .rule-headline { font-size: 15px; }
-  .rule-bullets li { font-size: 12.5px; }
-  .grid-2 { gap: 16px; margin-bottom: 16px; }
-  .grid-3 { grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-  .big-unit .num { font-size: 40px; }
-  .bonus-section { margin-bottom: 16px; }
-  .bonus-tier { padding: 20px 22px 18px; }
-  .tier-amount { font-size: 40px; }
+  .rule-bullets li { font-size: 13px; }
+  .daily-grid { grid-template-columns: 1fr 1fr; }
 }
 
 /* ── PRINT ────────────────────────────────────────────────── */
@@ -408,7 +335,6 @@ td strong { font-weight: 800; color: var(--charcoal); }
   .header-bar { padding: 8px 14px; }
   .header-logo img { height: 26px; }
   .header-right .doc-title { font-size: 13px; }
-  .header-right .studio { font-size: 8px; }
   .goal-strip { grid-template-columns: repeat(4, 1fr); }
   .goal-item { padding: 5px 10px; border-bottom: none; }
   .goal-item:nth-child(2n) { border-right: 1px solid rgba(255,255,255,0.2); }
@@ -417,84 +343,50 @@ td strong { font-weight: 800; color: var(--charcoal); }
   .tracker { padding: 8px 10px 7px; margin-bottom: 7px; box-shadow: none; }
   .tracker-current { font-size: 32px; letter-spacing: -2px; }
   .tracker-goal, .tracker-slash { font-size: 16px; }
-  .tracker-eyebrow { font-size: 6px; }
-  .tracker-first { font-size: 6.5px; max-width: 140px; }
-  .tracker-sublabel { font-size: 6.5px; margin-bottom: 5px; }
-  .tracker-bar-wrap { height: 5px; margin-bottom: 5px; }
   .tracker-stats { gap: 4px; }
   .t-stat { padding: 4px 5px; }
   .t-stat .t-val { font-size: 11px; }
   .t-stat .t-lbl { font-size: 5.5px; }
-  .advantage-strip { gap: 5px; margin-bottom: 6px; flex-wrap: nowrap; }
-  .adv-pill { padding: 5px 8px; min-width: 0; gap: 5px; }
-  .adv-icon { font-size: 11px; }
-  .adv-eyebrow { font-size: 5.5px; margin-bottom: 1px; }
-  .adv-body { font-size: 7px; }
-  .rule-box { margin-bottom: 7px; }
-  .rule-callout { min-width: 60px; padding: 8px 10px; }
-  .rule-num { font-size: 34px; }
+  details.zone { display: block; }
+  details.zone > summary { display: none; }
+  .summary-chevron { display: none; }
+  .zone { margin-bottom: 6px; }
+  .zone-body, details > div { display: block !important; }
+  .bonus-strip { padding: 7px 10px; margin-bottom: 7px; }
+  .bs-earned { font-size: 16px; }
+  .bs-line { font-size: 10px; }
+  .daily-grid { grid-template-columns: 1fr 1fr; gap: 4px; }
+  .daily-item { padding: 5px 7px; }
+  .daily-label { font-size: 7.5px; }
+  .daily-val { font-size: 7.5px; }
+  .rule-callout { min-width: 55px; padding: 7px 9px; }
+  .rule-num { font-size: 30px; }
   .rule-unit { font-size: 7px; }
-  .rule-eyebrow { font-size: 6px; }
   .rule-content { padding: 7px 9px; gap: 4px; }
   .rule-headline { font-size: 8px; }
-  .rule-bullets { gap: 2px 8px; }
   .rule-bullets li { font-size: 7px; }
-  .rule-care { font-size: 7px; padding-top: 4px; }
-  .grid-2 { grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 6px; }
-  .grid-3 { grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 6px; }
+  .advantage-strip { gap: 5px; flex-wrap: nowrap; }
+  .adv-pill { padding: 5px 8px; min-width: 0; }
+  .adv-body { font-size: 7px; }
   .card-head { font-size: 7px; padding: 4px 8px; }
   .card-body { padding: 6px 8px; }
   .big-unit .num { font-size: 20px; }
   .big-unit .lbl { font-size: 6px; }
-  .big-pair { margin-bottom: 6px; padding-bottom: 6px; }
-  .stat-row { padding: 2.5px 0; }
-  .stat-label, .stat-val { font-size: 7.5px; }
   table { font-size: 7.5px; }
-  th { font-size: 6.5px; padding: 2px 4px 3px 0; }
+  th { font-size: 6.5px; }
   td { padding: 2px 4px 2px 0; }
-  .tag { font-size: 6px; padding: 1px 5px; }
-  .card-note { font-size: 7px; margin-top: 5px; padding-top: 5px; }
-  .budget-bar-wrap { height: 5px; margin: 3px 0 3px; }
-  .budget-legend { gap: 8px; margin-bottom: 5px; }
-  .b-leg { font-size: 6.5px; }
-  .b-dot { width: 6px; height: 6px; }
-  .bonus-section { margin-bottom: 7px; box-shadow: none; }
+  .bonus-section { margin-bottom: 6px; }
   .bonus-tiers { grid-template-columns: 1fr 1fr 1fr; }
-  .bonus-tier { padding: 7px 9px; border-bottom: none; border-right: 1px solid rgba(255,255,255,0.12); }
-  .bonus-tier:last-child { border-right: none; }
-  .tier-label { font-size: 7px; margin-bottom: 3px; }
-  .tier-amount { font-size: 18px; margin-bottom: 3px; }
-  .tier-amount .sub { font-size: 9px; }
+  .tier-amount { font-size: 16px; margin-bottom: 3px; }
   .tier-desc { font-size: 7.5px; }
-  .bonus-head { padding: 4px 10px; }
-  .bonus-head .title { font-size: 7.5px; }
-  .bonus-head .contract-ref { font-size: 7px; }
-  .bonus-totals { flex-direction: row; justify-content: space-between; padding: 4px 9px; gap: 0; }
-  .total-item { font-size: 7.5px; }
-  .total-fine { font-size: 6.5px; }
-  .playbooks { margin-bottom: 7px; box-shadow: none; }
-  .playbook-grid { grid-template-columns: 1fr 1fr; }
-  .playbook-link { padding: 4px 8px; font-size: 7px; }
-  .pl-icon { font-size: 9px; }
-  .pl-arrow { font-size: 7px; }
-  .post-open { margin-bottom: 7px; box-shadow: none; }
-  .post-open-head { padding: 4px 10px; }
-  .post-open-head .po-title { font-size: 7.5px; }
-  .post-open-head .po-sub { font-size: 7px; }
-  .post-open-body { padding: 6px 8px; }
-  .stages-grid { grid-template-columns: 1fr 1fr 1fr; gap: 4px; margin-bottom: 6px; }
-  .stage-row { padding: 5px 7px; gap: 6px; }
-  .stage-badge { width: 20px; height: 20px; font-size: 8px; }
-  .stage-name { font-size: 7px; }
-  .stage-stats { font-size: 7px; }
+  .stages-grid { grid-template-columns: 1fr 1fr 1fr; gap: 4px; }
+  .stage-badge { width: 18px; height: 18px; font-size: 7px; }
   .stage-count { font-size: 14px; }
   .conv-grid { grid-template-columns: repeat(4, 1fr); gap: 4px; }
-  .conv-item { padding: 4px 6px; }
-  .conv-val { font-size: 13px; }
-  .conv-lbl { font-size: 6.5px; }
+  .playbook-grid { grid-template-columns: 1fr 1fr; }
+  .playbook-link { padding: 4px 8px; font-size: 7px; }
   .footer { padding: 4px 14px; }
   .footer .left { font-size: 7.5px; }
-  .footer .right { font-size: 7px; }
 }
 
 </style>
@@ -535,7 +427,7 @@ td strong { font-weight: 800; color: var(--charcoal); }
 <!-- PAGE BODY -->
 <div class="page-body">
 
-  <!-- FOUNDING MEMBER TRACKER -->
+  <!-- 1. FOUNDING MEMBER TRACKER -->
   <div class="tracker">
     <div class="tracker-top">
       <div>
@@ -568,7 +460,85 @@ td strong { font-weight: 800; color: var(--charcoal); }
     </div>
   </div>
 
-  <!-- SALES ADVANTAGE STRIP -->
+  <!-- 2. BONUS MOTIVATOR STRIP -->
+  <div class="bonus-strip">
+    <div class="bs-icon">💰</div>
+    <div class="bs-body">
+      <div class="bs-label">Community Manager Bonus</div>
+      <div class="bs-line" id="bs-main-line">Hit 125 to unlock your $1,000 bonus. Every member above 125 = $25.</div>
+      <div class="bs-sub" id="bs-sub-line">At 200 founders: $2,875 total. At 300 net new: $5,375 total.</div>
+    </div>
+    <div class="bs-amount">
+      <div class="bs-earned" id="bs-earned">$0</div>
+      <div class="bs-earned-lbl">Earned so far</div>
+    </div>
+  </div>
+
+  <!-- 3. DAILY ACTIONS (always open, orange zone) -->
+  <div class="zone zone-orange">
+    <div class="zone-head">
+      <div class="zh-label">Act Now — Every Single Day</div>
+      <div class="zh-title">Daily Actions</div>
+    </div>
+    <div class="zone-body">
+      <div class="daily-grid">
+        <div class="daily-item urgent">
+          <div class="daily-dot orange"></div>
+          <div class="daily-label"><strong>Call every new lead during business hours</strong></div>
+          <div class="daily-val orange">Within 30 min</div>
+        </div>
+        <div class="daily-item urgent">
+          <div class="daily-dot orange"></div>
+          <div class="daily-label"><strong>After-hours leads</strong> — call first thing next morning</div>
+          <div class="daily-val orange">9 AM sharp</div>
+        </div>
+        <div class="daily-item">
+          <div class="daily-dot orange"></div>
+          <div class="daily-label"><a href="https://app.musicologie.com/help-articles/founders-membership-presales-program?search=C.A.R.E.#search" target="_blank">Use C.A.R.E. framework on every call</a></div>
+          <div class="daily-val blue">Always</div>
+        </div>
+        <div class="daily-item">
+          <div class="daily-dot blue"></div>
+          <div class="daily-label">Follow-up calls to warm leads</div>
+          <div class="daily-val blue">5 calls/day</div>
+        </div>
+        <div class="daily-item">
+          <div class="daily-dot blue"></div>
+          <div class="daily-label">FB / Nextdoor post or comment</div>
+          <div class="daily-val blue">1/day</div>
+        </div>
+        <div class="daily-item">
+          <div class="daily-dot blue"></div>
+          <div class="daily-label">Studio inbox — respond to all messages</div>
+          <div class="daily-val blue">Same day</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. 30-MIN RULE (always open, orange zone) -->
+  <div class="zone zone-orange">
+    <div class="rule-inner">
+      <div class="rule-callout">
+        <div class="rule-eyebrow">Rule #1</div>
+        <div class="rule-num">30</div>
+        <div class="rule-unit">Min</div>
+      </div>
+      <div class="rule-content">
+        <div class="rule-headline">Call Every New Lead Within 30 Minutes During Business Hours.</div>
+        <ul class="rule-bullets">
+          <li>Conversion drops <strong>sharply</strong> after 30 min — don't wait</li>
+          <li>After hours: leave a voicemail, let automations run, call <strong>first thing next morning</strong></li>
+          <li><strong>In-person always converts higher</strong> than digital — prioritize table events</li>
+        </ul>
+        <div class="rule-script">
+          <a href="https://app.musicologie.com/help-articles/founders-presales-phone-call-script?search=presales#search" target="_blank">Founders Presales Phone Call Script ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. SALES ADVANTAGE STRIP -->
   <div class="advantage-strip">
     <div class="adv-pill orange-tint">
       <div class="adv-icon">🎓</div>
@@ -581,234 +551,241 @@ td strong { font-weight: 800; color: var(--charcoal); }
       <div class="adv-icon">⚡</div>
       <div>
         <div class="adv-eyebrow">Automations Live — April 20</div>
-        <div class="adv-body">The follow-up email sequence runs automatically. Your 30-min call is the human layer on top. Don't skip it.</div>
+        <div class="adv-body">The follow-up email sequence runs automatically. Your 30-min call is the human layer on top.</div>
       </div>
     </div>
   </div>
 
-  <!-- 30-MIN RULE -->
-  <div class="rule-box">
-    <div class="rule-callout">
-      <div class="rule-eyebrow">Rule #1</div>
-      <div class="rule-num">30</div>
-      <div class="rule-unit">Min</div>
+  <!-- 6. HQ PLAYBOOKS (always open, blue zone) -->
+  <div class="zone zone-blue">
+    <div class="zone-head">
+      <div class="zh-label" style="color:var(--blue-dark)">Reference</div>
+      <div class="zh-title">HQ Playbooks — Tap to Open</div>
     </div>
-    <div class="rule-content">
-      <div class="rule-headline">Call Every New Lead Within 30 Minutes During Business Hours.</div>
-      <ul class="rule-bullets">
-        <li>Conversion drops <strong>sharply</strong> after 30 min</li>
-        <li>After hours — call <strong>first thing next morning</strong></li>
-        <li>Leave a voicemail — let automations run</li>
-        <li>Follow up through <strong>Day 28</strong> on every lead</li>
-        <li>In-person <strong>always</strong> converts higher than digital</li>
-      </ul>
-      <div class="rule-care">Use the <strong><a href="https://app.musicologie.com/help-articles/founders-membership-presales-program?search=C.A.R.E.#search" target="_blank" style="color:var(--blue-light);text-decoration:underline;text-underline-offset:2px;">C.A.R.E. framework</a></strong> on every call.
-        <a href="https://app.musicologie.com/help-articles/founders-presales-phone-call-script?search=presales#search" target="_blank" class="rule-script-link">Founders Presales Phone Call Script ↗</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- ROW 1: Presales Math · Conversion Scenarios · Marketing Budget -->
-  <div class="grid-3">
-
-    <div class="card">
-      <div class="card-head">The Numbers Behind 200</div>
-      <div class="card-body">
-        <div class="big-pair">
-          <div class="big-unit">
-            <div class="num orange">30</div>
-            <div class="lbl">New Families/Day — Campaign Target</div>
-          </div>
-          <div class="big-divider"></div>
-          <div class="big-unit">
-            <div class="num">~15</div>
-            <div class="lbl">New Families/Day — Bare Minimum</div>
-          </div>
-        </div>
-        <div class="stat-row"><span class="stat-label">Families who need to raise their hand</span><span class="stat-val">~1,000</span></div>
-        <div class="stat-row"><span class="stat-label">Bare minimum new families per day</span><span class="stat-val">~15/day</span></div>
-        <div class="stat-row"><span class="stat-label">Days to hit the goal</span><span class="stat-val">69 days (Apr 20–Jun 28)</span></div>
-        <div class="stat-row"><span class="stat-label">Avg. days from interest to signup</span><span class="stat-val">13–14 days</span></div>
-        <div class="stat-row"><span class="stat-label">Expected new families in Week 1</span><span class="stat-val">150–200</span></div>
-        <div class="stat-row"><span class="stat-label">About 1 in 5 digital leads sign up</span><span class="stat-val">~20%</span></div>
-        <div class="stat-row"><span class="stat-label">About 1 in 3 in-person conversations sign up</span><span class="stat-val orange">35–40%</span></div>
-        <div class="stat-row"><span class="stat-label">Average across both channels</span><span class="stat-val blue">~26%</span></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-head light-blue">Conversion Scenarios</div>
-      <div class="card-body">
-        <table>
-          <thead>
-            <tr>
-              <th>How Many Say Yes</th>
-              <th>Families Needed</th>
-              <th>Min. Per Day</th>
-              <th>How You Get There</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>1 in 5 (20%)</td><td><strong>1,000</strong></td><td>~15/day</td><td><span class="tag tag-blue">Digital ads only</span></td></tr>
-            <tr><td>1 in 4 (25%)</td><td><strong>800</strong></td><td>~12/day</td><td><span class="tag tag-blue">Ads + conversations</span></td></tr>
-            <tr><td>1 in 3.8 (26%)</td><td><strong>769</strong></td><td>~11/day</td><td><span class="tag tag-orange">Ads + strong follow-up calls</span></td></tr>
-            <tr><td>1 in 3.3 (30%)</td><td><strong>667</strong></td><td>~10/day</td><td><span class="tag tag-orange">Ads + great in-person convos</span></td></tr>
-          </tbody>
-        </table>
-        <div class="card-note">
-          <strong>Key insight:</strong> Form-fills are warm, self-selected leads. The 30-minute call closes a door that is already open.
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-head orange">Marketing Budget — $30K Total</div>
-      <div class="card-body">
-        <div class="big-pair">
-          <div class="big-unit">
-            <div class="num" style="font-size:28px;letter-spacing:-1px">$22.5K</div>
-            <div class="lbl">Digital — 75%</div>
-          </div>
-          <div class="big-divider"></div>
-          <div class="big-unit">
-            <div class="num" style="font-size:28px;letter-spacing:-1px">$7.5K</div>
-            <div class="lbl">Community — 25%</div>
-          </div>
-        </div>
-        <div class="budget-bar-wrap">
-          <div class="bbar-digital"></div>
-          <div class="bbar-community"></div>
-        </div>
-        <div class="budget-legend">
-          <div class="b-leg"><div class="b-dot blue"></div>Meta / Digital</div>
-          <div class="b-leg"><div class="b-dot org"></div>Events / Local</div>
-        </div>
-        <div class="stat-row"><span class="stat-label">Cost per lead — digital</span><span class="stat-val">~$30</span></div>
-        <div class="stat-row"><span class="stat-label">Digital leads at $30 CPL</span><span class="stat-val">~750</span></div>
-        <div class="stat-row"><span class="stat-label">In-person leads (est.)</span><span class="stat-val orange">~250</span></div>
-        <div class="stat-row"><span class="stat-label">Total leads from full budget</span><span class="stat-val blue">~1,000</span></div>
-        <div class="card-note">
-          <strong>Digital ads are the volume engine</strong> — they fill the top of the funnel with families who raise their hand. The 25% community budget is for in-person conversations: table events, partnerships, and anywhere you can talk to a real person. Those conversations close at 2× the rate of digital. Both work together — don't trade one for the other.<br><br>
-          <em>Spend ramps toward end of campaign — families are most ready to commit as opening day nears. Week 1 = launch spike. Mid-campaign may dip. Back half ramps with budget.</em><br><br>
-          <a href="https://app.musicologie.com/help-articles/a-franchisees-guide-to-the-founders-presale-digital-ads-campaign?search=presales#search" target="_blank" style="color:var(--blue-dark);font-weight:700;text-decoration:underline;text-underline-offset:2px;display:block;margin-bottom:4px;">A Franchisee's Guide to the Founders Presale Digital Ads Campaign ↗</a>
-          <a href="https://app.musicologie.com/help-articles/presales--grand-opening-marketing-campaign?search=presales#search" target="_blank" style="color:var(--blue-dark);font-weight:700;text-decoration:underline;text-underline-offset:2px;display:block;">Presales &amp; Grand Opening Marketing Campaign ↗</a>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- ROW 2: Daily · Weekly · Lead Mix -->
-  <div class="grid-3">
-
-    <div class="card">
-      <div class="card-head orange">Daily — Every Single Day</div>
-      <div class="card-body">
-        <div class="stat-row"><span class="stat-label"><strong>Call every new lead — business hours</strong></span><span class="stat-val orange">Within 30 min</span></div>
-        <div class="stat-row"><span class="stat-label">After-hours leads</span><span class="stat-val orange">First call next morning</span></div>
-        <div class="stat-row"><span class="stat-label"><a href="https://app.musicologie.com/help-articles/founders-membership-presales-program?search=C.A.R.E.#search" target="_blank" style="color:var(--text-body);text-decoration:underline;text-underline-offset:2px;">Use C.A.R.E. framework on every call</a></span><span class="stat-val blue">Always</span></div>
-        <div class="stat-row"><span class="stat-label">Follow-up calls to warm leads</span><span class="stat-val">5 calls/day</span></div>
-        <div class="stat-row"><span class="stat-label">FB / Nextdoor post or comment</span><span class="stat-val">1/day</span></div>
-        <div class="stat-row"><span class="stat-label">Studio inbox — respond to all</span><span class="stat-val">Same day</span></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-head">Weekly — Minimum Targets</div>
-      <div class="card-body">
-        <div class="stat-row"><span class="stat-label"><strong>Table events / in-person</strong></span><span class="stat-val blue">1–2/week</span></div>
-        <div class="stat-row"><span class="stat-label">Partnership contacts (donut drops)</span><span class="stat-val">1/week</span></div>
-        <div class="stat-row"><span class="stat-label">Flyer drops to new locations</span><span class="stat-val">1/week</span></div>
-        <div class="stat-row"><span class="stat-label">Social media posts</span><span class="stat-val">1/week</span></div>
-        <div class="stat-row"><span class="stat-label">Withdrawal calls (cold leads)</span><span class="stat-val">10/week</span></div>
-        <div class="stat-row"><span class="stat-label">Yard sign check + refresh</span><span class="stat-val">Ongoing</span></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-head light-blue">Lead Source Mix</div>
-      <div class="card-body">
-        <table>
-          <thead><tr><th>Source</th><th>Mix</th><th>Conv.</th></tr></thead>
-          <tbody>
-            <tr><td>Meta ads</td><td>80%</td><td>~20%</td></tr>
-            <tr><td><strong>In-person / events</strong></td><td>20%</td><td><strong style="color:var(--orange)">35–40%</strong></td></tr>
-          </tbody>
-        </table>
-        <div class="card-note">
-          <strong>Priority:</strong> Table events punch above their weight. Every in-person hour is the Community Manager's highest-leverage activity.
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- BONUS SECTION -->
-  <div class="bonus-section">
-    <div class="bonus-head">
-      <div class="title">Community Manager Bonus Structure</div>
-      <div class="contract-ref">Signed Employment Contract · Dropbox Sign · 12/29/2025</div>
-    </div>
-    <div class="bonus-tiers">
-      <div class="bonus-tier">
-        <div class="tier-label">Milestone 1 — Pre-Opening</div>
-        <div class="tier-amount">$1,000</div>
-        <div class="tier-desc">Lump sum when <strong>125 net new students</strong> are enrolled prior to opening day (June 22, 2026).</div>
-      </div>
-      <div class="bonus-tier">
-        <div class="tier-label">Milestone 2 — Presales</div>
-        <div class="tier-amount">$25<span class="sub"> / net new</span></div>
-        <div class="tier-desc">For every <strong>net new student above 125</strong> enrolled before opening. Paid at confirmed enrollment.</div>
-      </div>
-      <div class="bonus-tier">
-        <div class="tier-label">Milestone 3 — Post-Open</div>
-        <div class="tier-amount">$25<span class="sub"> / net new</span></div>
-        <div class="tier-desc">Per <strong>net new student</strong> monthly after opening. Continues through <strong>300 net new students</strong> total. Calculated monthly.</div>
-      </div>
-    </div>
-    <div class="bonus-totals">
-      <div class="total-item">At 200 founders: $1,000 + (75 &times; $25) = <strong>$2,875 presales bonus</strong></div>
-      <div class="total-item">At 300 net new: $1,000 + (175 &times; $25) = <strong>$5,375 total bonus</strong></div>
-      <div class="total-fine">"Net new" applies in all bonus scenarios</div>
-    </div>
-  </div>
-
-  <!-- HQ PLAYBOOKS -->
-  <div class="playbooks">
-    <div class="card-head" style="background:linear-gradient(90deg,var(--blue-deep),var(--blue-dark));">HQ Playbooks — Tap to Open</div>
     <div class="playbook-grid">
       <a class="playbook-link" href="https://app.musicologie.com/help-articles/founders-membership-presales-program?search=presales#search" target="_blank">
-        <span class="pl-icon">📋</span><span class="pl-title">Founders Membership Presales Program</span><span class="pl-arrow">↗</span>
+        <span class="pl-icon">📋</span>Founders Membership Presales Program<span class="pl-arrow">↗</span>
       </a>
       <a class="playbook-link" href="https://app.musicologie.com/help-articles/founders-presales-phone-call-script?search=presales#search" target="_blank">
-        <span class="pl-icon">📞</span><span class="pl-title">Founders Presales Phone Call Script</span><span class="pl-arrow">↗</span>
+        <span class="pl-icon">📞</span>Founders Presales Phone Call Script<span class="pl-arrow">↗</span>
       </a>
       <a class="playbook-link" href="https://app.musicologie.com/help-articles/a-franchisees-guide-to-the-founders-presale-digital-ads-campaign?search=presales#search" target="_blank">
-        <span class="pl-icon">📣</span><span class="pl-title">A Franchisee's Guide to the Founders Presale Digital Ads Campaign</span><span class="pl-arrow">↗</span>
+        <span class="pl-icon">📣</span>Franchisee's Guide to Digital Ads Campaign<span class="pl-arrow">↗</span>
       </a>
       <a class="playbook-link" href="https://app.musicologie.com/help-articles/presales--grand-opening-marketing-campaign?search=presales#search" target="_blank">
-        <span class="pl-icon">🚀</span><span class="pl-title">Presales &amp; Grand Opening Marketing Campaign</span><span class="pl-arrow">↗</span>
+        <span class="pl-icon">🚀</span>Presales &amp; Grand Opening Marketing Campaign<span class="pl-arrow">↗</span>
       </a>
       <a class="playbook-link" href="https://app.musicologie.com/help-articles/key-performance-indicators-kpis?search=presales#search" target="_blank">
-        <span class="pl-icon">📊</span><span class="pl-title">Key Performance Indicators (KPIs)</span><span class="pl-arrow">↗</span>
+        <span class="pl-icon">📊</span>Key Performance Indicators (KPIs)<span class="pl-arrow">↗</span>
       </a>
       <a class="playbook-link" href="https://app.musicologie.com/help-articles/how-to-grand-opening-week?search=presales#search" target="_blank">
-        <span class="pl-icon">🎉</span><span class="pl-title">How To: Grand Opening Week</span><span class="pl-arrow">↗</span>
+        <span class="pl-icon">🎉</span>How To: Grand Opening Week<span class="pl-arrow">↗</span>
       </a>
     </div>
   </div>
 
-  <!-- POST-OPEN STAGE TARGETS -->
-  <div class="post-open">
-    <div class="post-open-head">
-      <div class="po-title">Post-Open Growth Stages</div>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
-        <div class="po-sub">What success looks like after June 22, 2026</div>
-        <a href="https://app.musicologie.com/help-articles/key-performance-indicators-kpis?search=presales#search" target="_blank" style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.65);text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Key Performance Indicators (KPIs) ↗</a>
-        <a href="https://app.musicologie.com/help-articles/how-to-grand-opening-week?search=presales#search" target="_blank" style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.65);text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">How To: Grand Opening Week ↗</a>
+  <!-- 7. NUMBERS BEHIND 200 (collapsible, blue zone) -->
+  <details class="zone zone-blue">
+    <summary>
+      <div class="summary-titles">
+        <span class="summary-title">The Numbers Behind 200</span>
+        <span class="summary-info">30 families/day target · ~15/day floor · ~1,000 leads needed</span>
+      </div>
+      <span class="summary-chevron">▾</span>
+    </summary>
+    <div class="section-divider"></div>
+    <div class="zone-body">
+      <div class="big-pair">
+        <div class="big-unit">
+          <div class="num orange">30</div>
+          <div class="lbl">New Families/Day — Campaign Target</div>
+        </div>
+        <div class="big-divider"></div>
+        <div class="big-unit">
+          <div class="num">~15</div>
+          <div class="lbl">New Families/Day — Bare Minimum</div>
+        </div>
+      </div>
+      <div class="stat-row"><span class="stat-label">Families who need to raise their hand</span><span class="stat-val">~1,000</span></div>
+      <div class="stat-row"><span class="stat-label">Days to hit the goal</span><span class="stat-val">69 days (Apr 20 – Jun 28)</span></div>
+      <div class="stat-row"><span class="stat-label">Avg. days from interest to signup</span><span class="stat-val">13–14 days</span></div>
+      <div class="stat-row"><span class="stat-label">Expected new families in Week 1</span><span class="stat-val">150–200</span></div>
+      <div class="stat-row"><span class="stat-label">Digital lead conversion rate</span><span class="stat-val">~20%</span></div>
+      <div class="stat-row"><span class="stat-label">In-person conversion rate</span><span class="stat-val orange">35–40%</span></div>
+      <div class="stat-row"><span class="stat-label">Average across both channels</span><span class="stat-val blue">~26%</span></div>
+    </div>
+  </details>
+
+  <!-- 8. CONVERSION SCENARIOS (collapsible, blue zone) -->
+  <details class="zone zone-blue">
+    <summary>
+      <div class="summary-titles">
+        <span class="summary-title">Conversion Scenarios</span>
+        <span class="summary-info">Digital: 1 in 5 (20%) · In-person: 1 in 3 (35–40%)</span>
+      </div>
+      <span class="summary-chevron">▾</span>
+    </summary>
+    <div class="section-divider"></div>
+    <div class="zone-body">
+      <table>
+        <thead>
+          <tr>
+            <th>How Many Say Yes</th>
+            <th>Families Needed</th>
+            <th>Min./Day</th>
+            <th>How You Get There</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1 in 5 (20%)</td><td><strong>1,000</strong></td><td>~15/day</td><td><span class="tag tag-blue">Digital ads only</span></td></tr>
+          <tr><td>1 in 4 (25%)</td><td><strong>800</strong></td><td>~12/day</td><td><span class="tag tag-blue">Ads + conversations</span></td></tr>
+          <tr><td>1 in 3.8 (26%)</td><td><strong>769</strong></td><td>~11/day</td><td><span class="tag tag-orange">Ads + strong follow-up calls</span></td></tr>
+          <tr><td>1 in 3.3 (30%)</td><td><strong>667</strong></td><td>~10/day</td><td><span class="tag tag-orange">Ads + great in-person convos</span></td></tr>
+        </tbody>
+      </table>
+      <div class="card-note">
+        <strong>Key insight:</strong> Form-fills are warm, self-selected leads. The 30-minute call closes a door that is already open.
       </div>
     </div>
-    <div class="post-open-body">
+  </details>
+
+  <!-- 9. MARKETING BUDGET (collapsible, blue zone) -->
+  <details class="zone zone-blue">
+    <summary>
+      <div class="summary-titles">
+        <span class="summary-title">Marketing Budget</span>
+        <span class="summary-info">$30K Total · $22.5K Digital / $7.5K Community · ~1,000 leads at $30 CPL</span>
+      </div>
+      <span class="summary-chevron">▾</span>
+    </summary>
+    <div class="section-divider"></div>
+    <div class="zone-body">
+      <div class="big-pair">
+        <div class="big-unit">
+          <div class="num" style="font-size:28px;letter-spacing:-1px">$22.5K</div>
+          <div class="lbl">Digital — 75%</div>
+        </div>
+        <div class="big-divider"></div>
+        <div class="big-unit">
+          <div class="num" style="font-size:28px;letter-spacing:-1px">$7.5K</div>
+          <div class="lbl">Community — 25%</div>
+        </div>
+      </div>
+      <div class="budget-bar-wrap">
+        <div class="bbar-digital"></div>
+        <div class="bbar-community"></div>
+      </div>
+      <div class="budget-legend">
+        <div class="b-leg"><div class="b-dot blue"></div>Meta / Digital</div>
+        <div class="b-leg"><div class="b-dot org"></div>Events / Local</div>
+      </div>
+      <div class="stat-row"><span class="stat-label">Cost per lead — digital</span><span class="stat-val">~$30</span></div>
+      <div class="stat-row"><span class="stat-label">Digital leads at $30 CPL</span><span class="stat-val">~750</span></div>
+      <div class="stat-row"><span class="stat-label">In-person leads (est.)</span><span class="stat-val orange">~250</span></div>
+      <div class="stat-row"><span class="stat-label">Total leads from full budget</span><span class="stat-val blue">~1,000</span></div>
+      <div class="card-note">
+        <strong>Digital ads fill the funnel.</strong> Community budget drives in-person conversations that close at 2× the rate. Spend ramps toward end of campaign — families commit as opening day nears.
+      </div>
+    </div>
+  </details>
+
+  <!-- 10. WEEKLY TARGETS (collapsible, gray zone) -->
+  <details class="zone zone-gray">
+    <summary>
+      <div class="summary-titles">
+        <span class="summary-title">Weekly Targets</span>
+        <span class="summary-info">1–2 table events · 10 withdrawal calls · 1 partnership drop per week</span>
+      </div>
+      <span class="summary-chevron">▾</span>
+    </summary>
+    <div class="section-divider"></div>
+    <div class="zone-body">
+      <div class="stat-row"><span class="stat-label"><strong>Table events / in-person</strong></span><span class="stat-val blue">1–2/week</span></div>
+      <div class="stat-row"><span class="stat-label">Partnership contacts (donut drops)</span><span class="stat-val">1/week</span></div>
+      <div class="stat-row"><span class="stat-label">Flyer drops to new locations</span><span class="stat-val">1/week</span></div>
+      <div class="stat-row"><span class="stat-label">Social media posts</span><span class="stat-val">1/week</span></div>
+      <div class="stat-row"><span class="stat-label">Withdrawal calls (cold leads)</span><span class="stat-val">10/week</span></div>
+      <div class="stat-row"><span class="stat-label">Yard sign check + refresh</span><span class="stat-val">Ongoing</span></div>
+    </div>
+  </details>
+
+  <!-- 11. LEAD SOURCE MIX (collapsible, gray zone) -->
+  <details class="zone zone-gray">
+    <summary>
+      <div class="summary-titles">
+        <span class="summary-title">Lead Source Mix</span>
+        <span class="summary-info">Meta 80% at ~20% conv. · In-person 20% at 35–40% conv.</span>
+      </div>
+      <span class="summary-chevron">▾</span>
+    </summary>
+    <div class="section-divider"></div>
+    <div class="zone-body">
+      <table>
+        <thead><tr><th>Source</th><th>Mix</th><th>Conv. Rate</th></tr></thead>
+        <tbody>
+          <tr><td>Meta ads</td><td>80%</td><td>~20%</td></tr>
+          <tr><td><strong>In-person / events</strong></td><td>20%</td><td><strong style="color:var(--orange)">35–40%</strong></td></tr>
+        </tbody>
+      </table>
+      <div class="card-note">
+        <strong>In-person punches above its weight.</strong> Every table event hour is the highest-leverage activity a Community Manager can do.
+      </div>
+    </div>
+  </details>
+
+  <!-- 12. BONUS DETAIL (collapsible, blue zone) -->
+  <details class="zone zone-blue">
+    <summary>
+      <div class="summary-titles">
+        <span class="summary-title">Bonus Structure — Full Detail</span>
+        <span class="summary-info">$1,000 at 125 members · $25/member above 125 · $5,375 total at 300</span>
+      </div>
+      <span class="summary-chevron">▾</span>
+    </summary>
+    <div class="section-divider"></div>
+    <div class="zone-body">
+      <div class="bonus-section">
+        <div class="bonus-head">
+          <div class="title">Community Manager Bonus Structure</div>
+          <div class="contract-ref">Signed Employment Contract · Dropbox Sign · 12/29/2025</div>
+        </div>
+        <div class="bonus-tiers">
+          <div class="bonus-tier">
+            <div class="tier-label">Milestone 1 — Pre-Opening</div>
+            <div class="tier-amount">$1,000</div>
+            <div class="tier-desc">Lump sum when <strong>125 net new students</strong> are enrolled prior to opening day (June 22, 2026).</div>
+          </div>
+          <div class="bonus-tier">
+            <div class="tier-label">Milestone 2 — Presales</div>
+            <div class="tier-amount">$25<span class="sub"> / net new</span></div>
+            <div class="tier-desc">For every <strong>net new student above 125</strong> enrolled before opening. Paid at confirmed enrollment.</div>
+          </div>
+          <div class="bonus-tier">
+            <div class="tier-label">Milestone 3 — Post-Open</div>
+            <div class="tier-amount">$25<span class="sub"> / net new</span></div>
+            <div class="tier-desc">Per <strong>net new student</strong> monthly after opening. Continues through <strong>300 net new students</strong> total.</div>
+          </div>
+        </div>
+        <div class="bonus-totals">
+          <div class="total-item">At 200 founders: $1,000 + (75 &times; $25) = <strong>$2,875 presales bonus</strong></div>
+          <div class="total-item">At 300 net new: $1,000 + (175 &times; $25) = <strong>$5,375 total bonus</strong></div>
+          <div class="total-fine">"Net new" applies in all bonus scenarios</div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- 13. POST-OPEN GROWTH STAGES (collapsible, gray zone) -->
+  <details class="zone zone-gray">
+    <summary>
+      <div class="summary-titles">
+        <span class="summary-title">Post-Open Growth Stages</span>
+        <span class="summary-info">S1: 150 students · S2: 300 · S3: 450 · Target ≤6% churn</span>
+      </div>
+      <span class="summary-chevron">▾</span>
+    </summary>
+    <div class="section-divider"></div>
+    <div class="zone-body">
       <div class="stages-grid">
         <div class="stage-row">
           <div class="stage-badge s1">S1</div>
@@ -836,125 +813,81 @@ td strong { font-weight: 800; color: var(--charcoal); }
         </div>
       </div>
       <div class="conv-grid">
-        <div class="conv-item">
-          <div class="conv-val">≥40%</div>
-          <div class="conv-lbl">Families Who Book a First Lesson</div>
-        </div>
-        <div class="conv-item">
-          <div class="conv-val">≥80%</div>
-          <div class="conv-lbl">First Lessons That Become Members</div>
-        </div>
-        <div class="conv-item">
-          <div class="conv-val org">≤6%</div>
-          <div class="conv-lbl">Students Leaving Per Month</div>
-        </div>
-        <div class="conv-item">
-          <div class="conv-val">12+ mo</div>
-          <div class="conv-lbl">How Long Students Stay</div>
-        </div>
+        <div class="conv-item"><div class="conv-val">≥40%</div><div class="conv-lbl">Families Who Book a First Lesson</div></div>
+        <div class="conv-item"><div class="conv-val">≥80%</div><div class="conv-lbl">First Lessons That Become Members</div></div>
+        <div class="conv-item"><div class="conv-val org">≤6%</div><div class="conv-lbl">Students Leaving Per Month</div></div>
+        <div class="conv-item"><div class="conv-val">12+ mo</div><div class="conv-lbl">How Long Students Stay</div></div>
       </div>
       <div class="card-note" style="margin-top:10px;">
-        <strong>On students leaving:</strong> Keep it under 6% per month and the studio grows automatically — the math takes care of itself. Above 6% for two months in a row, flag it immediately.
+        <strong>Keep churn under 6%</strong> and the studio grows automatically. Above 6% for two months in a row — flag it immediately.
       </div>
     </div>
-  </div>
+  </details>
 
-  <!-- TEACHER ROSTER -->
-  <div class="post-open" style="margin-bottom:12px;">
-    <div class="post-open-head">
-      <div class="po-title">Our Teachers — Day 1 Ready</div>
-      <div class="po-sub">Use this on every presales call: "All 8 teachers are hired and ready."</div>
-    </div>
-    <div class="post-open-body">
+  <!-- 14. TEACHER ROSTER (collapsible, gray zone) -->
+  <details class="zone zone-gray">
+    <summary>
+      <div class="summary-titles">
+        <span class="summary-title">Teacher Roster — Day 1 Ready</span>
+        <span class="summary-info">8 Teachers · Guitar, Piano, Voice, Violin, Brass, Strings · All hired and ready</span>
+      </div>
+      <span class="summary-chevron">▾</span>
+    </summary>
+    <div class="section-divider"></div>
+    <div class="zone-body">
       <table>
         <thead>
           <tr>
             <th>Teacher</th>
             <th>Instruments</th>
-            <th>Started</th>
             <th>What Makes Them Unique</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td><strong>Nick Johnson</strong></td>
-            <td>Guitar · Bass Guitar</td>
-            <td>Mar 30</td>
-            <td>Perfect for kids who want to play modern music, rock out, or eventually join a band. Guitar and bass covered.</td>
-          </tr>
-          <tr>
-            <td><strong>Gene Otto</strong></td>
-            <td>Mandolin · Banjo · Guitar · Piano</td>
-            <td>Mar 31</td>
-            <td>One of the only teachers anywhere who teaches folk and bluegrass alongside piano and guitar. Great for families who want something outside the classical track.</td>
-          </tr>
-          <tr>
-            <td><strong>Kathrine Underwood</strong></td>
-            <td>Voice · Piano</td>
-            <td>Apr 9</td>
-            <td>Ideal for singers and students who want to perform. Voice and piano together means she can work on both at once.</td>
-          </tr>
-          <tr>
-            <td><strong>Hugo Da Silva Santos</strong></td>
-            <td>Trombone · Trumpet · Saxophone · Drum Set · Bass Guitar</td>
-            <td>Apr 9</td>
-            <td>If your child wants to play in a school band, marching band, or drum line — Hugo is the teacher. Five instruments, all the ones most studios can't staff.</td>
-          </tr>
-          <tr>
-            <td><strong>Madison Ware</strong></td>
-            <td>Voice · Ukulele · Piano · Guitar</td>
-            <td>Apr 9</td>
-            <td>Great for families who aren't sure yet what their kid will love — she teaches four instruments and makes every lesson fun and exploratory.</td>
-          </tr>
-          <tr>
-            <td><strong>Haylee Mazankowski</strong></td>
-            <td>Piano</td>
-            <td>Apr 14</td>
-            <td>Patient, encouraging, and great with young beginners. If your child has never played before, Haylee is a perfect first teacher.</td>
-          </tr>
-          <tr>
-            <td><strong>Kiersten Vogrinec</strong></td>
-            <td>Piano</td>
-            <td>Apr 16</td>
-            <td>Piano is the most-requested instrument at almost every studio. Kiersten means families asking for piano won't be turned away or waitlisted.</td>
-          </tr>
-          <tr>
-            <td><strong>Wolfgang Jaegar</strong></td>
-            <td>Violin · Viola</td>
-            <td>Apr 16</td>
-            <td>Violin and viola together — rare to find both in one teacher. Ideal for kids in orchestra or families who want to start strings.</td>
-          </tr>
+          <tr><td><strong>Nick Johnson</strong></td><td>Guitar · Bass Guitar</td><td>Perfect for kids who want to rock out or join a band.</td></tr>
+          <tr><td><strong>Gene Otto</strong></td><td>Mandolin · Banjo · Guitar · Piano</td><td>Only teacher in the area who does folk + bluegrass alongside piano and guitar.</td></tr>
+          <tr><td><strong>Kathrine Underwood</strong></td><td>Voice · Piano</td><td>Ideal for singers — works on voice and piano together.</td></tr>
+          <tr><td><strong>Hugo Da Silva Santos</strong></td><td>Trombone · Trumpet · Saxophone · Drum Set · Bass Guitar</td><td>School band, marching band, drum line — Hugo has it all.</td></tr>
+          <tr><td><strong>Madison Ware</strong></td><td>Voice · Ukulele · Piano · Guitar</td><td>Great for families who aren't sure yet — four instruments, every lesson is exploratory.</td></tr>
+          <tr><td><strong>Haylee Mazankowski</strong></td><td>Piano</td><td>Patient and encouraging — the perfect first teacher for young beginners.</td></tr>
+          <tr><td><strong>Kiersten Vogrinec</strong></td><td>Piano</td><td>Families asking for piano won't be turned away or waitlisted.</td></tr>
+          <tr><td><strong>Wolfgang Jaegar</strong></td><td>Violin · Viola</td><td>Rare to find both in one teacher. Ideal for orchestra families.</td></tr>
         </tbody>
       </table>
       <div class="card-note" style="margin-top:12px;">
-        <strong>Sales angle:</strong> Most new studios open with 2–3 teachers. Lindon opens with all 8 hired and ready Day 1 — families can enroll knowing their teacher is already confirmed.
+        <strong>Sales angle:</strong> Most new studios open with 2–3 teachers. Lindon opens with all 8 hired and ready Day 1.
       </div>
     </div>
-  </div>
+  </details>
 
-  <!-- SYSTEM AVERAGE MIX — FYI -->
-  <div class="card" style="margin-bottom:12px;">
-    <div class="card-head light-blue">System Average — Membership Mix (FYI · All Studios)</div>
-    <div class="card-body">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:12px;">
-        <div>
-          <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:8px;">Franchise System Average</div>
-          <div class="stat-row"><span class="stat-label">Private (30-min)</span><span class="stat-val blue">80%</span></div>
-          <div class="stat-row"><span class="stat-label">APL (group)</span><span class="stat-val">10%</span></div>
-          <div class="stat-row"><span class="stat-label">Junior (group)</span><span class="stat-val">10%</span></div>
-        </div>
-        <div>
-          <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:8px;">Lindon Target Mix</div>
-          <div class="stat-row"><span class="stat-label">Private (30-min)</span><span class="stat-val blue">60%</span></div>
-          <div class="stat-row"><span class="stat-label">APL (group)</span><span class="stat-val">25%</span></div>
-          <div class="stat-row"><span class="stat-label">Junior (group)</span><span class="stat-val">15%</span></div>
-        </div>
+  <!-- 15. MEMBERSHIP MIX (collapsible, gray zone) -->
+  <details class="zone zone-gray">
+    <summary>
+      <div class="summary-titles">
+        <span class="summary-title">Membership Mix — System vs. Lindon Target</span>
+        <span class="summary-info">System: 80% Private · Lindon Target: 60% Private / 40% Group</span>
       </div>
-      <div class="card-note">
-        <strong>Note:</strong> System average skews heavily private (80%). Lindon is targeting more group programs — Utah homeschool market and family demographics may support a different mix. Track actual enrollment mix from day one and adjust projections accordingly.
+      <span class="summary-chevron">▾</span>
+    </summary>
+    <div class="section-divider"></div>
+    <div class="zone-body" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <div>
+        <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:8px;">Franchise System Average</div>
+        <div class="stat-row"><span class="stat-label">Private (30-min)</span><span class="stat-val blue">80%</span></div>
+        <div class="stat-row"><span class="stat-label">APL (group)</span><span class="stat-val">10%</span></div>
+        <div class="stat-row"><span class="stat-label">Junior (group)</span><span class="stat-val">10%</span></div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:8px;">Lindon Target Mix</div>
+        <div class="stat-row"><span class="stat-label">Private (30-min)</span><span class="stat-val blue">60%</span></div>
+        <div class="stat-row"><span class="stat-label">APL (group)</span><span class="stat-val">25%</span></div>
+        <div class="stat-row"><span class="stat-label">Junior (group)</span><span class="stat-val">15%</span></div>
+      </div>
+      <div style="grid-column:1/-1;" class="card-note">
+        Lindon targets more group programs — Utah homeschool market may support a different mix. Track actual enrollment from Day 1 and adjust accordingly.
       </div>
     </div>
-  </div>
+  </details>
 
 </div><!-- /page-body -->
 
@@ -983,6 +916,23 @@ td strong { font-weight: 800; color: var(--charcoal); }
   document.getElementById('tracker-pace').textContent = pace + '/day';
   document.getElementById('tracker-togo').textContent = toGo + ' to go';
   document.getElementById('tracker-bar').style.width = Math.max(1.5, pct) + '%';
+
+  // Bonus strip
+  var earned = 0;
+  var mainLine, subLine;
+  if (CURRENT_COUNT < 125) {
+    earned = 0;
+    var toMilestone = 125 - CURRENT_COUNT;
+    mainLine = 'Hit 125 to unlock your $1,000 bonus. ' + toMilestone + ' member' + (toMilestone === 1 ? '' : 's') + ' to go.';
+    subLine = 'Every member above 125 = $25 more. At 200 founders: $2,875 total.';
+  } else {
+    earned = 1000 + ((CURRENT_COUNT - 125) * 25);
+    mainLine = '$1,000 milestone unlocked! Every new member = $25.';
+    subLine = 'At 200 founders: $2,875. At 300 net new: $5,375 total.';
+  }
+  document.getElementById('bs-earned').textContent = '$' + earned.toLocaleString();
+  document.getElementById('bs-main-line').textContent = mainLine;
+  document.getElementById('bs-sub-line').textContent = subLine;
 })();
 </script>
 
