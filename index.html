@@ -96,6 +96,8 @@ body {
 .t-stat { background: rgba(255,255,255,0.06); border-radius: var(--radius-sm); padding: 10px 8px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 .t-stat .t-val { font-size: 17px; font-weight: 900; color: var(--white); line-height: 1; letter-spacing: -0.5px; margin-bottom: 4px; }
 .t-stat .t-lbl { font-size: 8.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: rgba(255,255,255,0.38); line-height: 1.3; }
+.t-stat--lg .t-val { font-size: 26px; letter-spacing: -1px; }
+.t-lbl-target { color: var(--white); font-weight: 800; }
 
 /* ── BONUS MOTIVATOR STRIP ────────────────────────────────── */
 .bonus-strip {
@@ -334,6 +336,7 @@ td strong { font-weight: 800; color: var(--charcoal); }
   .tracker-slash-goal { font-size: 22px; }
   .tracker-stats { grid-template-columns: repeat(4, 1fr); gap: 12px; }
   .t-stat .t-val { font-size: 24px; }
+  .t-stat--lg .t-val { font-size: 36px; }
   .daily-grid { grid-template-columns: 1fr 1fr; }
   .bonus-tiers { grid-template-columns: 1fr 1fr 1fr; }
   .bonus-tier { border-bottom: none; border-right: 1px solid rgba(255,255,255,0.1); }
@@ -548,14 +551,14 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
       </div>
     </div>
     <div class="tracker-stats">
-      <div class="t-stat">
+      <div class="t-stat t-stat--lg">
         <div class="t-val" id="tracker-days">69</div>
         <div class="t-lbl">Days Remaining</div>
       </div>
-      <div class="t-stat">
+      <div class="t-stat t-stat--lg">
         <div class="t-val" id="tracker-pace">—</div>
         <div id="tracker-pace-badge" class="t-badge" style="display:none"></div>
-        <div class="t-lbl">Avg/Day · Target: 3/day</div>
+        <div class="t-lbl">Avg/Day · <span class="t-lbl-target">Target: 3/day</span></div>
       </div>
       <div class="t-stat">
         <div class="t-val" id="tracker-projected">—</div>
@@ -564,7 +567,7 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
       <div class="t-stat">
         <div class="t-val" id="goal-weekly">—</div>
         <div id="weekly-pace-badge" class="t-badge" style="display:none"></div>
-        <div class="t-lbl">Wkly Rate · Target: 21/wk</div>
+        <div class="t-lbl">Wkly Rate · <span class="t-lbl-target">Target: 21/wk</span></div>
       </div>
     </div>
     <div class="tracker-update-wrap">
