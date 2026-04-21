@@ -472,8 +472,8 @@ td strong { font-weight: 800; color: var(--charcoal); }
     <div class="bs-icon">💰</div>
     <div class="bs-body">
       <div class="bs-label">Community Manager Bonus</div>
-      <div class="bs-line" id="bs-main-line">Hit 125 to unlock your $1,000 bonus. Every member above 125 = $25.</div>
-      <div class="bs-sub" id="bs-sub-line">At 200 founders: $2,875 total. At 300 net new: $5,375 total.</div>
+      <div class="bs-line" id="bs-main-line">Hit 125 to unlock your $1,000 bonus. Every member above 125 = $25 — all the way to 300.</div>
+      <div class="bs-sub" id="bs-sub-line">Bonus doesn't stop at opening. At 200: $2,875. At 300 net new students: $5,375 total.</div>
     </div>
     <div class="bs-amount">
       <div class="bs-earned" id="bs-earned">$0</div>
@@ -967,11 +967,11 @@ td strong { font-weight: 800; color: var(--charcoal); }
     earned = 0;
     var toMilestone = 125 - CURRENT_COUNT;
     mainLine = 'Hit 125 to unlock your $1,000 bonus. ' + toMilestone + ' member' + (toMilestone === 1 ? '' : 's') + ' to go.';
-    subLine = 'Every member above 125 = $25 more. At 200 founders: $2,875 total.';
+    subLine = '$25 per member above 125 — continues through 300 net new students. At 200: $2,875. At 300: $5,375.';
   } else {
     earned = 1000 + ((CURRENT_COUNT - 125) * 25);
-    mainLine = '$1,000 milestone unlocked! Every new member = $25.';
-    subLine = 'At 200 founders: $2,875. At 300 net new: $5,375 total.';
+    mainLine = '$1,000 milestone unlocked! Every new member = $25 — all the way through 300 net new students.';
+    subLine = 'Bonus doesn\'t stop at opening. At 200 founders: $2,875. At 300 net new: $5,375 total.';
   }
   document.getElementById('bs-earned').textContent = '$' + earned.toLocaleString();
   document.getElementById('bs-main-line').textContent = mainLine;
