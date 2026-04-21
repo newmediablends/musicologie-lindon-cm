@@ -83,7 +83,7 @@ body {
 .tracker::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 80% 50%, rgba(76,135,201,0.08) 0%, transparent 60%); pointer-events: none; }
 .tracker-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; gap: 10px; position: relative; z-index: 1; }
 .tracker-eyebrow { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--blue-light); margin-bottom: 2px; }
-.tracker-first { font-size: 10px; color: var(--orange); font-weight: 700; font-style: italic; text-align: right; line-height: 1.45; max-width: 190px; opacity: 0.88; }
+.tracker-first { font-size: 10px; color: var(--orange); font-weight: 700; font-style: italic; text-align: right; line-height: 1.45; max-width: 190px; opacity: 0.88; text-wrap: balance; }
 .tracker-main { display: flex; align-items: baseline; gap: 6px; margin-bottom: 4px; position: relative; z-index: 1; }
 .tracker-current { font-size: 80px; font-weight: 900; color: var(--white); line-height: 1; letter-spacing: -5px; }
 .tracker-slash { font-size: 36px; font-weight: 300; color: rgba(255,255,255,0.22); margin: 0 2px; }
@@ -440,7 +440,7 @@ td strong { font-weight: 800; color: var(--charcoal); }
       <div>
         <div class="tracker-eyebrow">Founding Member Tracker</div>
       </div>
-      <div class="tracker-first">200 pre-sales would make Lindon the first Musicologie franchise to achieve it.</div>
+      <div class="tracker-first">200 pre-sales would make Lindon the first Musicologie franchise to achieve&nbsp;it.</div>
     </div>
     <div class="tracker-main">
       <div class="tracker-current" id="tracker-count">0</div>
