@@ -191,6 +191,10 @@ details[open] > summary .summary-chevron { transform: rotate(180deg); }
 .adv-pill.orange-tint .adv-eyebrow { color: var(--orange); }
 .adv-pill.blue-tint .adv-eyebrow { color: var(--blue-dark); }
 .adv-body { font-size: 12px; font-weight: 600; color: var(--charcoal); line-height: 1.45; }
+.adv-link { display: inline-block; margin-top: 5px; font-size: 10px; font-weight: 800; text-decoration: none; text-underline-offset: 2px; }
+.adv-pill.orange-tint .adv-link { color: var(--orange); }
+.adv-pill.blue-tint .adv-link { color: var(--blue-dark); }
+.adv-link:hover { text-decoration: underline; }
 
 /* ── CARD (inside zone-body) ──────────────────────────────── */
 .card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); margin-bottom: 12px; }
@@ -524,7 +528,7 @@ td strong { font-weight: 800; color: var(--charcoal); }
   </div>
 
   <!-- 4. 30-MIN RULE (always open, orange zone) -->
-  <div class="zone zone-orange">
+  <div class="zone zone-orange" id="rule-30min">
     <div class="rule-inner">
       <div class="rule-callout">
         <div class="rule-eyebrow">Rule #1</div>
@@ -552,6 +556,7 @@ td strong { font-weight: 800; color: var(--charcoal); }
       <div>
         <div class="adv-eyebrow">Sales Talking Point</div>
         <div class="adv-body">All 8 teachers hired and ready Day 1 — use this on every call.</div>
+        <a href="#teacher-roster" class="adv-link">↓ See full teacher roster</a>
       </div>
     </div>
     <div class="adv-pill blue-tint">
@@ -559,6 +564,7 @@ td strong { font-weight: 800; color: var(--charcoal); }
       <div>
         <div class="adv-eyebrow">Automations Live — April 20</div>
         <div class="adv-body">The follow-up email sequence runs automatically. Your 30-min call is the human layer on top.</div>
+        <a href="#rule-30min" class="adv-link">↓ See the 30-min rule</a>
       </div>
     </div>
   </div>
@@ -860,7 +866,7 @@ td strong { font-weight: 800; color: var(--charcoal); }
   </details>
 
   <!-- 14. TEACHER ROSTER (collapsible, gray zone) -->
-  <details class="zone zone-gray">
+  <details class="zone zone-gray" id="teacher-roster">
     <summary>
       <div class="summary-stat">
         <div class="stat-big">8</div>
