@@ -445,6 +445,36 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
   .footer .left { font-size: 7.5px; }
 }
 
+/* ── COUNT UPDATE UI ──────────────────────────────────── */
+.tracker-update-wrap { text-align: center; margin-top: 14px; }
+.tracker-update-btn {
+  background: none; border: 1px solid rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.65); border-radius: 20px;
+  padding: 5px 16px; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.5px; cursor: pointer; font-family: inherit;
+  transition: all 0.2s;
+}
+.tracker-update-btn:hover { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.5); }
+.tracker-edit-form { display: none; align-items: center; justify-content: center; gap: 8px; margin-top: 10px; }
+.tracker-edit-form.active { display: flex; }
+.tracker-edit-input {
+  width: 88px; text-align: center; font-size: 20px; font-weight: 900;
+  padding: 6px 8px; border-radius: 8px; border: 2px solid var(--orange);
+  font-family: inherit; color: var(--charcoal); outline: none;
+}
+.tracker-edit-input:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(243,140,104,0.25); }
+.tracker-save-btn {
+  background: var(--orange); color: #fff; border: none;
+  border-radius: 8px; padding: 7px 18px; font-size: 13px; font-weight: 800;
+  cursor: pointer; font-family: inherit; transition: opacity 0.2s;
+}
+.tracker-save-btn:hover { opacity: 0.88; }
+.tracker-cancel-btn {
+  background: none; color: rgba(255,255,255,0.55); border: none;
+  font-size: 12px; cursor: pointer; font-family: inherit; padding: 7px 8px;
+}
+.tracker-save-status { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 6px; min-height: 16px; }
+
 </style>
 </head>
 <body>
@@ -525,6 +555,15 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
         <div class="t-val" id="goal-weekly">—</div>
         <div class="t-lbl">Enrollments/Wk</div>
       </div>
+    </div>
+    <div class="tracker-update-wrap">
+      <button class="tracker-update-btn" id="edit-count-btn">✎ Update Count</button>
+      <div class="tracker-edit-form" id="edit-form">
+        <input class="tracker-edit-input" type="number" id="edit-input" min="0" max="500" placeholder="0">
+        <button class="tracker-save-btn" id="save-count-btn">Save</button>
+        <button class="tracker-cancel-btn" id="cancel-count-btn">Cancel</button>
+      </div>
+      <div class="tracker-save-status" id="save-status"></div>
     </div>
   </div>
 
@@ -1109,36 +1148,13 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
 
 <script>
 (function () {
-  // ── UPDATE THIS NUMBER EACH DAY ──────────────────────────
-  var CURRENT_COUNT = 0;
-  // ────────────────────────────────────────────────────────
-
   var TARGET = 200;
-  var CIRCUMFERENCE = 628.3; // 2π × r100
-  var endDate = new Date('2026-06-28T00:00:00');
-  var today = new Date(); today.setHours(0,0,0,0);
-  var daysRemaining = Math.max(0, Math.round((endDate - today) / 86400000));
-  var toGo = TARGET - CURRENT_COUNT;
-  var pace = daysRemaining > 0 ? Math.ceil(toGo / daysRemaining) : '—';
-  var pct = Math.min(100, (CURRENT_COUNT / TARGET) * 100);
+  var CIRCUMFERENCE = 628.3;
 
-  // Bonus calc
-  var earned = 0;
-  var mainLine, subLine;
-  if (CURRENT_COUNT < 125) {
-    earned = 0;
-    var toMilestone = 125 - CURRENT_COUNT;
-    mainLine = 'Hit 125 to unlock your $1,000 bonus. ' + toMilestone + ' member' + (toMilestone === 1 ? '' : 's') + ' to go.';
-    subLine = '$25 per member above 125 — continues through 300 net new students. At 200: $2,875. At 300: $5,375.';
-  } else {
-    earned = 1000 + ((CURRENT_COUNT - 125) * 25);
-    mainLine = '$1,000 milestone unlocked! Every new member = $25 — all the way through 300 net new students.';
-    subLine = 'Bonus doesn\'t stop at opening. At 200 founders: $2,875. At 300 net new: $5,375 total.';
-  }
-  document.getElementById('bs-main-line').textContent = mainLine;
-  document.getElementById('bs-sub-line').textContent = subLine;
+  // ── Paste your Apps Script web app URL here after deploying ──
+  var SCRIPT_URL = 'PASTE_YOUR_SCRIPT_URL_HERE';
+  // ─────────────────────────────────────────────────────────────
 
-  // ── Animate counter up ──────────────────────────────────
   function animateCount(el, to, duration, formatter) {
     var start = null;
     function step(ts) {
@@ -1149,45 +1165,6 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
       if (p < 1) requestAnimationFrame(step);
     }
     requestAnimationFrame(step);
-  }
-
-  // ── Ring fill ──────────────────────────────────────────
-  var ring = document.getElementById('ring-progress');
-  var countEl = document.getElementById('tracker-count');
-  var earnedEl = document.getElementById('bs-earned');
-
-  // Kick off animations after a short paint delay
-  setTimeout(function () {
-    // Ring — set final offset (CSS transition handles the animation)
-    var offset = CIRCUMFERENCE - (pct / 100) * CIRCUMFERENCE;
-    if (CURRENT_COUNT === 0) offset = CIRCUMFERENCE; // stays empty at zero
-    ring.style.strokeDashoffset = offset;
-
-    // Count-up tracker number
-    animateCount(countEl, CURRENT_COUNT, 1500);
-
-    // Count-up bonus earned
-    animateCount(earnedEl, earned, 1200, function (n) { return '$' + n.toLocaleString(); });
-
-    // Stagger stat cards
-    var stats = document.querySelectorAll('.t-stat');
-    stats.forEach(function (s, i) {
-      setTimeout(function () { s.classList.add('popped'); }, 1800 + i * 120);
-    });
-  }, 80);
-
-  // Stat values
-  document.getElementById('tracker-days').textContent = daysRemaining;
-  document.getElementById('tracker-pace').textContent = pace + '/day';
-  document.getElementById('tracker-togo').textContent = toGo;
-
-  // Weekly target
-  var weeklyTarget = daysRemaining > 0 ? Math.ceil(toGo / (daysRemaining / 7)) + '/wk' : '—';
-  document.getElementById('goal-weekly').textContent = weeklyTarget;
-
-  // ── Confetti (fires if milestone reached) ──────────────
-  if (CURRENT_COUNT >= 125) {
-    setTimeout(launchConfetti, 1600);
   }
 
   function launchConfetti() {
@@ -1228,6 +1205,111 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
       else canvas.remove();
     })();
   }
+
+  function render(count) {
+    var endDate = new Date('2026-06-28T00:00:00');
+    var today = new Date(); today.setHours(0,0,0,0);
+    var daysRemaining = Math.max(0, Math.round((endDate - today) / 86400000));
+    var toGo = TARGET - count;
+    var pace = daysRemaining > 0 ? Math.ceil(toGo / daysRemaining) : '—';
+    var pct = Math.min(100, (count / TARGET) * 100);
+
+    var earned = count < 125 ? 0 : 1000 + ((count - 125) * 25);
+    var toMilestone = 125 - count;
+    var mainLine = count < 125
+      ? 'Hit 125 to unlock your $1,000 bonus. ' + toMilestone + ' member' + (toMilestone === 1 ? '' : 's') + ' to go.'
+      : '$1,000 milestone unlocked! Every new member = $25 — all the way through 300 net new students.';
+    var subLine = count < 125
+      ? '$25 per member above 125 — continues through 300 net new students. At 200: $2,875. At 300: $5,375.'
+      : 'Bonus doesn\'t stop at opening. At 200 founders: $2,875. At 300 net new: $5,375 total.';
+
+    document.getElementById('bs-main-line').textContent = mainLine;
+    document.getElementById('bs-sub-line').textContent = subLine;
+    document.getElementById('tracker-days').textContent = daysRemaining;
+    document.getElementById('tracker-pace').textContent = pace + '/day';
+    document.getElementById('tracker-togo').textContent = toGo;
+    document.getElementById('goal-weekly').textContent = daysRemaining > 0
+      ? Math.ceil(toGo / (daysRemaining / 7)) + '/wk' : '—';
+
+    var ring = document.getElementById('ring-progress');
+    var countEl = document.getElementById('tracker-count');
+    var earnedEl = document.getElementById('bs-earned');
+
+    setTimeout(function () {
+      var offset = count === 0 ? CIRCUMFERENCE : CIRCUMFERENCE - (pct / 100) * CIRCUMFERENCE;
+      ring.style.strokeDashoffset = offset;
+      animateCount(countEl, count, 1500);
+      animateCount(earnedEl, earned, 1200, function (n) { return '$' + n.toLocaleString(); });
+      document.querySelectorAll('.t-stat').forEach(function (s, i) {
+        setTimeout(function () { s.classList.add('popped'); }, 1800 + i * 120);
+      });
+    }, 80);
+
+    if (count >= 125) setTimeout(launchConfetti, 1600);
+  }
+
+  // ── Edit UI ────────────────────────────────────────────
+  var editBtn    = document.getElementById('edit-count-btn');
+  var editForm   = document.getElementById('edit-form');
+  var editInput  = document.getElementById('edit-input');
+  var saveBtn    = document.getElementById('save-count-btn');
+  var cancelBtn  = document.getElementById('cancel-count-btn');
+  var statusEl   = document.getElementById('save-status');
+  var liveCount  = 0;
+
+  editBtn.addEventListener('click', function () {
+    editInput.value = liveCount;
+    editForm.classList.add('active');
+    editBtn.style.display = 'none';
+    editInput.focus();
+    editInput.select();
+  });
+
+  cancelBtn.addEventListener('click', function () {
+    editForm.classList.remove('active');
+    editBtn.style.display = '';
+    statusEl.textContent = '';
+  });
+
+  saveBtn.addEventListener('click', function () {
+    var newCount = parseInt(editInput.value, 10);
+    if (isNaN(newCount) || newCount < 0) { statusEl.textContent = 'Enter a valid number.'; return; }
+    statusEl.textContent = 'Saving…';
+    saveBtn.disabled = true;
+    fetch(SCRIPT_URL + '?action=update&count=' + newCount)
+      .then(function (r) { return r.json(); })
+      .then(function () {
+        liveCount = newCount;
+        render(newCount);
+        editForm.classList.remove('active');
+        editBtn.style.display = '';
+        statusEl.textContent = 'Saved!';
+        setTimeout(function () { statusEl.textContent = ''; }, 2500);
+      })
+      .catch(function () {
+        statusEl.textContent = 'Error saving — check your connection.';
+      })
+      .finally(function () { saveBtn.disabled = false; });
+  });
+
+  editInput.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') saveBtn.click();
+    if (e.key === 'Escape') cancelBtn.click();
+  });
+
+  // ── Bootstrap: fetch count from Apps Script ────────────
+  if (SCRIPT_URL === 'PASTE_YOUR_SCRIPT_URL_HERE') {
+    render(0);
+  } else {
+    fetch(SCRIPT_URL)
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        liveCount = typeof d.count === 'number' ? d.count : 0;
+        render(liveCount);
+      })
+      .catch(function () { render(0); });
+  }
+
 })();
 </script>
 
