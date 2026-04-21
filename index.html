@@ -66,7 +66,6 @@ body {
 .goal-item { padding: 9px 12px; border-right: 1px solid rgba(255,255,255,0.2); border-bottom: 1px solid rgba(255,255,255,0.2); }
 .goal-item:nth-child(2n) { border-right: none; }
 .goal-item:nth-last-child(-n+2) { border-bottom: none; }
-.goal-item.goal-span { grid-column: 1 / -1; border-right: none; }
 .goal-label { font-size: 8px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(255,255,255,0.75); margin-bottom: 2px; }
 .goal-value { font-size: 13px; font-weight: 800; color: var(--white); letter-spacing: -0.2px; line-height: 1.25; }
 
@@ -93,7 +92,7 @@ body {
 .tracker-current { font-size: 62px; font-weight: 900; color: var(--white); line-height: 1; letter-spacing: -3px; }
 .tracker-slash-goal { font-size: 18px; font-weight: 600; color: rgba(255,255,255,0.32); margin-top: 2px; letter-spacing: -0.5px; }
 .tracker-sublabel { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.35); margin-top: 6px; position: relative; z-index: 1; }
-.tracker-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; position: relative; z-index: 1; }
+.tracker-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; position: relative; z-index: 1; }
 .t-stat { background: rgba(255,255,255,0.06); border-radius: var(--radius-sm); padding: 10px 8px; text-align: center; }
 .t-stat .t-val { font-size: 17px; font-weight: 900; color: var(--white); line-height: 1; letter-spacing: -0.5px; margin-bottom: 4px; }
 .t-stat .t-lbl { font-size: 8.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: rgba(255,255,255,0.38); line-height: 1.3; }
@@ -320,11 +319,10 @@ td strong { font-weight: 800; color: var(--charcoal); }
   .header-logo img { height: 50px; }
   .header-right .studio { display: block; font-size: 11px; }
   .header-right .doc-title { font-size: 20px; }
-  .goal-strip { grid-template-columns: repeat(5, 1fr); }
+  .goal-strip { grid-template-columns: repeat(4, 1fr); }
   .goal-item { padding: 10px 16px; border-bottom: none; }
   .goal-label { font-size: 9px; }
   .goal-value { font-size: 15px; }
-  .goal-item.goal-span { grid-column: auto; }
   .goal-item:nth-child(2n) { border-right: 1px solid rgba(255,255,255,0.2); }
   .goal-item:last-child { border-right: none; }
   .goal-value { font-size: 16px; }
@@ -334,7 +332,7 @@ td strong { font-weight: 800; color: var(--charcoal); }
   .tracker-ring-wrap { width: 264px; height: 264px; }
   .tracker-current { font-size: 88px; letter-spacing: -5px; }
   .tracker-slash-goal { font-size: 22px; }
-  .tracker-stats { gap: 12px; }
+  .tracker-stats { grid-template-columns: repeat(4, 1fr); gap: 12px; }
   .t-stat .t-val { font-size: 24px; }
   .daily-grid { grid-template-columns: 1fr 1fr; }
   .bonus-tiers { grid-template-columns: 1fr 1fr 1fr; }
@@ -480,10 +478,6 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
     <div class="goal-label">Avg. Close Cycle</div>
     <div class="goal-value">13–14 Days</div>
   </div>
-  <div class="goal-item goal-span">
-    <div class="goal-label">Weekly Signup Target</div>
-    <div class="goal-value" id="goal-weekly">—</div>
-  </div>
 </div>
 
 <!-- PAGE BODY -->
@@ -524,8 +518,12 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
         <div class="t-lbl">Pace Needed</div>
       </div>
       <div class="t-stat">
-        <div class="t-val" id="tracker-togo">200 to go</div>
+        <div class="t-val" id="tracker-togo">200</div>
         <div class="t-lbl">Members to Target</div>
+      </div>
+      <div class="t-stat">
+        <div class="t-val" id="goal-weekly">—</div>
+        <div class="t-lbl">Weekly Target</div>
       </div>
     </div>
   </div>
@@ -747,7 +745,7 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
     <summary>
       <div class="summary-stat">
         <div class="stat-big orange">3</div>
-        <div class="stat-unit">enrollments/day</div>
+        <div class="stat-unit">daily target</div>
       </div>
       <div class="summary-titles">
         <span class="summary-title">Daily Target — The Numbers Behind 200</span>
@@ -1181,8 +1179,8 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
   document.getElementById('tracker-togo').textContent = toGo;
 
   // Weekly target
-  var weeklyTarget = daysRemaining > 0 ? Math.ceil(toGo / (daysRemaining / 7)) : '—';
-  document.getElementById('goal-weekly').textContent = weeklyTarget + (typeof weeklyTarget === 'number' ? ' founders/week' : '');
+  var weeklyTarget = daysRemaining > 0 ? Math.ceil(toGo / (daysRemaining / 7)) + '/wk' : '—';
+  document.getElementById('goal-weekly').textContent = weeklyTarget;
 
   // ── Confetti (fires if milestone reached) ──────────────
   if (CURRENT_COUNT >= 125) {
