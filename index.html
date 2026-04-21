@@ -449,8 +449,10 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
 .t-badge { font-size: 7.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; padding: 2px 8px; border-radius: 10px; margin: 4px auto 0; display: inline-block; line-height: 1.5; }
 .t-badge.on-track { background: rgba(80,210,120,0.18); color: #5dd48a; }
 .t-badge.behind   { background: rgba(243,140,104,0.18); color: var(--orange); }
+.t-val.pace-good  { color: #5dd48a; }
+.t-val.pace-short { color: #e07070; }
 .t-val.projected-good  { color: #5dd48a; }
-.t-val.projected-short { color: var(--orange); }
+.t-val.projected-short { color: #e07070; }
 
 /* ── COUNT UPDATE UI ──────────────────────────────────── */
 .tracker-update-wrap { text-align: center; margin-top: 14px; }
@@ -1274,11 +1276,13 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
     if (hasAvg) {
       paceEl.textContent = avg3.toFixed(1) + '/day';
       var onPace = avg3 >= DAILY_TARGET;
+      paceEl.className = 't-val ' + (onPace ? 'pace-good' : 'pace-short');
       paceBadgeEl.textContent = onPace ? '▲ On Track' : '▼ Behind';
       paceBadgeEl.className = 't-badge ' + (onPace ? 'on-track' : 'behind');
       paceBadgeEl.style.display = '';
     } else {
       paceEl.textContent = '—';
+      paceEl.className = 't-val';
       paceBadgeEl.style.display = 'none';
     }
 
@@ -1300,11 +1304,13 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
       var weeklyRate = avg3 * 7;
       weeklyEl.textContent = weeklyRate.toFixed(1) + '/wk';
       var wkOnPace = weeklyRate >= WEEKLY_TARGET;
+      weeklyEl.className = 't-val ' + (wkOnPace ? 'pace-good' : 'pace-short');
       weeklyBadgeEl.textContent = wkOnPace ? '▲ On Track' : '▼ Behind';
       weeklyBadgeEl.className = 't-badge ' + (wkOnPace ? 'on-track' : 'behind');
       weeklyBadgeEl.style.display = '';
     } else {
       weeklyEl.textContent = '—';
+      weeklyEl.className = 't-val';
       weeklyBadgeEl.style.display = 'none';
     }
 
