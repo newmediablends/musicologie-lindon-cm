@@ -1244,7 +1244,7 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
       animateCount(countEl, count, 1500);
       animateCount(earnedEl, earned, 1200, function (n) { return '$' + n.toLocaleString(); });
       document.querySelectorAll('.t-stat').forEach(function (s, i) {
-        setTimeout(function () { s.classList.add('popped'); }, 1800 + i * 120);
+        setTimeout(function () { s.classList.add('popped'); }, i * 100);
       });
     }, 80);
 
