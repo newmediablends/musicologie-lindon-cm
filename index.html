@@ -313,6 +313,62 @@ td strong { font-weight: 800; color: var(--charcoal); }
 .footer .left { font-size: 11px; color: rgba(255,255,255,0.65); font-weight: 600; }
 .footer .right { font-size: 10px; color: rgba(255,255,255,0.38); }
 
+/* ── MOBILE ACCESSIBILITY — minimum readable sizes (< 640px) ─── */
+/* WCAG 2.1 AA: 16px min body text, 12px min for bold caps/labels */
+.goal-label                { font-size: 12px; }
+.goal-value                { font-size: 16px; }
+.tracker-eyebrow           { font-size: 12px; }
+.tracker-first             { font-size: 13px; }
+.tracker-sublabel          { font-size: 12px; }
+.t-stat .t-lbl             { font-size: 12px; }
+.stat-unit                 { font-size: 12px; }
+.bs-label                  { font-size: 12px; }
+.bs-line                   { font-size: 17px; }
+.bs-sub                    { font-size: 14px; }
+.bs-earned-lbl             { font-size: 12px; }
+.summary-title             { font-size: 16px; }
+.summary-info              { font-size: 15px; }
+.summary-chevron           { font-size: 14px; }
+.zone-head .zh-label       { font-size: 12px; }
+.zone-head .zh-title       { font-size: 17px; }
+.daily-label               { font-size: 16px; }
+.daily-val                 { font-size: 16px; }
+.rule-eyebrow              { font-size: 12px; }
+.rule-unit                 { font-size: 14px; }
+.rule-headline             { font-size: 17px; }
+.rule-bullets li           { font-size: 15px; }
+.rule-script a             { font-size: 14px; }
+.adv-eyebrow               { font-size: 12px; }
+.adv-body                  { font-size: 15px; }
+.adv-link                  { font-size: 13px; }
+.card-head                 { font-size: 12px; }
+.big-unit .lbl             { font-size: 13px; }
+.stat-label                { font-size: 16px; }
+.stat-val                  { font-size: 16px; }
+table                      { font-size: 15px; }
+th                         { font-size: 12px; }
+.tag                       { font-size: 12px; }
+.card-note                 { font-size: 15px; }
+.b-leg                     { font-size: 12px; }
+.tier-label                { font-size: 12px; }
+.tier-desc                 { font-size: 15px; }
+.total-item                { font-size: 15px; }
+.total-fine                { font-size: 13px; }
+.stage-name                { font-size: 15px; }
+.stage-stats               { font-size: 14px; }
+.conv-lbl                  { font-size: 12px; }
+.playbook-link             { font-size: 16px; }
+.flow-title                { font-size: 16px; }
+.flow-detail               { font-size: 14px; }
+.cadence-label             { font-size: 12px; }
+.cadence-pill              { font-size: 14px; }
+.footer .left              { font-size: 14px; }
+.footer .right             { font-size: 12px; }
+.bonus-head .title         { font-size: 13px; }
+.bonus-head .contract-ref  { font-size: 13px; }
+.header-right .doc-title   { font-size: 16px; }
+.pl-arrow                  { font-size: 14px; }
+
 /* ── TABLET (≥ 640px) ─────────────────────────────────────── */
 @media (min-width: 640px) {
   .header-logo img { height: 50px; }
@@ -486,6 +542,111 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
   font-size: 12px; cursor: pointer; font-family: inherit; padding: 7px 8px;
 }
 .tracker-save-status { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 6px; min-height: 16px; }
+
+/* ── DARK MODE — activated by .is-dark on <html> ──────── */
+/* JS sets .is-dark from system preference OR manual toggle  */
+html.is-dark {
+  --offwhite:   #111d2b;
+  --white:      #1b2a3b;
+  --border:     rgba(255,255,255,0.10);
+  --charcoal:   #e4edf6;
+  --text-body:  rgba(228,237,246,0.80);
+  --text-muted: rgba(255,255,255,0.42);
+  --shadow-sm:  0 1px 4px rgba(0,0,0,0.40);
+  --shadow-md:  0 3px 12px rgba(0,0,0,0.50);
+}
+html.is-dark body { background: #0d1822; }
+html.is-dark .stat-row,
+html.is-dark td,
+html.is-dark .flow-step          { border-bottom-color: rgba(255,255,255,0.07); }
+html.is-dark th                  { border-bottom-color: rgba(255,255,255,0.12); }
+html.is-dark .card-note,
+html.is-dark .rule-script        { border-top-color:    rgba(255,255,255,0.07); }
+html.is-dark details.zone > summary:hover { background: rgba(255,255,255,0.04); }
+html.is-dark .summary-stat              { background: rgba(255,255,255,0.04); }
+html.is-dark .zone-blue .summary-stat   { background: rgba(76,135,201,0.10); }
+html.is-dark .zone-gray .summary-stat   { background: rgba(255,255,255,0.05); }
+html.is-dark .playbook-link             { border-bottom-color: rgba(255,255,255,0.07); color: var(--blue-light); }
+html.is-dark .playbook-link:nth-child(odd) { border-right-color: rgba(255,255,255,0.07); }
+html.is-dark .playbook-link:hover       { background: rgba(255,255,255,0.05); color: #a8cef0; }
+html.is-dark .tag-blue      { background: rgba(76,135,201,0.22);  color: var(--blue-light); }
+html.is-dark .tag-orange    { background: rgba(243,140,104,0.22); color: var(--orange); }
+html.is-dark .cadence-pill  { background: rgba(76,135,201,0.22);  color: var(--blue-light); }
+html.is-dark .daily-item        { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); }
+html.is-dark .daily-item.urgent { background: rgba(243,140,104,0.09); border-color: rgba(243,140,104,0.28); }
+html.is-dark .adv-pill.orange-tint { background: rgba(243,140,104,0.12); border-color: rgba(243,140,104,0.30); }
+html.is-dark .adv-pill.blue-tint   { background: rgba(76,135,201,0.10);  border-color: rgba(76,135,201,0.25); }
+html.is-dark .bonus-strip { background: linear-gradient(135deg, rgba(243,140,104,0.10) 0%, rgba(243,140,104,0.05) 100%); border-color: rgba(243,140,104,0.30); }
+html.is-dark .tracker-edit-input { background: #1b2a3b; color: var(--charcoal); border-color: var(--orange); }
+
+/* ── TRACKER: inverted to light card in dark mode ─────── */
+html.is-dark .tracker {
+  background: linear-gradient(135deg, #e8f2fb 0%, #d4e8f5 100%);
+  box-shadow: 0 4px 24px rgba(76,135,201,0.18);
+}
+html.is-dark .tracker::after {
+  background: radial-gradient(ellipse at 80% 50%, rgba(76,135,201,0.10) 0%, transparent 60%);
+}
+html.is-dark .tracker-eyebrow   { color: var(--blue-dark); }
+html.is-dark .tracker-current   { color: #2e3a47; }
+html.is-dark .tracker-slash-goal { color: rgba(46,58,71,0.38); }
+html.is-dark .tracker-sublabel  { color: rgba(46,58,71,0.48); }
+html.is-dark .ring-track        { stroke: rgba(46,58,71,0.12); }
+html.is-dark .t-stat            { background: rgba(255,255,255,0.55); }
+html.is-dark .t-stat .t-val     { color: #2e3a47; }
+html.is-dark .t-stat .t-lbl     { color: rgba(46,58,71,0.52); }
+html.is-dark .t-lbl-target      { color: #2e3a47; }
+html.is-dark .tracker-update-btn {
+  border-color: rgba(46,58,71,0.25); color: rgba(46,58,71,0.60);
+}
+html.is-dark .tracker-update-btn:hover {
+  background: rgba(46,58,71,0.08); color: #2e3a47; border-color: rgba(46,58,71,0.45);
+}
+html.is-dark .tracker-cancel-btn { color: rgba(46,58,71,0.50); }
+html.is-dark .tracker-save-status { color: rgba(46,58,71,0.55); }
+html.is-dark .tracker-edit-input  { background: #fff; color: #2e3a47; }
+
+/* ── THEME TOGGLE BAR ────────────────────────────────────── */
+.theme-bar {
+  position: fixed; bottom: 18px; right: 18px; z-index: 9999;
+  display: flex; align-items: center; gap: 9px;
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: 40px; padding: 7px 14px 7px 12px;
+  box-shadow: var(--shadow-md);
+  font-family: 'Nunito Sans', 'Helvetica Neue', Arial, sans-serif;
+  transition: background 0.25s, border-color 0.25s, box-shadow 0.25s;
+  cursor: default; user-select: none;
+}
+.theme-bar-icon { font-size: 14px; line-height: 1; }
+.theme-bar-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.3px;
+  color: var(--text-muted); white-space: nowrap;
+  transition: color 0.2s;
+}
+.theme-switch {
+  position: relative; width: 36px; height: 20px; flex-shrink: 0;
+}
+.theme-switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+.theme-track {
+  position: absolute; inset: 0; border-radius: 20px;
+  background: var(--border); border: 1.5px solid rgba(0,0,0,0.08);
+  transition: background 0.22s, border-color 0.22s;
+  cursor: pointer;
+}
+.theme-track::after {
+  content: ''; position: absolute;
+  top: 2px; left: 2px;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--text-muted);
+  transition: transform 0.22s cubic-bezier(0.34,1.4,0.64,1), background 0.22s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.20);
+}
+.theme-switch input:checked + .theme-track {
+  background: var(--blue-dark); border-color: var(--blue-dark);
+}
+.theme-switch input:checked + .theme-track::after {
+  transform: translateX(16px); background: #fff;
+}
 
 </style>
 </head>
@@ -1163,7 +1324,46 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
   <a href="https://docs.google.com/spreadsheets/d/1hNG8jdOB3Fmiu58js0hZHZQi1jBhgYNktbiSMC8IzQo/edit" target="_blank" style="font-size:10px;color:var(--text-muted);text-decoration:none;font-family:'Nunito Sans',sans-serif;font-weight:600;letter-spacing:0.3px;">⊞ Count Data</a>
 </div>
 
+<!-- DARK MODE TOGGLE -->
+<div class="theme-bar" id="theme-bar">
+  <span class="theme-bar-icon" id="theme-icon">☀️</span>
+  <span class="theme-bar-label" id="theme-label">Light</span>
+  <label class="theme-switch" aria-label="Toggle dark mode">
+    <input type="checkbox" id="theme-toggle">
+    <span class="theme-track"></span>
+  </label>
+</div>
+
 <script>
+(function () {
+  // ── Theme toggle ──────────────────────────────────────────
+  var html    = document.documentElement;
+  var toggle  = document.getElementById('theme-toggle');
+  var icon    = document.getElementById('theme-icon');
+  var label   = document.getElementById('theme-label');
+  var sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+  function setDark(dark, save) {
+    html.classList.toggle('is-dark', dark);
+    toggle.checked = dark;
+    icon.textContent  = dark ? '🌙' : '☀️';
+    label.textContent = dark ? 'Dark'  : 'Light';
+    if (save) localStorage.setItem('theme', dark ? 'dark' : 'light');
+  }
+
+  // Init: stored pref → system pref
+  var stored = localStorage.getItem('theme');
+  setDark(stored === 'dark' || (stored === null && sysDark.matches), false);
+
+  // System preference changes (only if user hasn't pinned a pref)
+  sysDark.addEventListener('change', function (e) {
+    if (!localStorage.getItem('theme')) setDark(e.matches, false);
+  });
+
+  // Manual toggle
+  toggle.addEventListener('change', function () { setDark(toggle.checked, true); });
+})();
+
 (function () {
   var TARGET = 200;
   var DAILY_TARGET = 3;
