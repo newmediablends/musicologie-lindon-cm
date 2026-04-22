@@ -648,6 +648,317 @@ html.is-dark .tracker-edit-input  { background: #fff; color: #2e3a47; }
   transform: translateX(16px); background: #fff;
 }
 
+/* ══════════════════════════════════════════════════════════════
+   MARA UPGRADE — Material Design 3 · Bonus Journey + Checklist
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── BONUS JOURNEY CARD ───────────────────────────────────── */
+.journey-card {
+  background: linear-gradient(150deg, rgba(243,140,104,0.13) 0%, rgba(243,140,104,0.05) 100%);
+  border: 1.5px solid rgba(243,140,104,0.35);
+  border-radius: 20px;
+  padding: 18px 18px 16px;
+  margin-bottom: 14px;
+  position: relative;
+  overflow: hidden;
+}
+.journey-card::after {
+  content: '';
+  position: absolute;
+  top: -50px; right: -50px;
+  width: 180px; height: 180px;
+  background: radial-gradient(circle, rgba(243,140,104,0.18) 0%, transparent 68%);
+  pointer-events: none;
+  z-index: 0;
+}
+.journey-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+}
+.journey-eyebrow {
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--orange);
+  margin-bottom: 4px;
+}
+.journey-earned-num {
+  font-size: 40px;
+  font-weight: 900;
+  color: var(--charcoal);
+  line-height: 1;
+  letter-spacing: -2px;
+}
+.journey-earned-lbl {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+.journey-badge {
+  font-size: 40px;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: all 0.45s cubic-bezier(0.34,1.5,0.64,1);
+  filter: drop-shadow(0 3px 10px rgba(243,140,104,0.35));
+  transform-origin: center;
+}
+/* Road */
+.journey-road-wrap {
+  position: relative;
+  padding: 30px 0 42px;
+  margin: 0 6px;
+  z-index: 1;
+}
+.journey-road {
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(243,140,104,0.18);
+  position: relative;
+  overflow: visible;
+}
+.journey-road-fill {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #e8784e, var(--orange), #f5b090);
+  width: 0%;
+  transition: width 1.4s cubic-bezier(0.25,0.46,0.45,0.94);
+  box-shadow: 0 0 14px rgba(243,140,104,0.50);
+}
+.journey-avatar {
+  position: absolute;
+  top: 3px;
+  font-size: 22px;
+  line-height: 1;
+  transform: translateX(-50%);
+  left: 0%;
+  transition: left 1.4s cubic-bezier(0.25,0.46,0.45,0.94);
+  z-index: 3;
+  filter: drop-shadow(0 2px 6px rgba(243,140,104,0.55));
+}
+.journey-ms {
+  position: absolute;
+  top: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateX(-50%);
+  z-index: 2;
+  pointer-events: none;
+}
+.journey-ms-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--offwhite);
+  border: 2px solid rgba(243,140,104,0.32);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  line-height: 1;
+  transition: background 0.5s, border-color 0.5s, box-shadow 0.5s, transform 0.35s cubic-bezier(0.34,1.5,0.64,1);
+}
+.journey-ms-dot.reached {
+  background: var(--orange);
+  border-color: #e8784e;
+  box-shadow: 0 0 14px rgba(243,140,104,0.6), 0 0 0 4px rgba(243,140,104,0.15);
+  transform: scale(1.28);
+}
+.journey-ms-lbl {
+  margin-top: 8px;
+  text-align: center;
+}
+.jl-num {
+  display: block;
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--text-muted);
+  line-height: 1.2;
+}
+.jl-bonus {
+  display: block;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--orange);
+  opacity: 0.88;
+}
+.journey-ms-dot.reached + .journey-ms-lbl .jl-num { color: var(--charcoal); }
+.journey-nudge {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--charcoal);
+  padding: 9px 16px;
+  background: rgba(255,255,255,0.72);
+  border-radius: 24px;
+  line-height: 1.4;
+  border: 1px solid rgba(243,140,104,0.22);
+  backdrop-filter: blur(4px);
+}
+
+/* dark mode journey */
+html.is-dark .journey-card {
+  background: linear-gradient(150deg, rgba(243,140,104,0.10) 0%, rgba(243,140,104,0.04) 100%);
+}
+html.is-dark .journey-earned-num  { color: var(--charcoal); }
+html.is-dark .journey-nudge {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(243,140,104,0.22);
+  color: var(--charcoal);
+}
+html.is-dark .journey-ms-dot {
+  background: #1b2a3b;
+  border-color: rgba(243,140,104,0.25);
+}
+html.is-dark .journey-ms-dot.reached { background: var(--orange); border-color: #e8784e; }
+html.is-dark .jl-num { color: rgba(255,255,255,0.45); }
+html.is-dark .journey-ms-dot.reached + .journey-ms-lbl .jl-num { color: rgba(228,237,246,0.9); }
+
+/* ── DAILY CHECKLIST UPGRADES ─────────────────────────────── */
+.daily-score-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(243,140,104,0.18);
+  background: rgba(243,140,104,0.05);
+}
+.daily-score-label {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.1px;
+  color: var(--orange);
+  flex-shrink: 0;
+}
+.daily-score-track {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(243,140,104,0.18);
+  overflow: hidden;
+}
+.daily-score-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #50d278, #3eba66);
+  transition: width 0.45s cubic-bezier(0.25,0.46,0.45,0.94);
+  width: 0%;
+}
+.daily-score-num {
+  font-size: 11px;
+  font-weight: 900;
+  color: var(--orange);
+  flex-shrink: 0;
+  min-width: 32px;
+  text-align: right;
+  transition: color 0.3s;
+}
+.daily-score-num.complete { color: #3eba66; }
+.daily-item { cursor: pointer; transition: background 0.2s, border-color 0.2s; user-select: none; }
+.daily-item.done {
+  background: rgba(80,210,120,0.07) !important;
+  border-color: rgba(80,210,120,0.28) !important;
+}
+.daily-item.done .daily-label {
+  color: var(--text-muted);
+  text-decoration: line-through;
+  text-decoration-color: rgba(80,210,120,0.5);
+}
+.daily-item.done .daily-val  { color: #50d278 !important; }
+.daily-item.done .daily-dot  { background: #50d278 !important; }
+.daily-check {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+  font-size: 11px;
+  color: transparent;
+  transition: background 0.22s, border-color 0.22s, color 0.22s, transform 0.22s cubic-bezier(0.34,1.5,0.64,1);
+  background: transparent;
+}
+.daily-item.done .daily-check {
+  background: #50d278;
+  border-color: #50d278;
+  color: #fff;
+  transform: scale(1.12);
+}
+.daily-item:not(.done):hover .daily-check {
+  border-color: var(--orange);
+  background: rgba(243,140,104,0.09);
+}
+.daily-reset-wrap {
+  padding: 8px 14px;
+  border-top: 1px solid var(--border);
+  text-align: right;
+}
+.daily-reset-btn {
+  background: none; border: none;
+  font-size: 10px; font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: 0.3px;
+  padding: 3px 8px;
+  border-radius: 8px;
+  transition: color 0.2s, background 0.2s;
+}
+.daily-reset-btn:hover { color: var(--charcoal); background: rgba(0,0,0,0.04); }
+
+/* dark mode checklist */
+html.is-dark .daily-item.done {
+  background: rgba(80,210,120,0.06) !important;
+  border-color: rgba(80,210,120,0.20) !important;
+}
+html.is-dark .daily-reset-btn:hover { background: rgba(255,255,255,0.06); color: var(--charcoal); }
+
+/* ── M3 ACCORDION UPGRADES ────────────────────────────────── */
+details.zone                         { border-radius: 16px; }
+details.zone > summary               { border-radius: 16px; }
+details[open] > summary              { border-radius: 16px 16px 0 0; }
+.zone-orange .summary-stat           { background: rgba(243,140,104,0.09) !important; border-right-color: rgba(243,140,104,0.22) !important; }
+
+/* ── PILL SECTION BREAKS ──────────────────────────────────── */
+.section-break-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-break-pill .sb-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(76,135,201,0.3), transparent);
+}
+.section-break-pill .sb-pill {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--blue-dark);
+  white-space: nowrap;
+  background: rgba(76,135,201,0.08);
+  border: 1.5px solid rgba(76,135,201,0.22);
+  border-radius: 20px;
+  padding: 4px 14px;
+}
+html.is-dark .section-break-pill .sb-pill {
+  background: rgba(76,135,201,0.13);
+  border-color: rgba(76,135,201,0.28);
+  color: var(--blue-light);
+}
+
 </style>
 </head>
 <body>
@@ -742,18 +1053,41 @@ html.is-dark .tracker-edit-input  { background: #fff; color: #2e3a47; }
     </div>
   </div>
 
-  <!-- 2. BONUS MOTIVATOR STRIP -->
-  <div class="bonus-strip">
-    <div class="bs-icon">💰</div>
-    <div class="bs-body">
-      <div class="bs-label">Community Manager Bonus</div>
-      <div class="bs-line" id="bs-main-line">Hit 125 to unlock your $1,000 bonus. Every member above 125 = $25 — all the way to 300.</div>
-      <div class="bs-sub" id="bs-sub-line">Bonus doesn't stop at opening. At 200: $2,875. At 300 net new students: $5,375 total.</div>
+  <!-- 2. BONUS JOURNEY CARD -->
+  <div class="journey-card" id="bonus-journey">
+    <div class="journey-top">
+      <div>
+        <div class="journey-eyebrow">Community Manager Bonus</div>
+        <div class="journey-earned-num" id="bs-earned">$0</div>
+        <div class="journey-earned-lbl">earned so far</div>
+      </div>
+      <div class="journey-badge" id="journey-badge">🎵</div>
     </div>
-    <div class="bs-amount">
-      <div class="bs-earned" id="bs-earned">$0</div>
-      <div class="bs-earned-lbl">Earned so far</div>
+    <div class="journey-road-wrap">
+      <div class="journey-road">
+        <div class="journey-road-fill" id="journey-road-fill"></div>
+      </div>
+      <div class="journey-ms" style="left:0%">
+        <div class="journey-ms-dot reached" id="jms-0">🚀</div>
+        <div class="journey-ms-lbl"><span class="jl-num">Start</span></div>
+      </div>
+      <div class="journey-ms" style="left:41.67%">
+        <div class="journey-ms-dot" id="jms-125">🔓</div>
+        <div class="journey-ms-lbl"><span class="jl-num">125</span><span class="jl-bonus">$1,000</span></div>
+      </div>
+      <div class="journey-ms" style="left:66.67%">
+        <div class="journey-ms-dot" id="jms-200">⭐</div>
+        <div class="journey-ms-lbl"><span class="jl-num">200</span><span class="jl-bonus">$2,875</span></div>
+      </div>
+      <div class="journey-ms" style="left:100%">
+        <div class="journey-ms-dot" id="jms-300">🏆</div>
+        <div class="journey-ms-lbl"><span class="jl-num">300</span><span class="jl-bonus">$5,375</span></div>
+      </div>
+      <div class="journey-avatar" id="journey-avatar">🎵</div>
     </div>
+    <div class="journey-nudge" id="journey-nudge">Hit 125 to unlock your $1,000 bonus 🔓</div>
+    <span id="bs-main-line" style="display:none"></span>
+    <span id="bs-sub-line" style="display:none"></span>
   </div>
 
   <!-- 3. DAILY ACTIONS (always open, orange zone) -->
@@ -762,38 +1096,52 @@ html.is-dark .tracker-edit-input  { background: #fff; color: #2e3a47; }
       <div class="zh-label">Act Now — Every Single Day</div>
       <div class="zh-title">Daily Actions</div>
     </div>
+    <div class="daily-score-bar">
+      <div class="daily-score-label">Today</div>
+      <div class="daily-score-track"><div class="daily-score-fill" id="daily-score-fill"></div></div>
+      <div class="daily-score-num" id="daily-score-num">0/6</div>
+    </div>
     <div class="zone-body">
       <div class="daily-grid">
-        <div class="daily-item urgent">
+        <div class="daily-item urgent" data-key="call-leads">
+          <div class="daily-check">✓</div>
           <div class="daily-dot orange"></div>
           <div class="daily-label"><strong>Call every new lead during business hours</strong></div>
           <div class="daily-val orange">Within 30 min</div>
         </div>
-        <div class="daily-item urgent">
+        <div class="daily-item urgent" data-key="after-hours">
+          <div class="daily-check">✓</div>
           <div class="daily-dot orange"></div>
           <div class="daily-label"><strong>After-hours leads</strong> — call first thing next morning</div>
           <div class="daily-val orange">9 AM sharp</div>
         </div>
-        <div class="daily-item">
+        <div class="daily-item" data-key="care-framework">
+          <div class="daily-check">✓</div>
           <div class="daily-dot orange"></div>
           <div class="daily-label"><a href="https://app.musicologie.com/help-articles/founders-membership-presales-program?search=C.A.R.E.#search" target="_blank">Use C.A.R.E. framework on every call</a></div>
           <div class="daily-val blue">Always</div>
         </div>
-        <div class="daily-item">
+        <div class="daily-item" data-key="followup-calls">
+          <div class="daily-check">✓</div>
           <div class="daily-dot blue"></div>
           <div class="daily-label">Follow-up calls to warm leads</div>
           <div class="daily-val blue">5 calls/day</div>
         </div>
-        <div class="daily-item">
+        <div class="daily-item" data-key="social-post">
+          <div class="daily-check">✓</div>
           <div class="daily-dot blue"></div>
           <div class="daily-label">FB / Nextdoor post or comment</div>
           <div class="daily-val blue">1/day</div>
         </div>
-        <div class="daily-item">
+        <div class="daily-item" data-key="studio-inbox">
+          <div class="daily-check">✓</div>
           <div class="daily-dot blue"></div>
           <div class="daily-label">Studio inbox — respond to all messages</div>
           <div class="daily-val blue">Same day</div>
         </div>
+      </div>
+      <div class="daily-reset-wrap">
+        <button class="daily-reset-btn" id="daily-reset-btn">↺ Reset today</button>
       </div>
     </div>
   </div>
@@ -872,10 +1220,10 @@ html.is-dark .tracker-edit-input  { background: #fff; color: #2e3a47; }
   </div>
 
   <!-- SECTION BREAK — Your KPIs -->
-  <div style="margin: 4px 0 12px; display: flex; align-items: center; gap: 10px;">
-    <div style="flex: 1; height: 1px; background: rgba(76,135,201,0.3);"></div>
-    <div style="font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: var(--blue-dark); white-space: nowrap;">Your KPIs</div>
-    <div style="flex: 1; height: 1px; background: rgba(76,135,201,0.3);"></div>
+  <div class="section-break-pill" style="margin: 4px 0 14px;">
+    <div class="sb-line"></div>
+    <div class="sb-pill">Your KPIs</div>
+    <div class="sb-line"></div>
   </div>
 
   <!-- KPI 1. BONUS DETAIL -->
@@ -1030,10 +1378,10 @@ html.is-dark .tracker-edit-input  { background: #fff; color: #2e3a47; }
   </details>
 
   <!-- SECTION BREAK — Reference Material -->
-  <div style="margin: 20px 0 12px; display: flex; align-items: center; gap: 10px;">
-    <div style="flex: 1; height: 1px; background: var(--border);"></div>
-    <div style="font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); white-space: nowrap;">Reference Material</div>
-    <div style="flex: 1; height: 1px; background: var(--border);"></div>
+  <div class="section-break-pill" style="margin: 20px 0 14px;">
+    <div class="sb-line"></div>
+    <div class="sb-pill">Reference Material</div>
+    <div class="sb-line"></div>
   </div>
 
   <!-- REF 1. LEAD AUTOMATION FLOW -->
@@ -1145,7 +1493,7 @@ html.is-dark .tracker-edit-input  { background: #fff; color: #2e3a47; }
           <tr><td><strong>Hugo Da Silva Santos</strong></td><td>Trombone · Trumpet · Saxophone · Drum Set · Bass Guitar</td><td>School band, marching band, drum line — Hugo has it all.</td></tr>
           <tr><td><strong>Madison Ware</strong></td><td>Voice · Ukulele · Piano · Guitar</td><td>Great for families who aren't sure yet — four instruments, every lesson is exploratory.</td></tr>
           <tr><td><strong>Haylee Mazankowski</strong></td><td>Piano</td><td>Patient and encouraging — the perfect first teacher for young beginners.</td></tr>
-          <tr><td><strong>Kiersten Vogrinec</strong></td><td>Piano</td><td>Families asking for piano won't be turned away or waitlisted.</td></tr>
+          <tr><td><strong>Kiersten Vogrinec</strong></td><td>Piano · Violin <em>(coming soon)</em></td><td>Piano families won't be turned away — and violin students will have a second option opening soon.</td></tr>
           <tr><td><strong>Wolfgang Jaegar</strong></td><td>Violin · Viola</td><td>Rare to find both in one teacher. Ideal for orchestra families.</td></tr>
         </tbody>
       </table>
@@ -1364,6 +1712,33 @@ html.is-dark .tracker-edit-input  { background: #fff; color: #2e3a47; }
   toggle.addEventListener('change', function () { setDark(toggle.checked, true); });
 })();
 
+// ── Journey Road (global — called from tracker render) ────────
+function renderJourney(count) {
+  var fillEl   = document.getElementById('journey-road-fill');
+  var avatarEl = document.getElementById('journey-avatar');
+  var nudgeEl  = document.getElementById('journey-nudge');
+  var badgeEl  = document.getElementById('journey-badge');
+  if (!fillEl) return;
+  var pct = Math.min(100, (count / 300) * 100);
+  setTimeout(function () {
+    fillEl.style.width   = pct + '%';
+    avatarEl.style.left  = pct + '%';
+  }, 120);
+  [{id:'jms-0',t:0},{id:'jms-125',t:125},{id:'jms-200',t:200},{id:'jms-300',t:300}].forEach(function (m) {
+    var el = document.getElementById(m.id);
+    if (el) el.classList.toggle('reached', count >= m.t);
+  });
+  if (badgeEl) badgeEl.textContent = count>=300?'🏆':count>=200?'⭐':count>=125?'🎯':'🎵';
+  if (nudgeEl) {
+    nudgeEl.textContent = count === 0
+      ? 'Hit 125 to unlock your $1,000 bonus 🔓'
+      : count < 125  ? (125-count)+' members to unlock your $1,000 bonus 🔓'
+      : count < 200  ? (200-count)+' members to hit 200 and earn $2,875 total ⭐'
+      : count < 300  ? (300-count)+' more members to unlock $5,375 total 🏆'
+      : 'Max bonus unlocked — $5,375 total earned! 🎉';
+  }
+}
+
 (function () {
   var TARGET = 200;
   var DAILY_TARGET = 3;
@@ -1532,6 +1907,7 @@ html.is-dark .tracker-edit-input  { background: #fff; color: #2e3a47; }
     }, 80);
 
     if (count >= 125) setTimeout(launchConfetti, 1600);
+    renderJourney(count);
   }
 
   // ── Edit UI ────────────────────────────────────────────
@@ -1597,6 +1973,55 @@ html.is-dark .tracker-edit-input  { background: #fff; color: #2e3a47; }
       .catch(function () { render(0); });
   }
 
+})();
+
+// ── Daily Checklist ───────────────────────────────────────────
+(function () {
+  var TOTAL = 6;
+  var TODAY = new Date().toISOString().slice(0, 10);
+  var KEY   = 'daily-done-' + TODAY;
+
+  function getDone() {
+    try { return new Set(JSON.parse(localStorage.getItem(KEY) || '[]')); }
+    catch (e) { return new Set(); }
+  }
+  function saveDone(s) { localStorage.setItem(KEY, JSON.stringify(Array.from(s))); }
+
+  function updateScore(s) {
+    var f = document.getElementById('daily-score-fill');
+    var n = document.getElementById('daily-score-num');
+    if (!f || !n) return;
+    var c = s.size;
+    f.style.width  = (c / TOTAL * 100) + '%';
+    n.textContent  = c + '/' + TOTAL;
+    n.className    = 'daily-score-num' + (c === TOTAL ? ' complete' : '');
+  }
+
+  var done  = getDone();
+  var items = document.querySelectorAll('.daily-item[data-key]');
+
+  items.forEach(function (item) {
+    var k = item.getAttribute('data-key');
+    if (done.has(k)) item.classList.add('done');
+    item.addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') return;
+      if (done.has(k)) { done.delete(k); item.classList.remove('done'); }
+      else             { done.add(k);    item.classList.add('done');    }
+      saveDone(done);
+      updateScore(done);
+    });
+  });
+
+  var rb = document.getElementById('daily-reset-btn');
+  if (rb) rb.addEventListener('click', function (e) {
+    e.stopPropagation();
+    done.clear();
+    saveDone(done);
+    items.forEach(function (i) { i.classList.remove('done'); });
+    updateScore(done);
+  });
+
+  updateScore(done);
 })();
 </script>
 
