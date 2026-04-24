@@ -976,10 +976,11 @@ html.is-dark .section-break-pill .sb-pill {
 .cel-card {
   position: relative; z-index: 1;
   background: var(--white); border-radius: 20px;
-  padding: 40px 32px 32px; text-align: center;
+  padding: 32px 24px 28px; text-align: center;
   box-shadow: 0 24px 72px rgba(0,0,0,0.45);
   animation: cel-card-in 0.5s 0.1s cubic-bezier(0.34,1.56,0.64,1) both;
-  max-width: 300px; width: 88%;
+  max-width: 380px; width: calc(100% - 32px);
+  max-height: calc(100svh - 48px); overflow-y: auto;
 }
 @keyframes cel-card-in {
   0%   { transform: scale(0.3) translateY(48px) rotate(-6deg); opacity: 0; }
@@ -1025,9 +1026,9 @@ html.is-dark .section-break-pill .sb-pill {
 .cel-btn {
   background: linear-gradient(135deg, #e8784e 0%, var(--orange) 60%, #f5a080 100%);
   color: white; border: none; border-radius: 50px;
-  padding: 13px 30px; font-size: 15px; font-weight: 800;
+  padding: 15px 30px; font-size: 16px; font-weight: 800;
   cursor: pointer; letter-spacing: 0.2px;
-  font-family: inherit;
+  font-family: inherit; width: 100%; min-height: 52px;
   transition: transform 0.15s, box-shadow 0.15s;
   box-shadow: 0 4px 18px rgba(243,140,104,0.45);
 }
@@ -1036,20 +1037,20 @@ html.is-dark .section-break-pill .sb-pill {
 
 /* ── Go-Giver Quote Block (in checklist celebration) ─────── */
 .cel-quote {
-  background: var(--offwhite); border-radius: 10px; padding: 12px 16px;
+  background: var(--offwhite); border-radius: 10px; padding: 14px 16px;
   margin: 0 0 20px; text-align: left; border-left: 3px solid var(--blue-light);
 }
 .cel-quote-law {
-  font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.2px;
-  color: var(--blue-dark); margin-bottom: 4px;
+  font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.2px;
+  color: var(--blue-dark); margin-bottom: 6px;
 }
 .cel-quote-text {
-  font-size: 12px; font-style: italic; color: var(--text-body);
-  line-height: 1.55; font-weight: 600;
+  font-size: 15px; font-style: italic; color: var(--text-body);
+  line-height: 1.6; font-weight: 600;
 }
 .cel-quote-book {
-  font-size: 10px; font-weight: 700; color: var(--text-muted);
-  margin-top: 6px; text-align: right; letter-spacing: 0.2px;
+  font-size: 12px; font-weight: 700; color: var(--text-muted);
+  margin-top: 8px; text-align: right; letter-spacing: 0.2px;
 }
 
 /* ── Milestone Overlay ───────────────────────────────────── */
@@ -1070,10 +1071,11 @@ html.is-dark .section-break-pill .sb-pill {
 .mil-card {
   position: relative; z-index: 1;
   background: var(--white); border-radius: 22px;
-  padding: 36px 28px 28px; text-align: center;
+  padding: 28px 24px 24px; text-align: center;
   box-shadow: 0 28px 80px rgba(0,0,0,0.5);
   animation: cel-card-in 0.55s 0.1s cubic-bezier(0.34,1.56,0.64,1) both;
-  max-width: 320px; width: 90%;
+  max-width: 380px; width: calc(100% - 32px);
+  max-height: calc(100svh - 48px); overflow-y: auto;
 }
 .mil-card.closing {
   animation: cel-card-out 0.38s cubic-bezier(0.36,0.07,0.19,0.97) forwards !important;
@@ -1118,11 +1120,11 @@ html.is-dark .section-break-pill .sb-pill {
 .tier-bonus .mil-title   { color: #6b4f00; }
 .tier-legendary .mil-title { font-size: 28px; letter-spacing: -1px; color: #ffffff; }
 .mil-sub {
-  font-size: 13px; color: var(--text-muted); font-weight: 600;
-  margin-bottom: 16px; line-height: 1.5;
+  font-size: 15px; color: var(--text-muted); font-weight: 600;
+  margin-bottom: 16px; line-height: 1.55;
 }
 .tier-bonus .mil-sub     { color: #9a7a00; }
-.tier-legendary .mil-sub { color: rgba(255,255,255,0.72); }
+.tier-legendary .mil-sub { color: rgba(255,255,255,0.80); white-space: pre-line; }
 .mil-bonus-amt {
   font-size: 36px; font-weight: 900; color: #b8860b;
   margin: 4px 0 16px; letter-spacing: -1px;
@@ -1130,8 +1132,9 @@ html.is-dark .section-break-pill .sb-pill {
 .mil-btn {
   background: linear-gradient(135deg, #e8784e 0%, var(--orange) 60%, #f5a080 100%);
   color: white; border: none; border-radius: 50px;
-  padding: 13px 28px; font-size: 15px; font-weight: 800;
+  padding: 15px 28px; font-size: 16px; font-weight: 800;
   cursor: pointer; letter-spacing: 0.2px; font-family: inherit;
+  width: 100%; min-height: 52px;
   transition: transform 0.15s, box-shadow 0.15s;
   box-shadow: 0 4px 18px rgba(243,140,104,0.45);
 }
@@ -1140,7 +1143,7 @@ html.is-dark .section-break-pill .sb-pill {
   color: #3d2800; box-shadow: 0 4px 18px rgba(184,134,11,0.4);
 }
 .tier-legendary .mil-btn {
-  font-size: 17px; padding: 16px 36px;
+  font-size: 18px; min-height: 56px;
   box-shadow: 0 6px 28px rgba(243,140,104,0.55);
 }
 .mil-btn:hover  { transform: translateY(-2px); }
@@ -1148,25 +1151,27 @@ html.is-dark .section-break-pill .sb-pill {
 
 /* ── Encouragement Toast ─────────────────────────────────── */
 #encourage-toast {
-  position: fixed; bottom: 24px; left: 50%;
-  transform: translateX(-50%) translateY(120px);
+  position: fixed;
+  bottom: max(20px, env(safe-area-inset-bottom, 20px));
+  left: 50%;
+  transform: translateX(-50%) translateY(140px);
   z-index: 10001; background: var(--charcoal); color: white;
-  border-radius: 16px; padding: 14px 16px;
-  max-width: 340px; width: 92%;
+  border-radius: 16px; padding: 16px 16px;
+  max-width: 400px; width: calc(100% - 32px);
   box-shadow: 0 8px 32px rgba(0,0,0,0.4);
   display: flex; align-items: flex-start; gap: 12px;
   transition: transform 0.45s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease;
   opacity: 0;
 }
 #encourage-toast.visible { transform: translateX(-50%) translateY(0); opacity: 1; }
-.toast-emoji { font-size: 26px; flex-shrink: 0; margin-top: 1px; }
+.toast-emoji { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
 .toast-body  { flex: 1; }
-.toast-title { font-size: 13px; font-weight: 800; margin-bottom: 3px; }
-.toast-sub   { font-size: 11px; color: rgba(255,255,255,0.65); font-weight: 600; line-height: 1.45; }
+.toast-title { font-size: 14px; font-weight: 800; margin-bottom: 4px; line-height: 1.35; }
+.toast-sub   { font-size: 13px; color: rgba(255,255,255,0.72); font-weight: 600; line-height: 1.5; }
 .toast-close {
   background: none; border: none; color: rgba(255,255,255,0.45);
-  cursor: pointer; font-size: 20px; padding: 0; line-height: 1;
-  flex-shrink: 0; align-self: flex-start;
+  cursor: pointer; font-size: 22px; padding: 0; line-height: 1;
+  flex-shrink: 0; align-self: flex-start; min-width: 32px; min-height: 32px;
 }
 .toast-close:hover { color: white; }
 
