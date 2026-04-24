@@ -2173,6 +2173,7 @@ function launchConfetti() {
     e.stopPropagation();
     done.clear();
     saveDone(done);
+    localStorage.removeItem(CEL_KEY);
     items.forEach(function (i) { i.classList.remove('done'); });
     updateScore(done);
   });
