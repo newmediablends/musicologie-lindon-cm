@@ -982,17 +982,38 @@ html.is-dark .section-break-pill .sb-pill {
   max-width: 300px; width: 88%;
 }
 @keyframes cel-card-in {
-  from { transform: scale(0.65) translateY(24px); opacity: 0; }
-  to   { transform: scale(1) translateY(0); opacity: 1; }
+  0%   { transform: scale(0.3) translateY(48px) rotate(-6deg); opacity: 0; }
+  55%  { transform: scale(1.14) translateY(-10px) rotate(3deg); opacity: 1; }
+  75%  { transform: scale(0.94) translateY(4px) rotate(-1.5deg); }
+  90%  { transform: scale(1.04) translateY(-2px) rotate(0.5deg); }
+  100% { transform: scale(1) translateY(0) rotate(0deg); }
+}
+.cel-card.closing {
+  animation: cel-card-out 0.38s cubic-bezier(0.36,0.07,0.19,0.97) forwards !important;
+}
+@keyframes cel-card-out {
+  0%   { transform: scale(1) rotate(0deg); opacity: 1; }
+  20%  { transform: scale(1.1) rotate(-4deg); }
+  100% { transform: scale(0.25) rotate(12deg) translateY(40px); opacity: 0; }
+}
+#celebration.closing {
+  animation: cel-out 0.42s 0.08s ease forwards !important;
+}
+@keyframes cel-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
 }
 .cel-emoji {
   font-size: 60px; line-height: 1; margin-bottom: 14px;
   display: block;
-  animation: cel-pop 0.6s 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+  animation: cel-pop 0.7s 0.45s both;
 }
 @keyframes cel-pop {
-  from { transform: scale(0) rotate(-20deg); }
-  to   { transform: scale(1) rotate(0deg); }
+  0%   { transform: scale(0) rotate(-30deg); }
+  45%  { transform: scale(1.35) rotate(18deg); }
+  70%  { transform: scale(0.82) rotate(-8deg); }
+  88%  { transform: scale(1.1) rotate(4deg); }
+  100% { transform: scale(1) rotate(0deg); }
 }
 .cel-title {
   font-size: 26px; font-weight: 900; color: var(--charcoal);
@@ -2116,8 +2137,16 @@ function launchConfetti() {
 
   function hideCelebration() {
     var cel = document.getElementById('celebration');
-    if (cel) cel.style.display = 'none';
-    if (stopConfetti) { stopConfetti(); stopConfetti = null; }
+    if (!cel || cel.classList.contains('closing')) return;
+    var card = cel.querySelector('.cel-card');
+    if (card) card.classList.add('closing');
+    cel.classList.add('closing');
+    setTimeout(function () {
+      cel.style.display = 'none';
+      cel.classList.remove('closing');
+      if (card) card.classList.remove('closing');
+      if (stopConfetti) { stopConfetti(); stopConfetti = null; }
+    }, 480);
   }
 
   var cel = document.getElementById('celebration');
