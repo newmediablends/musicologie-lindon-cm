@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Process Dashboard · Musicologie Lindon</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%234c87c9'/><text x='16' y='24' text-anchor='middle' font-size='22' fill='%23f38c68'>♪</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,300;6..12,400;6..12,600;6..12,700;6..12,800;6..12,900&display=swap" rel="stylesheet">
+<style>
+
+/* ── Brand tokens (same as main dashboard) ──────────────── */
+:root {
+  --orange:      #f38c68;
+  --orange-soft: #fde8df;
+  --blue-light:  #78b2e9;
+  --blue-mid:    #5a9ad6;
+  --blue-dark:   #4c87c9;
+  --blue-deep:   #3a6fa8;
+  --charcoal:    #2e3a47;
+  --text-body:   #44566a;
+  --text-muted:  #7a96b0;
+  --offwhite:    #f7fafd;
+  --border:      #d6e8f7;
+  --white:       #ffffff;
+  --green:       #22c55e;
+  --green-soft:  #dcfce7;
+  --green-dark:  #16a34a;
+  --shadow-sm:   0 1px 4px rgba(76,135,201,0.10);
+  --radius:      14px;
+  --radius-sm:   8px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: 'Nunito Sans', 'Helvetica Neue', Arial, sans-serif;
+  background: var(--offwhite);
+  color: var(--charcoal);
+  line-height: 1.55;
+  min-height: 100vh;
+  padding-bottom: max(40px, env(safe-area-inset-bottom, 40px));
+}
+
+/* ── Header ─────────────────────────────────────────────── */
+.header-bar {
+  background: linear-gradient(135deg, var(--blue-deep) 0%, var(--blue-dark) 60%, var(--blue-mid) 100%);
+  padding: 16px 20px;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+}
+.header-logo img { height: 36px; width: auto; display: block; object-fit: contain; }
+.header-right { text-align: right; }
+.header-title { font-size: 14px; font-weight: 800; color: white; letter-spacing: -0.2px; line-height: 1.2; }
+.header-sub   { font-size: 11px; color: rgba(255,255,255,0.60); font-weight: 600; margin-top: 2px; font-style: italic; }
+
+/* ── Date + nav strip ───────────────────────────────────── */
+.date-strip {
+  background: var(--charcoal);
+  padding: 10px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.date-label { font-size: 14px; font-weight: 800; color: white; }
+.nav-back {
+  font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.60);
+  text-decoration: none; letter-spacing: 0.3px;
+}
+.nav-back:hover { color: white; }
+
+/* ── Tagline bar ────────────────────────────────────────── */
+.tagline-bar {
+  background: linear-gradient(135deg, #e8784e 0%, var(--orange) 60%, #f5a080 100%);
+  padding: 9px 20px;
+  text-align: center;
+  font-size: 11px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 1.6px; color: white;
+}
+
+/* ── Page body ──────────────────────────────────────────── */
+.page-body { padding: 16px 16px 32px; max-width: 600px; margin: 0 auto; }
+
+/* ── Section headers ────────────────────────────────────── */
+.section-head {
+  display: flex; align-items: center; gap: 8px;
+  margin: 22px 0 8px;
+}
+.section-head:first-child { margin-top: 0; }
+.section-eyebrow {
+  font-size: 10px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 1.6px; color: var(--text-muted); flex: 1;
+}
+.section-score { font-size: 12px; font-weight: 800; color: var(--blue-dark); }
+
+/* ── Progress bar ───────────────────────────────────────── */
+.prog-wrap { height: 4px; background: var(--border); border-radius: 2px; margin-bottom: 10px; overflow: hidden; }
+.prog-fill  { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--blue-dark), var(--blue-light)); transition: width 0.4s ease; }
+.prog-fill.green { background: linear-gradient(90deg, var(--green-dark), var(--green)); }
+
+/* ── Streak card ────────────────────────────────────────── */
+.streak-card {
+  background: linear-gradient(135deg, var(--charcoal) 0%, #1e2d3d 100%);
+  border-radius: var(--radius);
+  padding: 18px 20px 16px;
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 22px;
+  position: relative; overflow: hidden;
+  box-shadow: 0 4px 20px rgba(30,45,61,0.28);
+}
+.streak-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--orange), var(--blue-light));
+}
+.streak-fire { font-size: 40px; flex-shrink: 0; line-height: 1; }
+.streak-body { flex: 1; }
+.streak-num  {
+  font-size: 48px; font-weight: 900; color: white;
+  letter-spacing: -3px; line-height: 1;
+}
+.streak-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+.streak-best  { font-size: 12px; color: rgba(255,255,255,0.38); font-weight: 600; margin-top: 6px; }
+
+/* ── Check items (daily + weekly) ───────────────────────── */
+.check-card {
+  background: var(--white); border-radius: var(--radius);
+  overflow: hidden; box-shadow: var(--shadow-sm); margin-bottom: 12px;
+}
+.check-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 18px; border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: background 0.12s;
+  -webkit-tap-highlight-color: transparent; user-select: none;
+  min-height: 64px;
+}
+.check-item:last-child { border-bottom: none; }
+.check-item:active { background: var(--offwhite); }
+.check-item.urgent { border-left: 3px solid var(--orange); }
+.check-item.done   { background: var(--green-soft); }
+.check-item.done .check-label { color: var(--text-muted); text-decoration: line-through; text-decoration-color: var(--green); }
+.check-item.is-na  { background: var(--offwhite); }
+.check-item.is-na .check-label { color: var(--text-muted); font-style: italic; }
+
+.check-box {
+  width: 30px; height: 30px; flex-shrink: 0; border-radius: 8px;
+  border: 2px solid var(--border); background: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; transition: all 0.2s; color: white;
+}
+.check-item.urgent:not(.done):not(.is-na) .check-box { border-color: var(--orange); }
+.check-item.done .check-box { background: var(--green); border-color: var(--green); }
+.check-item.is-na .check-box { background: var(--border); border-color: var(--border); color: var(--text-muted); font-size: 14px; }
+
+.check-content { flex: 1; min-width: 0; }
+.check-label { font-size: 15px; font-weight: 700; color: var(--charcoal); line-height: 1.3; }
+.check-sub   { font-size: 12px; color: var(--text-muted); font-weight: 600; margin-top: 3px; line-height: 1.4; }
+
+.urgent-badge {
+  font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
+  color: var(--orange); background: var(--orange-soft);
+  border-radius: 50px; padding: 3px 9px; flex-shrink: 0; white-space: nowrap;
+}
+.na-btn {
+  font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px;
+  color: var(--text-muted); background: var(--offwhite);
+  border: 1px solid var(--border); border-radius: 50px;
+  padding: 5px 12px; cursor: pointer; flex-shrink: 0; font-family: inherit;
+  white-space: nowrap; min-height: 30px;
+}
+.na-btn:active { background: var(--border); }
+.check-item.done .na-btn, .check-item.is-na .na-btn { display: none; }
+
+/* ── Number stepper cards ───────────────────────────────── */
+.num-card {
+  background: var(--white); border-radius: var(--radius);
+  padding: 18px 18px 16px; box-shadow: var(--shadow-sm); margin-bottom: 10px;
+}
+.num-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 5px; }
+.num-title  { font-size: 15px; font-weight: 800; color: var(--charcoal); line-height: 1.3; flex: 1; }
+.num-badge  {
+  font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
+  color: var(--orange); background: var(--orange-soft);
+  border-radius: 50px; padding: 4px 11px; flex-shrink: 0; white-space: nowrap;
+  transition: all 0.3s;
+}
+.num-badge.met { color: var(--green-dark); background: var(--green-soft); }
+.num-sub    { font-size: 12px; color: var(--text-muted); font-weight: 600; margin-bottom: 14px; line-height: 1.45; }
+
+.stepper {
+  display: flex; align-items: center;
+  background: var(--offwhite); border-radius: 12px; border: 2px solid var(--border);
+  overflow: hidden;
+}
+.step-btn {
+  width: 56px; height: 56px; background: none; border: none; cursor: pointer;
+  font-size: 24px; font-weight: 300; color: var(--blue-dark);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent; font-family: inherit;
+  transition: background 0.1s;
+}
+.step-btn:active { background: var(--border); }
+.step-val {
+  flex: 1; text-align: center;
+  font-size: 32px; font-weight: 900; color: var(--charcoal); letter-spacing: -1px;
+  transition: color 0.3s;
+}
+.step-val.met { color: var(--green-dark); }
+
+/* ── Principle card ─────────────────────────────────────── */
+.principle-card {
+  background: var(--white); border-radius: var(--radius);
+  padding: 20px 20px; box-shadow: var(--shadow-sm);
+  border-left: 4px solid var(--blue-light);
+  margin-bottom: 4px;
+}
+.principle-law  { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.4px; color: var(--blue-dark); margin-bottom: 8px; }
+.principle-text { font-size: 16px; font-style: italic; color: var(--text-body); line-height: 1.6; font-weight: 600; margin-bottom: 10px; }
+.principle-book { font-size: 12px; font-weight: 700; color: var(--text-muted); text-align: right; }
+
+/* ── Reset row ──────────────────────────────────────────── */
+.reset-row { text-align: center; margin-top: 24px; }
+.reset-btn {
+  background: none; border: 1px solid var(--border); border-radius: 50px;
+  padding: 10px 24px; font-size: 13px; font-weight: 700; color: var(--text-muted);
+  cursor: pointer; font-family: inherit;
+}
+.reset-btn:active { background: var(--border); }
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (min-width: 480px) {
+  .page-body { padding: 20px 20px 40px; }
+  .streak-num { font-size: 60px; }
+  .streak-fire { font-size: 48px; }
+  .check-label { font-size: 16px; }
+  .num-title { font-size: 16px; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header-bar">
+  <div class="header-logo">
+    <img src="logo-white.png?v=3" alt="Musicologie Lindon">
+  </div>
+  <div class="header-right">
+    <div class="header-title">Process Dashboard</div>
+    <div class="header-sub">Let the scoreboard take care of itself.</div>
+  </div>
+</div>
+
+<!-- Date + nav -->
+<div class="date-strip">
+  <span class="date-label" id="date-label">—</span>
+  <a href="index.html" class="nav-back">← KPI Board</a>
+</div>
+
+<!-- Tagline -->
+<div class="tagline-bar">Do the work · Trust the process · The score follows</div>
+
+<div class="page-body">
+
+  <!-- Streak -->
+  <div class="streak-card">
+    <div class="streak-fire">🔥</div>
+    <div class="streak-body">
+      <div class="streak-num" id="streak-num">0</div>
+      <div class="streak-label">Day streak — all dailies complete</div>
+      <div class="streak-best" id="streak-best">Best: 0 days</div>
+    </div>
+  </div>
+
+  <!-- Daily Non-Negotiables -->
+  <div class="section-head">
+    <div class="section-eyebrow">Daily Non-Negotiables</div>
+    <div class="section-score" id="daily-score">0 / 7</div>
+  </div>
+  <div class="prog-wrap"><div class="prog-fill" id="daily-prog" style="width:0%"></div></div>
+
+  <div class="check-card">
+
+    <div class="check-item urgent" data-key="lead-2hr">
+      <div class="check-box"></div>
+      <div class="check-content">
+        <div class="check-label">Called every new lead within 2 hours</div>
+        <div class="check-sub">First 2 hours = highest conversion rate. No exceptions.</div>
+      </div>
+      <span class="urgent-badge">Urgent</span>
+    </div>
+
+    <div class="check-item urgent" data-key="after-hours">
+      <div class="check-box"></div>
+      <div class="check-content">
+        <div class="check-label">After-hours leads queued for first call tomorrow</div>
+        <div class="check-sub">Flagged and ready. Call them first thing, before anything else.</div>
+      </div>
+      <span class="urgent-badge">Urgent</span>
+    </div>
+
+    <div class="check-item" data-key="care-calls">
+      <div class="check-box"></div>
+      <div class="check-content">
+        <div class="check-label">C.A.R.E. framework used on every call</div>
+        <div class="check-sub">Connect · Assess · Recommend · Enroll — every single conversation.</div>
+      </div>
+    </div>
+
+    <div class="check-item" data-key="followup">
+      <div class="check-box"></div>
+      <div class="check-content">
+        <div class="check-label">Follow-up calls to warm leads done</div>
+        <div class="check-sub">No warm lead goes cold today without a real conversation attempt.</div>
+      </div>
+    </div>
+
+    <div class="check-item" data-key="social">
+      <div class="check-box"></div>
+      <div class="check-content">
+        <div class="check-label">Social post published today</div>
+        <div class="check-sub">FB, Nextdoor, or Instagram — minimum one real post, not just a story.</div>
+      </div>
+    </div>
+
+    <div class="check-item" data-key="inbox">
+      <div class="check-box"></div>
+      <div class="check-content">
+        <div class="check-label">Studio inbox cleared</div>
+        <div class="check-sub">Every message responded to before end of business today.</div>
+      </div>
+    </div>
+
+    <div class="check-item" data-key="withdrawal">
+      <div class="check-box"></div>
+      <div class="check-content">
+        <div class="check-label">Withdrawal calls made same day</div>
+        <div class="check-sub">Every cancellation or cold founder called today. A re-enrolled cancel = net new.</div>
+      </div>
+      <button class="na-btn" data-na-for="withdrawal">N/A today</button>
+    </div>
+
+  </div>
+
+  <!-- Today's Numbers -->
+  <div class="section-head">
+    <div class="section-eyebrow">Today's Numbers</div>
+  </div>
+
+  <div class="num-card">
+    <div class="num-header">
+      <div class="num-title">Personal outreach texts sent</div>
+      <div class="num-badge" id="texts-badge">Target: 50+</div>
+    </div>
+    <div class="num-sub">Your personal network is the highest-ROI channel you directly control. Count every text.</div>
+    <div class="stepper">
+      <button class="step-btn" data-dec="texts">−</button>
+      <div class="step-val" id="texts-val">0</div>
+      <button class="step-btn" data-inc="texts">+</button>
+    </div>
+  </div>
+
+  <div class="num-card">
+    <div class="num-header">
+      <div class="num-title">New leads called today</div>
+      <div class="num-badge" id="leads-badge">Track it</div>
+    </div>
+    <div class="num-sub">Every lead that came in today — called within 2 hours or queued for morning.</div>
+    <div class="stepper">
+      <button class="step-btn" data-dec="leads">−</button>
+      <div class="step-val" id="leads-val">0</div>
+      <button class="step-btn" data-inc="leads">+</button>
+    </div>
+  </div>
+
+  <div class="num-card">
+    <div class="num-header">
+      <div class="num-title">Real conversations had today</div>
+      <div class="num-badge" id="convos-badge">Track it</div>
+    </div>
+    <div class="num-sub">Live phone conversations — not voicemails, not texts. Human-to-human moments that move people.</div>
+    <div class="stepper">
+      <button class="step-btn" data-dec="convos">−</button>
+      <div class="step-val" id="convos-val">0</div>
+      <button class="step-btn" data-inc="convos">+</button>
+    </div>
+  </div>
+
+  <!-- This Week's Rhythms -->
+  <div class="section-head">
+    <div class="section-eyebrow">This Week's Rhythms</div>
+    <div class="section-score" id="week-score">0 / 5</div>
+  </div>
+  <div class="prog-wrap"><div class="prog-fill" id="week-prog" style="width:0%"></div></div>
+
+  <div class="check-card">
+
+    <div class="check-item" data-wkey="table-booked">
+      <div class="check-box"></div>
+      <div class="check-content">
+        <div class="check-label">Table event booked this week</div>
+        <div class="check-sub">In-person converts at 35–40%. One event per week minimum.</div>
+      </div>
+    </div>
+
+    <div class="check-item" data-wkey="table-attended">
+      <div class="check-box"></div>
+      <div class="check-content">
+        <div class="check-label">Table event attended this week</div>
+        <div class="check-sub">Nothing replaces showing up in person. Did you go?</div>
+      </div>
+    </div>
+
+    <div class="check-item" data-wkey="yard-sign">
+      <div class="check-box"></div>
+      <div class="check-content">
+        <div class="check-label">Yard signs placed this week</div>
+        <div class="check-sub">One per day on the way home. Low effort, constant presence.</div>
+      </div>
+    </div>
+
+    <div class="check-item" data-wkey="flyer-drop">
+      <div class="check-box"></div>
+      <div class="check-content">
+        <div class="check-label">Flyer drops done (target: 2x)</div>
+        <div class="check-sub">Kids-focused businesses on the way to work. Twice a week, every week.</div>
+      </div>
+    </div>
+
+    <div class="check-item" data-wkey="b2b">
+      <div class="check-box"></div>
+      <div class="check-content">
+        <div class="check-label">B2B partnership contact made</div>
+        <div class="check-sub">One new business relationship started or an existing one advanced.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Principle of the Day -->
+  <div class="section-head">
+    <div class="section-eyebrow">Principle of the Day</div>
+  </div>
+  <div class="principle-card">
+    <div class="principle-law" id="principle-law"></div>
+    <div class="principle-text" id="principle-text"></div>
+    <div class="principle-book">— The Go-Giver</div>
+  </div>
+
+  <!-- Reset -->
+  <div class="reset-row">
+    <button class="reset-btn" id="reset-btn">Reset today's data</button>
+  </div>
+
+</div><!-- /page-body -->
+
+<script>
+(function () {
+
+// ── Keys ──────────────────────────────────────────────────
+var TODAY = new Date().toISOString().slice(0, 10);
+
+var WEEK_START = (function () {
+  var d = new Date(); d.setHours(0,0,0,0);
+  var dow = d.getDay();
+  var diff = dow === 0 ? -6 : 1 - dow;
+  var mon = new Date(d.setDate(d.getDate() + diff));
+  return mon.toISOString().slice(0, 10);
+})();
+
+var KEYS = {
+  daily:   'proc-daily-'   + TODAY,
+  numbers: 'proc-numbers-' + TODAY,
+  week:    'proc-week-'    + WEEK_START,
+  streak:  'proc-streak',
+  best:    'proc-best',
+  last:    'proc-last-complete',
+};
+
+// ── Storage helpers ───────────────────────────────────────
+function load(key, def) {
+  try { return JSON.parse(localStorage.getItem(key)) ?? def; }
+  catch (e) { return def; }
+}
+function save(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
+
+// ── State ─────────────────────────────────────────────────
+var DAILY_ITEMS = ['lead-2hr','after-hours','care-calls','followup','social','inbox','withdrawal'];
+var WEEK_ITEMS  = ['table-booked','table-attended','yard-sign','flyer-drop','b2b'];
+var DAILY_TOTAL = DAILY_ITEMS.length;
+var WEEK_TOTAL  = WEEK_ITEMS.length;
+var TEXTS_TARGET = 50;
+
+var dailySet  = new Set(load(KEYS.daily, []));
+var weekSet   = new Set(load(KEYS.week, []));
+var nums      = load(KEYS.numbers, { texts: 0, leads: 0, convos: 0 });
+
+// ── Date label ────────────────────────────────────────────
+var DAYS   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+(function () {
+  var d = new Date();
+  document.getElementById('date-label').textContent =
+    DAYS[d.getDay()] + ', ' + MONTHS[d.getMonth()] + ' ' + d.getDate();
+})();
+
+// ── Daily checklist ───────────────────────────────────────
+function renderDaily() {
+  var realDone = 0;
+  DAILY_ITEMS.forEach(function (k) {
+    var item = document.querySelector('[data-key="' + k + '"]');
+    if (!item) return;
+    var done = dailySet.has(k);
+    var na   = dailySet.has(k + '-na');
+    item.classList.toggle('done',  done);
+    item.classList.toggle('is-na', na && !done);
+    var box = item.querySelector('.check-box');
+    box.textContent = done ? '✓' : (na ? '—' : '');
+    if (done) realDone++;
+    if (na)   realDone++;
+  });
+  var pct = Math.round(realDone / DAILY_TOTAL * 100);
+  document.getElementById('daily-score').textContent = realDone + ' / ' + DAILY_TOTAL;
+  var prog = document.getElementById('daily-prog');
+  prog.style.width = pct + '%';
+  prog.className   = 'prog-fill' + (realDone === DAILY_TOTAL ? ' green' : '');
+  updateStreak(realDone === DAILY_TOTAL);
+}
+
+document.querySelectorAll('.check-item[data-key]').forEach(function (item) {
+  item.addEventListener('click', function (e) {
+    if (e.target.classList.contains('na-btn')) return;
+    var k = item.getAttribute('data-key');
+    dailySet.delete(k + '-na');
+    if (dailySet.has(k)) dailySet.delete(k);
+    else dailySet.add(k);
+    save(KEYS.daily, Array.from(dailySet));
+    renderDaily();
+  });
+});
+
+document.querySelectorAll('.na-btn').forEach(function (btn) {
+  btn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    var k = btn.getAttribute('data-na-for');
+    if (dailySet.has(k + '-na')) {
+      dailySet.delete(k + '-na');
+    } else {
+      dailySet.delete(k);
+      dailySet.add(k + '-na');
+    }
+    save(KEYS.daily, Array.from(dailySet));
+    renderDaily();
+  });
+});
+
+// ── Stepper numbers ───────────────────────────────────────
+function renderNums() {
+  var t = nums.texts || 0;
+  var l = nums.leads  || 0;
+  var c = nums.convos || 0;
+
+  var tv = document.getElementById('texts-val');
+  tv.textContent = t;
+  tv.className   = 'step-val' + (t >= TEXTS_TARGET ? ' met' : '');
+  var tb = document.getElementById('texts-badge');
+  tb.textContent = t >= TEXTS_TARGET ? '✓ Target met!' : 'Target: 50+';
+  tb.className   = 'num-badge' + (t >= TEXTS_TARGET ? ' met' : '');
+
+  document.getElementById('leads-val').textContent  = l;
+  document.getElementById('convos-val').textContent = c;
+
+  var lb = document.getElementById('leads-badge');
+  lb.textContent = l > 0 ? l + ' today' : 'Track it';
+  lb.className   = 'num-badge' + (l > 0 ? ' met' : '');
+
+  var cb = document.getElementById('convos-badge');
+  cb.textContent = c > 0 ? c + ' today' : 'Track it';
+  cb.className   = 'num-badge' + (c > 0 ? ' met' : '');
+}
+
+document.querySelectorAll('.step-btn').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var inc = btn.hasAttribute('data-inc');
+    var k   = inc ? btn.getAttribute('data-inc') : btn.getAttribute('data-dec');
+    nums[k] = Math.max(0, (nums[k] || 0) + (inc ? 1 : -1));
+    save(KEYS.numbers, nums);
+    renderNums();
+  });
+});
+
+// ── Weekly checklist ──────────────────────────────────────
+function renderWeekly() {
+  var count = 0;
+  WEEK_ITEMS.forEach(function (k) {
+    var item = document.querySelector('[data-wkey="' + k + '"]');
+    if (!item) return;
+    var done = weekSet.has(k);
+    item.classList.toggle('done', done);
+    item.querySelector('.check-box').textContent = done ? '✓' : '';
+    if (done) count++;
+  });
+  var pct = Math.round(count / WEEK_TOTAL * 100);
+  document.getElementById('week-score').textContent = count + ' / ' + WEEK_TOTAL;
+  var prog = document.getElementById('week-prog');
+  prog.style.width = pct + '%';
+  prog.className   = 'prog-fill' + (count === WEEK_TOTAL ? ' green' : '');
+}
+
+document.querySelectorAll('.check-item[data-wkey]').forEach(function (item) {
+  item.addEventListener('click', function () {
+    var k = item.getAttribute('data-wkey');
+    if (weekSet.has(k)) weekSet.delete(k);
+    else weekSet.add(k);
+    save(KEYS.week, Array.from(weekSet));
+    renderWeekly();
+  });
+});
+
+// ── Streak ────────────────────────────────────────────────
+function updateStreak(allDone) {
+  var streak = load(KEYS.streak, 0);
+  var best   = load(KEYS.best, 0);
+  var last   = load(KEYS.last, '');
+
+  if (allDone && last !== TODAY) {
+    var yest = new Date(); yest.setDate(yest.getDate() - 1);
+    var yStr = yest.toISOString().slice(0, 10);
+    streak = (last === yStr) ? streak + 1 : 1;
+    best   = Math.max(best, streak);
+    save(KEYS.streak, streak);
+    save(KEYS.best, best);
+    save(KEYS.last, TODAY);
+  }
+  if (!allDone && last !== TODAY) {
+    streak = load(KEYS.streak, 0);
+  }
+
+  document.getElementById('streak-num').textContent  = streak;
+  document.getElementById('streak-best').textContent = 'Best: ' + best + ' day' + (best === 1 ? '' : 's');
+}
+
+// ── Principle (rotates by day of year, deterministic) ─────
+var QUOTES = [
+  { law: 'The Law of Value',        text: 'Your true worth is determined by how much more you give in value than you take in payment.' },
+  { law: 'The Law of Compensation', text: 'Your income is determined by how many people you serve and how well you serve them.' },
+  { law: 'The Law of Influence',    text: 'Your influence is determined by how abundantly you place other people\'s interests first.' },
+  { law: 'The Law of Authenticity', text: 'The most valuable gift you can offer is yourself.' },
+  { law: 'The Law of Receptivity',  text: 'The key to effective giving is to stay open to receiving.' },
+];
+(function () {
+  var doy = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+  var q   = QUOTES[doy % QUOTES.length];
+  document.getElementById('principle-law').textContent  = q.law;
+  document.getElementById('principle-text').textContent = q.text;
+})();
+
+// ── Reset ─────────────────────────────────────────────────
+document.getElementById('reset-btn').addEventListener('click', function () {
+  if (!confirm('Reset today\'s daily data and numbers? Weekly data stays.')) return;
+  dailySet.clear();
+  nums = { texts: 0, leads: 0, convos: 0 };
+  save(KEYS.daily, []);
+  save(KEYS.numbers, nums);
+  renderDaily();
+  renderNums();
+});
+
+// ── Boot ──────────────────────────────────────────────────
+renderDaily();
+renderNums();
+renderWeekly();
+
+})();
+</script>
+
+</body>
+</html>
