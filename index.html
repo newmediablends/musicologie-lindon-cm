@@ -2126,15 +2126,6 @@ function launchConfetti() {
     if (c === TOTAL) showCelebration();
   }
 
-  function showCelebration() {
-    if (localStorage.getItem(CEL_KEY)) return;
-    var cel = document.getElementById('celebration');
-    if (!cel) return;
-    cel.style.display = 'flex';
-    stopConfetti = launchConfetti();
-    localStorage.setItem(CEL_KEY, '1');
-  }
-
   function hideCelebration() {
     var cel = document.getElementById('celebration');
     if (!cel || cel.classList.contains('closing')) return;
@@ -2149,9 +2140,16 @@ function launchConfetti() {
     }, 480);
   }
 
-  var cel = document.getElementById('celebration');
-  if (cel) {
-    document.getElementById('cel-dismiss').addEventListener('click', hideCelebration);
+  function showCelebration() {
+    if (localStorage.getItem(CEL_KEY)) return;
+    var cel = document.getElementById('celebration');
+    if (!cel) return;
+    cel.style.display = 'flex';
+    stopConfetti = launchConfetti();
+    localStorage.setItem(CEL_KEY, '1');
+    // Attach dismiss handlers here — element now exists in DOM
+    var btn = document.getElementById('cel-dismiss');
+    if (btn) btn.addEventListener('click', hideCelebration);
     cel.addEventListener('click', function (e) { if (e.target === cel) hideCelebration(); });
   }
 
@@ -2190,7 +2188,7 @@ function launchConfetti() {
     <span class="cel-emoji">🎉</span>
     <div class="cel-title">You crushed it!</div>
     <div class="cel-sub">Daily checklist complete.</div>
-    <button class="cel-btn" id="cel-dismiss">Keep going →</button>
+    <button class="cel-btn" id="cel-dismiss">Thanks, I AM awesome</button>
   </div>
 </div>
 
