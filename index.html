@@ -959,6 +959,60 @@ html.is-dark .section-break-pill .sb-pill {
   color: var(--blue-light);
 }
 
+/* ── Celebration Overlay ──────────────────────────────────── */
+#celebration {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(30,45,61,0.90);
+  display: flex; align-items: center; justify-content: center;
+  animation: cel-in 0.35s ease;
+}
+@keyframes cel-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+#confetti-canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;
+}
+.cel-card {
+  position: relative; z-index: 1;
+  background: var(--white); border-radius: 20px;
+  padding: 40px 32px 32px; text-align: center;
+  box-shadow: 0 24px 72px rgba(0,0,0,0.45);
+  animation: cel-card-in 0.5s 0.1s cubic-bezier(0.34,1.56,0.64,1) both;
+  max-width: 300px; width: 88%;
+}
+@keyframes cel-card-in {
+  from { transform: scale(0.65) translateY(24px); opacity: 0; }
+  to   { transform: scale(1) translateY(0); opacity: 1; }
+}
+.cel-emoji {
+  font-size: 60px; line-height: 1; margin-bottom: 14px;
+  display: block;
+  animation: cel-pop 0.6s 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes cel-pop {
+  from { transform: scale(0) rotate(-20deg); }
+  to   { transform: scale(1) rotate(0deg); }
+}
+.cel-title {
+  font-size: 26px; font-weight: 900; color: var(--charcoal);
+  letter-spacing: -0.5px; margin-bottom: 6px;
+}
+.cel-sub {
+  font-size: 13px; color: var(--text-muted); font-weight: 600; margin-bottom: 22px;
+}
+.cel-btn {
+  background: linear-gradient(135deg, #e8784e 0%, var(--orange) 60%, #f5a080 100%);
+  color: white; border: none; border-radius: 50px;
+  padding: 13px 30px; font-size: 15px; font-weight: 800;
+  cursor: pointer; letter-spacing: 0.2px;
+  font-family: inherit;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 18px rgba(243,140,104,0.45);
+}
+.cel-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(243,140,104,0.55); }
+.cel-btn:active { transform: translateY(0); }
+
 </style>
 </head>
 <body>
@@ -1975,11 +2029,64 @@ function renderJourney(count) {
 
 })();
 
+// ── Confetti Engine ───────────────────────────────────────────
+function launchConfetti() {
+  var canvas = document.getElementById('confetti-canvas');
+  var ctx    = canvas.getContext('2d');
+  var W = canvas.width  = window.innerWidth;
+  var H = canvas.height = window.innerHeight;
+  var colors = ['#f38c68','#78b2e9','#4c87c9','#fde8df','#ffffff','#f5a080','#3a6fa8'];
+  var pieces = [];
+  for (var i = 0; i < 140; i++) {
+    pieces.push({
+      x:    Math.random() * W,
+      y:    Math.random() * H - H,
+      r:    Math.random() * 7 + 3,
+      d:    Math.random() * 140,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      tiltAngle:    0,
+      tiltAngleInc: Math.random() * 0.08 + 0.04,
+      vx:   (Math.random() - 0.5) * 2.5,
+      vy:   Math.random() * 3 + 1.5,
+      shape: Math.random() > 0.45 ? 'rect' : 'circle'
+    });
+  }
+  var angle = 0;
+  var raf;
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    angle += 0.012;
+    pieces.forEach(function (p) {
+      p.tiltAngle += p.tiltAngleInc;
+      p.y += p.vy;
+      p.x += p.vx + Math.sin(angle + p.d) * 0.6;
+      if (p.y > H + 12) { p.y = -12; p.x = Math.random() * W; }
+      ctx.beginPath();
+      ctx.fillStyle = p.color;
+      if (p.shape === 'circle') {
+        ctx.arc(p.x, p.y, p.r, 0, 2 * Math.PI);
+      } else {
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.tiltAngle);
+        ctx.fillRect(-p.r * 0.6, -p.r * 0.4, p.r * 1.6, p.r * 0.7);
+        ctx.restore();
+      }
+      ctx.fill();
+    });
+    raf = requestAnimationFrame(draw);
+  }
+  draw();
+  return function stop() { cancelAnimationFrame(raf); ctx.clearRect(0, 0, W, H); };
+}
+
 // ── Daily Checklist ───────────────────────────────────────────
 (function () {
   var TOTAL = 6;
   var TODAY = new Date().toISOString().slice(0, 10);
   var KEY   = 'daily-done-' + TODAY;
+  var CEL_KEY = 'cel-done-' + TODAY;
+  var stopConfetti = null;
 
   function getDone() {
     try { return new Set(JSON.parse(localStorage.getItem(KEY) || '[]')); }
@@ -1995,6 +2102,28 @@ function renderJourney(count) {
     f.style.width  = (c / TOTAL * 100) + '%';
     n.textContent  = c + '/' + TOTAL;
     n.className    = 'daily-score-num' + (c === TOTAL ? ' complete' : '');
+    if (c === TOTAL) showCelebration();
+  }
+
+  function showCelebration() {
+    if (localStorage.getItem(CEL_KEY)) return;
+    var cel = document.getElementById('celebration');
+    if (!cel) return;
+    cel.style.display = 'flex';
+    stopConfetti = launchConfetti();
+    localStorage.setItem(CEL_KEY, '1');
+  }
+
+  function hideCelebration() {
+    var cel = document.getElementById('celebration');
+    if (cel) cel.style.display = 'none';
+    if (stopConfetti) { stopConfetti(); stopConfetti = null; }
+  }
+
+  var cel = document.getElementById('celebration');
+  if (cel) {
+    document.getElementById('cel-dismiss').addEventListener('click', hideCelebration);
+    cel.addEventListener('click', function (e) { if (e.target === cel) hideCelebration(); });
   }
 
   var done  = getDone();
@@ -2024,6 +2153,17 @@ function renderJourney(count) {
   updateScore(done);
 })();
 </script>
+
+<!-- ── Celebration Overlay ─────────────────────────────────── -->
+<div id="celebration" style="display:none;" role="dialog" aria-modal="true" aria-label="Checklist complete">
+  <canvas id="confetti-canvas"></canvas>
+  <div class="cel-card">
+    <span class="cel-emoji">🎉</span>
+    <div class="cel-title">You crushed it!</div>
+    <div class="cel-sub">Daily checklist complete.</div>
+    <button class="cel-btn" id="cel-dismiss">Keep going →</button>
+  </div>
+</div>
 
 </body>
 </html>
