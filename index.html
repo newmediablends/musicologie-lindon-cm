@@ -2375,42 +2375,6 @@ function renderJourney(count) {
     if (e.key === 'Escape') closePanel();
   });
 
-  // Save toast — fires after a successful save
-  function showSaveToast(from, to) {
-    var MILESTONE_NS = [1, 10, 25, 50, 75, 100, 125, 150, 200];
-    var delta = to - from;
-    // If dropping below a milestone, checkMilestones already shows the encouragement toast
-    if (delta < 0) {
-      var milDropped = MILESTONE_NS.some(function (n) { return from >= n && to < n; });
-      if (milDropped) return;
-    }
-    var toast   = document.getElementById('encourage-toast');
-    if (!toast) return;
-    var emojiEl = toast.querySelector('.toast-emoji');
-    var titleEl = document.getElementById('toast-title');
-    var subEl   = document.getElementById('toast-sub');
-    var closeBtn = document.getElementById('toast-close');
-    if (delta > 0) {
-      if (emojiEl) emojiEl.textContent = '🎉';
-      titleEl.textContent = '+' + delta + ' — now at ' + to + ' founders!';
-      var lines = [
-        'Every founder is a family choosing Lindon before the doors open.',
-        'That\'s ' + to + ' people who believed first. Keep going.',
-        'Momentum is real. ' + (200 - to) + ' to go.',
-      ];
-      subEl.textContent = lines[Math.floor(Math.random() * lines.length)];
-    } else {
-      if (emojiEl) emojiEl.textContent = '✓';
-      titleEl.textContent = 'Updated — ' + to + ' founders.';
-      subEl.textContent = 'Accurate numbers are how you know exactly what to do next.';
-    }
-    toast.classList.add('visible');
-    function dismiss() { toast.classList.remove('visible'); }
-    closeBtn.onclick = dismiss;
-    clearTimeout(toast._t);
-    toast._t = setTimeout(dismiss, 6000);
-  }
-
   // Save button
   editSaveBtn.addEventListener('click', function () {
     var newCount = editCount;
@@ -2425,7 +2389,6 @@ function renderJourney(count) {
         render(newCount);
         closePanel();
         if (window.checkMilestones) window.checkMilestones(from, newCount);
-        showSaveToast(from, newCount);
       })
       .catch(function () {
         editStatus.textContent = 'Error saving — try again.';
