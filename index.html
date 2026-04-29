@@ -521,31 +521,80 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
 .t-val.projected-short { color: #e07070; }
 
 /* ── COUNT EDIT UI ────────────────────────────────────── */
-.tracker-update-wrap { margin-top: 16px; text-align: center; }
 
-/* Trigger button (idle state) */
+/* Ring row: [−] [ring] [+] */
+.ring-area-wrap {
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px; margin-bottom: 10px;
+  position: relative; z-index: 2;
+  transition: opacity 0.3s;
+}
+.tracker-ring-wrap { flex-shrink: 0; }
+
+/* Flanking +/- buttons — hidden in idle, shown in edit */
+.ring-step-btn {
+  width: 56px; height: 56px; border-radius: 50%; border: none;
+  font-size: 30px; font-weight: 300; line-height: 1;
+  cursor: pointer; font-family: inherit; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  user-select: none; -webkit-tap-highlight-color: transparent;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s, transform 0.14s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.14s;
+}
+.tracker.edit-active .ring-step-btn { opacity: 1; pointer-events: auto; }
+.ring-step-btn:active { transform: scale(0.80); }
+.ring-step-minus {
+  background: rgba(255,255,255,0.11); color: rgba(255,255,255,0.72);
+  border: 1.5px solid rgba(255,255,255,0.22);
+}
+.ring-step-minus:hover { background: rgba(255,255,255,0.19); color: #fff; }
+.ring-step-plus {
+  background: linear-gradient(135deg, #e8784e 0%, var(--orange) 60%, #f5a080 100%);
+  color: #fff; box-shadow: 0 4px 20px rgba(243,140,104,0.52);
+}
+.ring-step-plus:hover  { box-shadow: 0 6px 28px rgba(243,140,104,0.65); }
+.ring-step-plus:active { box-shadow: 0 2px 10px rgba(243,140,104,0.30); }
+
+/* Controls area under ring: pencil OR save/cancel */
+.ring-controls-area {
+  display: flex; flex-direction: column; align-items: center;
+  min-height: 46px; margin-bottom: 12px;
+  position: relative; z-index: 2;
+  padding: 0 16px; width: 100%;
+}
+
+/* Pencil trigger — circle icon, hidden in edit mode */
 .tracker-trigger-btn {
   background: none; border: 1px solid rgba(255,255,255,0.25);
-  color: rgba(255,255,255,0.65); border-radius: 20px;
-  padding: 7px 20px; font-size: 12px; font-weight: 700; letter-spacing: 0.5px;
-  cursor: pointer; font-family: inherit; transition: all 0.2s;
+  color: rgba(255,255,255,0.55); border-radius: 50%;
+  width: 38px; height: 38px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; cursor: pointer; font-family: inherit;
+  transition: all 0.2s;
 }
-.tracker-trigger-btn:hover { background: rgba(255,255,255,0.10); color: #fff; border-color: rgba(255,255,255,0.50); }
+.tracker-trigger-btn:hover { background: rgba(255,255,255,0.12); color: #fff; border-color: rgba(255,255,255,0.55); }
+.tracker.edit-active .tracker-trigger-btn { display: none; }
 
-/* Expanded edit panel */
-.count-edit-panel {
-  display: none; flex-direction: column; align-items: center; gap: 14px;
-  padding: 22px 16px 18px;
-  background: rgba(0,0,0,0.28); border-radius: 18px; margin-top: 12px;
+/* Tracker count is tappable in idle */
+.tracker-current { cursor: pointer; }
+.tracker.edit-active .tracker-current { cursor: text; }
+
+/* Save/cancel controls — hidden in idle, shown in edit */
+.ring-edit-controls {
+  display: none; flex-direction: column; align-items: center; gap: 6px; width: 100%;
+  animation: panel-in 0.28s cubic-bezier(0.34,1.4,0.64,1);
 }
-.count-edit-panel.active {
-  display: flex;
-  animation: panel-in 0.30s cubic-bezier(0.34,1.4,0.64,1);
-}
+.tracker.edit-active .ring-edit-controls { display: flex; }
 @keyframes panel-in {
-  from { opacity: 0; transform: translateY(10px) scale(0.97); }
-  to   { opacity: 1; transform: translateY(0)   scale(1);    }
+  from { opacity: 0; transform: translateY(8px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
+
+/* Dim everything except ring area and controls in edit mode */
+.tracker.edit-active .tracker-top,
+.tracker.edit-active .tracker-stats { opacity: 0.15; pointer-events: none; }
+.tracker-top,
+.tracker-stats { transition: opacity 0.3s; }
 
 /* Large live count shown while editing */
 .edit-display-wrap { display: flex; flex-direction: column; align-items: center; gap: 2px; }
@@ -606,7 +655,7 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
 
 /* Save + Cancel */
 .edit-save-btn {
-  flex: 1;
+  width: 100%;
   background: linear-gradient(135deg, #e8784e 0%, var(--orange) 60%, #f5a080 100%);
   color: #fff; border: none; border-radius: 14px;
   padding: 16px; font-size: 16px; font-weight: 800; letter-spacing: 0.2px;
@@ -719,21 +768,16 @@ html.is-dark .t-stat .t-lbl     { color: rgba(46,58,71,0.52); }
 html.is-dark .t-lbl-target      { color: #2e3a47; }
 /* Edit panel dark mode — tracker inverts to light, so flip edit panel colors to charcoal-based */
 html.is-dark .tracker-trigger-btn {
-  border-color: rgba(46,58,71,0.25); color: rgba(46,58,71,0.60);
+  border-color: rgba(46,58,71,0.25); color: rgba(46,58,71,0.55);
 }
 html.is-dark .tracker-trigger-btn:hover {
   background: rgba(46,58,71,0.08); color: #2e3a47; border-color: rgba(46,58,71,0.45);
 }
-html.is-dark .count-edit-panel {
-  background: rgba(46,58,71,0.10); border: 1px solid rgba(46,58,71,0.12);
-}
-html.is-dark .edit-panel-count  { color: #2e3a47; }
-html.is-dark .edit-panel-label  { color: rgba(46,58,71,0.42); }
-html.is-dark .edit-step-minus {
-  background: rgba(46,58,71,0.10); color: rgba(46,58,71,0.65);
+html.is-dark .ring-step-minus {
+  background: rgba(46,58,71,0.12); color: rgba(46,58,71,0.65);
   border-color: rgba(46,58,71,0.22);
 }
-html.is-dark .edit-step-minus:hover { background: rgba(46,58,71,0.18); color: #2e3a47; }
+html.is-dark .ring-step-minus:hover { background: rgba(46,58,71,0.20); color: #2e3a47; }
 html.is-dark .edit-manual-row {
   background: rgba(46,58,71,0.07); border-color: rgba(46,58,71,0.16);
 }
@@ -1406,56 +1450,60 @@ html.is-dark #milestone-cel.tier-major .mil-count-badge {
       </div>
       <div class="tracker-first">200 pre-sales would make Lindon the first Musicologie franchise to achieve&nbsp;it.</div>
     </div>
-    <div class="tracker-ring-wrap">
-      <svg class="tracker-ring-svg" viewBox="0 0 240 240" aria-hidden="true">
-        <defs>
-          <linearGradient id="ring-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#f38c68"/>
-            <stop offset="100%" stop-color="#f5b090"/>
-          </linearGradient>
-        </defs>
-        <circle class="ring-track" cx="120" cy="120" r="100"/>
-        <circle class="ring-progress" id="ring-progress" cx="120" cy="120" r="100"/>
-      </svg>
-      <div class="tracker-ring-inner">
-        <div class="tracker-current" id="tracker-count">0</div>
-        <div class="ring-edit-wrap" id="ring-edit-wrap">
-          <input class="ring-edit-input" id="ring-edit-input" type="number" min="0" max="9999" inputmode="numeric" pattern="[0-9]*">
+    <!-- Ring row: flanking step buttons + ring -->
+    <div class="ring-area-wrap">
+      <button class="ring-step-btn ring-step-minus" id="edit-minus" aria-label="Remove one">&#8722;</button>
+      <div class="tracker-ring-wrap">
+        <svg class="tracker-ring-svg" viewBox="0 0 240 240" aria-hidden="true">
+          <defs>
+            <linearGradient id="ring-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#f38c68"/>
+              <stop offset="100%" stop-color="#f5b090"/>
+            </linearGradient>
+          </defs>
+          <circle class="ring-track" cx="120" cy="120" r="100"/>
+          <circle class="ring-progress" id="ring-progress" cx="120" cy="120" r="100"/>
+        </svg>
+        <div class="tracker-ring-inner">
+          <div class="tracker-current" id="tracker-count" title="Tap to edit">0</div>
+          <div class="ring-edit-wrap" id="ring-edit-wrap">
+            <input class="ring-edit-input" id="ring-edit-input" type="number" min="0" max="9999" inputmode="numeric" pattern="[0-9]*">
+          </div>
+          <div class="tracker-slash-goal">/&thinsp;200</div>
+          <div class="tracker-sublabel">Founding<br>Members</div>
         </div>
-        <div class="tracker-slash-goal">/&thinsp;200</div>
-        <div class="tracker-sublabel">Founding<br>Members</div>
+      </div>
+      <button class="ring-step-btn ring-step-plus" id="edit-plus" aria-label="Add one">+</button>
+    </div>
+
+    <!-- Controls under ring: pencil (idle) or Save/Cancel (edit) -->
+    <div class="ring-controls-area">
+      <button class="tracker-trigger-btn" id="trigger-btn" aria-label="Edit count">&#9998;</button>
+      <div class="ring-edit-controls">
+        <button class="edit-save-btn" id="edit-save-btn">Save</button>
+        <button class="edit-cancel-btn" id="edit-cancel-btn">Cancel</button>
+        <div class="edit-save-status" id="edit-save-status"></div>
       </div>
     </div>
+
     <div class="tracker-stats">
       <div class="t-stat t-stat--lg">
         <div class="t-val" id="tracker-days">69</div>
         <div class="t-lbl">Days Remaining</div>
       </div>
       <div class="t-stat t-stat--lg">
-        <div class="t-val" id="tracker-pace">—</div>
+        <div class="t-val" id="tracker-pace">&#8212;</div>
         <div id="tracker-pace-badge" class="t-badge" style="display:none"></div>
-        <div class="t-lbl">Avg/Day · <span class="t-lbl-target">Target: 3/day</span></div>
+        <div class="t-lbl">Avg/Day &middot; <span class="t-lbl-target">Target: 3/day</span></div>
       </div>
       <div class="t-stat">
-        <div class="t-val" id="tracker-projected">—</div>
+        <div class="t-val" id="tracker-projected">&#8212;</div>
         <div class="t-lbl">Projected at Pace</div>
       </div>
       <div class="t-stat">
-        <div class="t-val" id="goal-weekly">—</div>
+        <div class="t-val" id="goal-weekly">&#8212;</div>
         <div id="weekly-pace-badge" class="t-badge" style="display:none"></div>
-        <div class="t-lbl">Wkly Rate · <span class="t-lbl-target">Target: 21/wk</span></div>
-      </div>
-    </div>
-    <div class="tracker-update-wrap">
-      <button class="tracker-trigger-btn" id="trigger-btn">✎ Update Founders Count</button>
-      <div class="count-edit-panel" id="count-edit-panel">
-        <div class="edit-stepper-row">
-          <button class="edit-step-btn edit-step-minus" id="edit-minus" aria-label="Remove one">−</button>
-          <button class="edit-save-btn" id="edit-save-btn">Save</button>
-          <button class="edit-step-btn edit-step-plus"  id="edit-plus"  aria-label="Add one">+</button>
-        </div>
-        <button class="edit-cancel-btn" id="edit-cancel-btn">Cancel</button>
-        <div class="edit-save-status" id="edit-save-status"></div>
+        <div class="t-lbl">Wkly Rate &middot; <span class="t-lbl-target">Target: 21/wk</span></div>
       </div>
     </div>
   </div>
@@ -2319,7 +2367,6 @@ function renderJourney(count) {
 
   // ── Count Edit UI ──────────────────────────────────────
   var triggerBtn  = document.getElementById('trigger-btn');
-  var editPanel   = document.getElementById('count-edit-panel');
   var ringWrap    = document.getElementById('ring-edit-wrap');
   var ringInput   = document.getElementById('ring-edit-input');
   var trackerEl   = document.querySelector('.tracker');
@@ -2339,19 +2386,16 @@ function renderJourney(count) {
     trackerEl.classList.add('edit-active');
     editSaveBtn.disabled = false;
     editStatus.textContent = '';
-    editPanel.classList.add('active');
-    triggerBtn.style.display = 'none';
     setTimeout(function () { ringInput.focus(); ringInput.select(); }, 60);
   }
 
   function closePanel() {
     trackerEl.classList.remove('edit-active');
-    editPanel.classList.remove('active');
-    triggerBtn.style.display = '';
     editStatus.textContent = '';
   }
 
   triggerBtn.addEventListener('click', openPanel);
+  document.getElementById('tracker-count').addEventListener('click', openPanel);
   editCancel.addEventListener('click', closePanel);
 
   // Spring bounce on the ring number
@@ -2784,38 +2828,38 @@ window.GO_GIVER_QUOTES = [
 
   // ── Setback dialog (drop below a milestone) ──────────────
   function showSetback(mil) {
-    var cel = document.getElementById(‘setback-cel’);
+    var cel = document.getElementById('setback-cel');
     if (!cel) return;
     var goGiverLines = [
-      ‘Be a Go-Giver. Give more than you take, and the numbers will follow.’,
-      ‘Go-Givers are the most competitive people on the planet. Get back up.’,
-      ‘Your influence grows when you put others\’ interests first. Keep giving.’,
-      ‘The Law of Compensation: the more people you serve, the more you earn. Serve more.’,
-      ‘The key to effective giving is staying open. Stay open. Keep going.’,
+      'Be a Go-Giver. Give more than you take, and the numbers will follow.',
+      'Go-Givers are the most competitive people on the planet. Get back up.',
+      'Your influence grows when you put others\' interests first. Keep giving.',
+      'The Law of Compensation: the more people you serve, the more you earn. Serve more.',
+      'The key to effective giving is staying open. Stay open. Keep going.',
     ];
-    document.getElementById(‘setback-badge’).textContent = ‘Below ‘ + mil.n;
-    document.getElementById(‘setback-title’).textContent = "You’ve been here before. Get back.";
-    document.getElementById(‘setback-sub’).textContent = goGiverLines[Math.floor(Math.random() * goGiverLines.length)];
-    cel.style.display = ‘flex’;
-    var oldBtn = document.getElementById(‘setback-dismiss’);
+    document.getElementById('setback-badge').textContent = 'Below ' + mil.n;
+    document.getElementById('setback-title').textContent = "You've been here before. Get back.";
+    document.getElementById('setback-sub').textContent = goGiverLines[Math.floor(Math.random() * goGiverLines.length)];
+    cel.style.display = 'flex';
+    var oldBtn = document.getElementById('setback-dismiss');
     var newBtn = oldBtn.cloneNode(true);
     oldBtn.parentNode.replaceChild(newBtn, oldBtn);
     function hideSetback() {
-      var card = cel.querySelector(‘.setback-card’);
-      if (card) card.classList.add(‘closing’);
-      cel.classList.add(‘closing’);
+      var card = cel.querySelector('.setback-card');
+      if (card) card.classList.add('closing');
+      cel.classList.add('closing');
       setTimeout(function () {
-        cel.style.display = ‘none’; cel.className = ‘’;
-        if (card) card.classList.remove(‘closing’);
+        cel.style.display = 'none'; cel.className = '';
+        if (card) card.classList.remove('closing');
       }, 490);
     }
-    newBtn.addEventListener(‘click’, hideSetback);
+    newBtn.addEventListener('click', hideSetback);
     cel.onclick = function (e) { if (e.target === cel) hideSetback(); };
   }
 
   // ── Public API ────────────────────────────────────────────
   // Celebrations fire any time oldCount < milestone.n <= newCount.
-  // No hit-tracking — simple threshold crossing is all that’s needed.
+  // No hit-tracking — simple threshold crossing is all that's needed.
   window.checkMilestones = function (oldCount, newCount) {
     if (newCount > oldCount) {
       var toShow = null;
