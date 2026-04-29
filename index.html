@@ -513,35 +513,117 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
 .t-val.projected-good  { color: #5dd48a; }
 .t-val.projected-short { color: #e07070; }
 
-/* ── COUNT UPDATE UI ──────────────────────────────────── */
-.tracker-update-wrap { text-align: center; margin-top: 14px; }
-.tracker-update-btn {
-  background: none; border: 1px solid rgba(255,255,255,0.25);
-  color: rgba(255,255,255,0.65); border-radius: 20px;
-  padding: 5px 16px; font-size: 11px; font-weight: 700;
-  letter-spacing: 0.5px; cursor: pointer; font-family: inherit;
-  transition: all 0.2s;
+/* ── COUNT STEPPER UI ─────────────────────────────────── */
+.tracker-update-wrap { margin-top: 16px; }
+
+.count-stepper {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; padding: 0 4px; margin-bottom: 10px;
 }
-.tracker-update-btn:hover { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.5); }
-.tracker-edit-form { display: none; align-items: center; justify-content: center; gap: 8px; margin-top: 10px; }
-.tracker-edit-form.active { display: flex; }
-.tracker-edit-input {
-  width: 88px; text-align: center; font-size: 20px; font-weight: 900;
-  padding: 6px 8px; border-radius: 8px; border: 2px solid var(--orange);
-  font-family: inherit; color: var(--charcoal); outline: none;
+.step-btn {
+  width: 62px; height: 62px; border-radius: 50%; border: none;
+  font-size: 30px; font-weight: 300; line-height: 1;
+  cursor: pointer; font-family: inherit; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  user-select: none; -webkit-tap-highlight-color: transparent;
+  transition: transform 0.14s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.14s;
 }
-.tracker-edit-input:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(243,140,104,0.25); }
-.tracker-save-btn {
-  background: var(--orange); color: #fff; border: none;
-  border-radius: 8px; padding: 7px 18px; font-size: 13px; font-weight: 800;
-  cursor: pointer; font-family: inherit; transition: opacity 0.2s;
+.step-btn:active { transform: scale(0.80); }
+
+.step-minus {
+  background: rgba(255,255,255,0.10);
+  color: rgba(255,255,255,0.72);
+  border: 1.5px solid rgba(255,255,255,0.22);
 }
-.tracker-save-btn:hover { opacity: 0.88; }
-.tracker-cancel-btn {
-  background: none; color: rgba(255,255,255,0.55); border: none;
-  font-size: 12px; cursor: pointer; font-family: inherit; padding: 7px 8px;
+.step-minus:hover { background: rgba(255,255,255,0.17); color: #fff; }
+
+.step-plus {
+  background: linear-gradient(135deg, #e8784e 0%, var(--orange) 60%, #f5a080 100%);
+  color: #fff;
+  box-shadow: 0 4px 22px rgba(243,140,104,0.52);
 }
-.tracker-save-status { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 6px; min-height: 16px; }
+.step-plus:hover  { box-shadow: 0 6px 30px rgba(243,140,104,0.65); }
+.step-plus:active { box-shadow: 0 2px 10px rgba(243,140,104,0.30); }
+
+.step-center { flex: 1; text-align: center; min-width: 0; }
+.step-status {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.3px;
+  color: rgba(255,255,255,0.45); min-height: 16px; line-height: 1.5;
+  transition: color 0.2s;
+}
+.step-status.saving { color: rgba(255,255,255,0.38); }
+.step-status.saved  { color: #5dd48a; }
+.step-status.error  { color: #e07070; cursor: pointer; }
+.step-hint {
+  font-size: 8.5px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.1px; color: rgba(255,255,255,0.22); margin-top: 2px;
+}
+
+/* Quick-adjust pills */
+.quick-pills {
+  display: flex; justify-content: center; gap: 8px; margin-bottom: 4px;
+}
+.quick-pill {
+  border-radius: 20px; padding: 5px 14px;
+  font-size: 12px; font-weight: 800; letter-spacing: 0.2px;
+  cursor: pointer; font-family: inherit; border: 1px solid;
+  user-select: none; -webkit-tap-highlight-color: transparent;
+  transition: all 0.14s;
+}
+.quick-pill:active { transform: scale(0.88); }
+.quick-pill.pill-neg {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.16);
+  color: rgba(255,255,255,0.48);
+}
+.quick-pill.pill-neg:hover { background: rgba(255,255,255,0.13); color: rgba(255,255,255,0.80); }
+.quick-pill.pill-pos {
+  background: rgba(243,140,104,0.10);
+  border-color: rgba(243,140,104,0.38);
+  color: rgba(243,140,104,0.85);
+}
+.quick-pill.pill-pos:hover { background: rgba(243,140,104,0.18); color: var(--orange); }
+
+/* Ring tap-to-edit */
+.tracker-ring-inner { cursor: pointer; transition: opacity 0.15s; }
+.tracker-ring-inner:hover { opacity: 0.88; }
+.tracker-ring-inner.ring-editing { cursor: default; opacity: 1; }
+.ring-edit-wrap { display: none; flex-direction: column; align-items: center; gap: 5px; }
+.tracker-ring-inner.ring-editing .ring-edit-wrap  { display: flex; }
+.tracker-ring-inner.ring-editing #tracker-count,
+.tracker-ring-inner.ring-editing .tracker-slash-goal,
+.tracker-ring-inner.ring-editing .tracker-sublabel { display: none; }
+.ring-edit-input {
+  width: 118px; background: transparent; border: none;
+  border-bottom: 2.5px solid var(--orange); outline: none;
+  text-align: center; font-family: inherit;
+  font-size: 52px; font-weight: 900; color: #fff;
+  letter-spacing: -2px; line-height: 1; padding: 0 4px;
+}
+.ring-edit-input::-webkit-inner-spin-button,
+.ring-edit-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+.ring-edit-label {
+  font-size: 9.5px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.4px; color: rgba(255,255,255,0.42);
+}
+
+/* Count spring animations */
+@keyframes count-bump-up {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.30); }
+  60%  { transform: scale(0.88); }
+  80%  { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+@keyframes count-bump-down {
+  0%   { transform: scale(1); }
+  25%  { transform: scale(0.76); }
+  55%  { transform: scale(1.10); }
+  80%  { transform: scale(0.96); }
+  100% { transform: scale(1); }
+}
+.tracker-current.bump-up   { animation: count-bump-up   0.40s cubic-bezier(0.34,1.56,0.64,1); }
+.tracker-current.bump-down { animation: count-bump-down 0.28s ease; }
 
 /* ── DARK MODE — activated by .is-dark on <html> ──────── */
 /* JS sets .is-dark from system preference OR manual toggle  */
@@ -577,8 +659,6 @@ html.is-dark .daily-item.urgent { background: rgba(243,140,104,0.09); border-col
 html.is-dark .adv-pill.orange-tint { background: rgba(243,140,104,0.12); border-color: rgba(243,140,104,0.30); }
 html.is-dark .adv-pill.blue-tint   { background: rgba(76,135,201,0.10);  border-color: rgba(76,135,201,0.25); }
 html.is-dark .bonus-strip { background: linear-gradient(135deg, rgba(243,140,104,0.10) 0%, rgba(243,140,104,0.05) 100%); border-color: rgba(243,140,104,0.30); }
-html.is-dark .tracker-edit-input { background: #1b2a3b; color: var(--charcoal); border-color: var(--orange); }
-
 /* ── TRACKER: inverted to light card in dark mode ─────── */
 html.is-dark .tracker {
   background: linear-gradient(135deg, #e8f2fb 0%, #d4e8f5 100%);
@@ -596,15 +676,26 @@ html.is-dark .t-stat            { background: rgba(255,255,255,0.55); }
 html.is-dark .t-stat .t-val     { color: #2e3a47; }
 html.is-dark .t-stat .t-lbl     { color: rgba(46,58,71,0.52); }
 html.is-dark .t-lbl-target      { color: #2e3a47; }
-html.is-dark .tracker-update-btn {
-  border-color: rgba(46,58,71,0.25); color: rgba(46,58,71,0.60);
+/* Stepper dark mode — tracker inverts to light, so flip stepper colors to charcoal-based */
+html.is-dark .step-minus {
+  background: rgba(46,58,71,0.10); color: rgba(46,58,71,0.65);
+  border-color: rgba(46,58,71,0.22);
 }
-html.is-dark .tracker-update-btn:hover {
-  background: rgba(46,58,71,0.08); color: #2e3a47; border-color: rgba(46,58,71,0.45);
+html.is-dark .step-minus:hover { background: rgba(46,58,71,0.18); color: #2e3a47; }
+html.is-dark .step-status         { color: rgba(46,58,71,0.55); }
+html.is-dark .step-status.saving  { color: rgba(46,58,71,0.38); }
+html.is-dark .step-status.saved   { color: #16a34a; }
+html.is-dark .step-status.error   { color: #c0392b; }
+html.is-dark .step-hint           { color: rgba(46,58,71,0.28); }
+html.is-dark .quick-pill.pill-neg {
+  background: rgba(46,58,71,0.07);
+  border-color: rgba(46,58,71,0.18); color: rgba(46,58,71,0.48);
 }
-html.is-dark .tracker-cancel-btn { color: rgba(46,58,71,0.50); }
-html.is-dark .tracker-save-status { color: rgba(46,58,71,0.55); }
-html.is-dark .tracker-edit-input  { background: #fff; color: #2e3a47; }
+html.is-dark .quick-pill.pill-neg:hover { background: rgba(46,58,71,0.14); color: rgba(46,58,71,0.80); }
+html.is-dark .quick-pill.pill-pos { border-color: rgba(200,100,60,0.38); color: rgba(190,90,50,0.85); }
+html.is-dark .quick-pill.pill-pos:hover { background: rgba(200,100,60,0.12); }
+html.is-dark .ring-edit-input     { color: #2e3a47; }
+html.is-dark .ring-edit-label     { color: rgba(46,58,71,0.45); }
 
 /* ── THEME TOGGLE BAR ────────────────────────────────────── */
 .theme-bar {
@@ -1269,10 +1360,14 @@ html.is-dark #milestone-cel.tier-major .mil-count-badge {
         <circle class="ring-track" cx="120" cy="120" r="100"/>
         <circle class="ring-progress" id="ring-progress" cx="120" cy="120" r="100"/>
       </svg>
-      <div class="tracker-ring-inner">
+      <div class="tracker-ring-inner" id="ring-inner" title="Tap to set exact number">
         <div class="tracker-current" id="tracker-count">0</div>
         <div class="tracker-slash-goal">/&thinsp;200</div>
         <div class="tracker-sublabel">Founding<br>Members</div>
+        <div class="ring-edit-wrap">
+          <input class="ring-edit-input" id="ring-edit-input" type="number" min="0" max="9999" inputmode="numeric" pattern="[0-9]*" placeholder="0">
+          <div class="ring-edit-label">↩ to confirm</div>
+        </div>
       </div>
     </div>
     <div class="tracker-stats">
@@ -1296,13 +1391,20 @@ html.is-dark #milestone-cel.tier-major .mil-count-badge {
       </div>
     </div>
     <div class="tracker-update-wrap">
-      <button class="tracker-update-btn" id="edit-count-btn">✎ Update Count</button>
-      <div class="tracker-edit-form" id="edit-form">
-        <input class="tracker-edit-input" type="number" id="edit-input" min="0" max="500" placeholder="0">
-        <button class="tracker-save-btn" id="save-count-btn">Save</button>
-        <button class="tracker-cancel-btn" id="cancel-count-btn">Cancel</button>
+      <div class="count-stepper">
+        <button class="step-btn step-minus" id="btn-minus" aria-label="Decrease count">−</button>
+        <div class="step-center">
+          <div class="step-status" id="step-status"></div>
+          <div class="step-hint">tap number to set manually</div>
+        </div>
+        <button class="step-btn step-plus" id="btn-plus" aria-label="Increase count">+</button>
       </div>
-      <div class="tracker-save-status" id="save-status"></div>
+      <div class="quick-pills">
+        <button class="quick-pill pill-neg" data-delta="-10">−10</button>
+        <button class="quick-pill pill-neg" data-delta="-5">−5</button>
+        <button class="quick-pill pill-pos" data-delta="5">+5</button>
+        <button class="quick-pill pill-pos" data-delta="10">+10</button>
+      </div>
     </div>
   </div>
 
@@ -2163,54 +2265,133 @@ function renderJourney(count) {
     renderJourney(count);
   }
 
-  // ── Edit UI ────────────────────────────────────────────
-  var editBtn    = document.getElementById('edit-count-btn');
-  var editForm   = document.getElementById('edit-form');
-  var editInput  = document.getElementById('edit-input');
-  var saveBtn    = document.getElementById('save-count-btn');
-  var cancelBtn  = document.getElementById('cancel-count-btn');
-  var statusEl   = document.getElementById('save-status');
-  var liveCount  = 0;
+  // ── Stepper UI ─────────────────────────────────────────
+  var btnPlus      = document.getElementById('btn-plus');
+  var btnMinus     = document.getElementById('btn-minus');
+  var statusEl     = document.getElementById('step-status');
+  var ringInner    = document.getElementById('ring-inner');
+  var ringEditInp  = document.getElementById('ring-edit-input');
+  var countEl      = document.getElementById('tracker-count');
+  var liveCount    = 0;
+  var saveTimer    = null;
+  var pendingFrom  = null;
+  var repeatTimer  = null;
+  var repeatIv     = null;
 
-  editBtn.addEventListener('click', function () {
-    editInput.value = liveCount;
-    editForm.classList.add('active');
-    editBtn.style.display = 'none';
-    editInput.focus();
-    editInput.select();
-  });
+  // Status display
+  function setStatus(msg, cls) {
+    statusEl.textContent = msg;
+    statusEl.className = 'step-status' + (cls ? ' ' + cls : '');
+    if (cls === 'saved') {
+      clearTimeout(statusEl._t);
+      statusEl._t = setTimeout(function () {
+        statusEl.textContent = ''; statusEl.className = 'step-status';
+      }, 2500);
+    }
+  }
 
-  cancelBtn.addEventListener('click', function () {
-    editForm.classList.remove('active');
-    editBtn.style.display = '';
-    statusEl.textContent = '';
-  });
-
-  saveBtn.addEventListener('click', function () {
-    var newCount = parseInt(editInput.value, 10);
-    if (isNaN(newCount) || newCount < 0) { statusEl.textContent = 'Enter a valid number.'; return; }
-    statusEl.textContent = 'Saving…';
-    saveBtn.disabled = true;
-    fetch(SCRIPT_URL + '?action=update&count=' + newCount)
+  // Remote save
+  function doSave() {
+    var from = pendingFrom;
+    var to   = liveCount;
+    pendingFrom = null; saveTimer = null;
+    fetch(SCRIPT_URL + '?action=update&count=' + to)
       .then(function (r) { return r.json(); })
       .then(function () {
-        if (window.checkMilestones) window.checkMilestones(liveCount, newCount);
-        liveCount = newCount;
-        render(newCount);
-        editForm.classList.remove('active');
-        editBtn.style.display = '';
-        statusEl.textContent = 'Saved!';
-        setTimeout(function () { statusEl.textContent = ''; }, 2500);
+        if (window.checkMilestones) window.checkMilestones(from, to);
+        setStatus('saved ✓', 'saved');
       })
       .catch(function () {
-        statusEl.textContent = 'Error saving — check your connection.';
-      })
-      .finally(function () { saveBtn.disabled = false; });
+        setStatus('error — tap to retry', 'error');
+        statusEl.onclick = function () { if (saveTimer === null) { pendingFrom = from; queueSave(); } };
+      });
+  }
+
+  // Debounced save — batches rapid taps into one network call
+  function queueSave() {
+    setStatus('saving…', 'saving');
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(doSave, 1200);
+  }
+
+  // Spring bounce on the big count number
+  function bumpCount(up) {
+    countEl.classList.remove('bump-up', 'bump-down');
+    void countEl.offsetWidth;
+    countEl.classList.add(up ? 'bump-up' : 'bump-down');
+    countEl.addEventListener('animationend', function h() {
+      countEl.classList.remove('bump-up', 'bump-down');
+      countEl.removeEventListener('animationend', h);
+    });
+  }
+
+  // Core step function
+  function stepBy(delta) {
+    var before = liveCount;
+    liveCount = Math.max(0, Math.min(9999, liveCount + delta));
+    if (liveCount === before) return;
+    if (pendingFrom === null) pendingFrom = before;
+    bumpCount(delta > 0);
+    render(liveCount);
+    queueSave();
+  }
+
+  // Hold-to-repeat: tap fires once immediately, holds repeat after 480ms
+  function startRepeat(delta) {
+    stepBy(delta);
+    repeatTimer = setTimeout(function () {
+      repeatIv = setInterval(function () { stepBy(delta); }, 95);
+    }, 480);
+  }
+  function stopRepeat() { clearTimeout(repeatTimer); clearInterval(repeatIv); }
+
+  function attachHold(btn, delta) {
+    btn.addEventListener('mousedown', function (e) { e.preventDefault(); startRepeat(delta); });
+    btn.addEventListener('touchstart', function (e) { e.preventDefault(); startRepeat(delta); }, { passive: false });
+    ['mouseup','mouseleave','touchend','touchcancel'].forEach(function (ev) {
+      btn.addEventListener(ev, stopRepeat);
+    });
+  }
+  attachHold(btnPlus,  +1);
+  attachHold(btnMinus, -1);
+
+  // Quick pills
+  document.querySelectorAll('.quick-pill').forEach(function (pill) {
+    pill.addEventListener('click', function () {
+      stepBy(parseInt(pill.dataset.delta, 10));
+    });
   });
 
-  editInput.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') saveBtn.click();
-    if (e.key === 'Escape') cancelBtn.click();
+  // Ring tap-to-edit: tap the big number to type directly
+  ringInner.addEventListener('click', function (e) {
+    if (ringInner.classList.contains('ring-editing')) return;
+    if (e.target === ringEditInp) return;
+    ringEditInp.value = liveCount;
+    ringInner.classList.add('ring-editing');
+    setTimeout(function () { ringEditInp.focus(); ringEditInp.select(); }, 30);
+  });
+  ringEditInp.addEventListener('click', function (e) { e.stopPropagation(); });
+
+  function confirmRingEdit() {
+    var val = parseInt(ringEditInp.value, 10);
+    ringInner.classList.remove('ring-editing');
+    if (!isNaN(val) && val >= 0) {
+      var before = liveCount;
+      liveCount = Math.min(9999, val);
+      render(liveCount);
+      if (liveCount !== before) {
+        bumpCount(liveCount > before);
+        if (pendingFrom === null) pendingFrom = before;
+        queueSave();
+      }
+    }
+  }
+  ringEditInp.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter')  { e.preventDefault(); confirmRingEdit(); }
+    if (e.key === 'Escape') { ringInner.classList.remove('ring-editing'); }
+  });
+  ringEditInp.addEventListener('blur', function () {
+    if (ringInner.classList.contains('ring-editing')) confirmRingEdit();
   });
 
   // ── Bootstrap: fetch count from Apps Script ────────────
