@@ -1074,12 +1074,11 @@ html.is-dark .section-break-pill .sb-pill {
   color: var(--blue-light);
 }
 
-/* ── Dark mode: Encouragement Toast ──────────────────────── */
-html.is-dark #encourage-toast {
-  background: #1b2d42;
-  border: 1px solid rgba(255,255,255,0.12);
-  box-shadow: 0 8px 40px rgba(0,0,0,0.65);
-}
+/* ── Dark mode: Setback Dialog ────────────────────────────── */
+html.is-dark .setback-card   { background: #112035; border: 1px solid rgba(255,255,255,0.10); }
+html.is-dark .setback-badge  { background: rgba(76,135,201,0.22); color: var(--blue-light); }
+html.is-dark .setback-title  { color: #e8f0f8; }
+html.is-dark .setback-sub    { color: rgba(255,255,255,0.65); }
 
 /* ── Dark mode: Celebration (checklist complete) card ─────── */
 html.is-dark .cel-card {
@@ -1301,31 +1300,42 @@ html.is-dark #milestone-cel.tier-major .mil-count-badge {
 .mil-btn:hover  { transform: translateY(-2px); }
 .mil-btn:active { transform: translateY(0); }
 
-/* ── Encouragement Toast ─────────────────────────────────── */
-#encourage-toast {
-  position: fixed;
-  bottom: max(20px, env(safe-area-inset-bottom, 20px));
-  left: 50%;
-  transform: translateX(-50%) translateY(140px);
-  z-index: 10001; background: var(--charcoal); color: white;
-  border-radius: 16px; padding: 16px 16px;
-  max-width: 400px; width: calc(100% - 32px);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-  display: flex; align-items: flex-start; gap: 12px;
-  transition: transform 0.45s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease;
-  opacity: 0;
+/* ── Setback Dialog ──────────────────────────────────────── */
+#setback-cel {
+  position: fixed; inset: 0; z-index: 10001;
+  background: rgba(15,25,40,0.92);
+  display: flex; align-items: center; justify-content: center;
+  animation: cel-in 0.35s ease;
 }
-#encourage-toast.visible { transform: translateX(-50%) translateY(0); opacity: 1; }
-.toast-emoji { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
-.toast-body  { flex: 1; }
-.toast-title { font-size: 14px; font-weight: 800; margin-bottom: 4px; line-height: 1.35; }
-.toast-sub   { font-size: 13px; color: rgba(255,255,255,0.72); font-weight: 600; line-height: 1.5; }
-.toast-close {
-  background: none; border: none; color: rgba(255,255,255,0.45);
-  cursor: pointer; font-size: 22px; padding: 0; line-height: 1;
-  flex-shrink: 0; align-self: flex-start; min-width: 32px; min-height: 32px;
+#setback-cel.closing { animation: cel-out 0.42s 0.08s ease forwards !important; }
+.setback-card {
+  position: relative; z-index: 1;
+  background: var(--white); border-radius: 22px;
+  padding: 28px 24px 24px; text-align: center;
+  box-shadow: 0 28px 80px rgba(0,0,0,0.50);
+  animation: cel-card-in 0.50s 0.1s cubic-bezier(0.34,1.56,0.64,1) both;
+  max-width: 380px; width: calc(100% - 32px);
 }
-.toast-close:hover { color: white; }
+.setback-card.closing { animation: cel-card-out 0.38s cubic-bezier(0.36,0.07,0.19,0.97) forwards !important; }
+.setback-emoji { font-size: 56px; line-height: 1; margin-bottom: 10px; display: block; animation: cel-pop 0.7s 0.45s both; }
+.setback-badge {
+  display: inline-block; margin-bottom: 10px;
+  background: rgba(76,135,201,0.12); color: var(--blue-dark);
+  font-size: 10px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+  border-radius: 50px; padding: 4px 14px;
+}
+.setback-title { font-size: 22px; font-weight: 900; color: var(--charcoal); letter-spacing: -0.4px; margin-bottom: 10px; line-height: 1.2; }
+.setback-sub { font-size: 14px; color: var(--text-muted); font-weight: 600; font-style: italic; line-height: 1.65; margin-bottom: 22px; }
+.setback-btn {
+  background: linear-gradient(135deg, var(--blue-deep) 0%, var(--blue-dark) 100%);
+  color: #fff; border: none; border-radius: 50px;
+  padding: 15px 30px; font-size: 16px; font-weight: 800;
+  cursor: pointer; font-family: inherit; width: 100%; min-height: 52px;
+  box-shadow: 0 4px 18px rgba(76,135,201,0.40);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.setback-btn:hover  { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(76,135,201,0.50); }
+.setback-btn:active { transform: translateY(0); }
 
 </style>
 </head>
@@ -2559,14 +2569,15 @@ function launchConfetti() {
   </div>
 </div>
 
-<!-- ── Encouragement Toast ────────────────────────────────── -->
-<div id="encourage-toast">
-  <span class="toast-emoji">💪</span>
-  <div class="toast-body">
-    <div class="toast-title" id="toast-title"></div>
-    <div class="toast-sub" id="toast-sub"></div>
+<!-- ── Setback Dialog ──────────────────────────────────────── -->
+<div id="setback-cel" style="display:none;" role="dialog" aria-modal="true">
+  <div class="setback-card">
+    <span class="setback-emoji">💪</span>
+    <div class="setback-badge" id="setback-badge"></div>
+    <div class="setback-title" id="setback-title"></div>
+    <div class="setback-sub" id="setback-sub"></div>
+    <button class="setback-btn" id="setback-dismiss">Get Back Up.</button>
   </div>
-  <button class="toast-close" id="toast-close" aria-label="Dismiss">×</button>
 </div>
 
 <!-- ── Celebration Overlay ─────────────────────────────────── -->
@@ -2633,11 +2644,7 @@ window.GO_GIVER_QUOTES = [
     { n: 200, emoji: '🎆', title: '200 FOUNDING MEMBERS.',        sub: 'YOU. DID. IT.\n\nThe studio is full. The community is built. Go open your doors.',                   btn: 'WE DID IT! 🎊',        tier: 'legendary' },
   ];
 
-  var hitSet = {};          // in-memory only — resets each page load
   var stopMilConfetti = null;
-
-  function wasHit(n) { return !!hitSet[n]; }
-  function markHit(n) { hitSet[n] = true; }
 
   // ── Confetti for milestones ───────────────────────────────
   function launchMilConfetti(tier) {
@@ -2761,64 +2768,63 @@ window.GO_GIVER_QUOTES = [
     stopMilConfetti = launchMilConfetti(mil.tier);
   }
 
-  // ── Encouragement toast (drop below a milestone) ─────────
-  function showEncouragement(mil) {
-    var toast = document.getElementById('encourage-toast');
-    if (!toast) return;
+  // ── Setback dialog (drop below a milestone) ──────────────
+  function showSetback(mil) {
+    var cel = document.getElementById(‘setback-cel’);
+    if (!cel) return;
     var goGiverLines = [
-      'Be a Go-Giver. Give more than you take, and the numbers will follow.',
-      'Go-Givers are the most competitive people on the planet. Get back up.',
-      'Your influence grows when you put others\' interests first. Keep giving.',
-      'The Law of Compensation: the more people you serve, the more you earn. Serve more.',
-      'The key to effective giving is staying open. Stay open. Keep going.',
+      ‘Be a Go-Giver. Give more than you take, and the numbers will follow.’,
+      ‘Go-Givers are the most competitive people on the planet. Get back up.’,
+      ‘Your influence grows when you put others\’ interests first. Keep giving.’,
+      ‘The Law of Compensation: the more people you serve, the more you earn. Serve more.’,
+      ‘The key to effective giving is staying open. Stay open. Keep going.’,
     ];
-    var line = goGiverLines[Math.floor(Math.random() * goGiverLines.length)];
-    document.getElementById('toast-title').textContent = 'Below ' + mil.n + ' — you’ve been here before. Get back.';
-    document.getElementById('toast-sub').textContent = line;
-    toast.classList.add('visible');
-    var closeBtn = document.getElementById('toast-close');
-    function dismiss() { toast.classList.remove('visible'); }
-    closeBtn.onclick = dismiss;
-    clearTimeout(toast._t);
-    toast._t = setTimeout(dismiss, 7000);
+    document.getElementById(‘setback-badge’).textContent = ‘Below ‘ + mil.n;
+    document.getElementById(‘setback-title’).textContent = ‘You’ve been here before. Get back.’;
+    document.getElementById(‘setback-sub’).textContent = goGiverLines[Math.floor(Math.random() * goGiverLines.length)];
+    cel.style.display = ‘flex’;
+    var oldBtn = document.getElementById(‘setback-dismiss’);
+    var newBtn = oldBtn.cloneNode(true);
+    oldBtn.parentNode.replaceChild(newBtn, oldBtn);
+    function hideSetback() {
+      var card = cel.querySelector(‘.setback-card’);
+      if (card) card.classList.add(‘closing’);
+      cel.classList.add(‘closing’);
+      setTimeout(function () {
+        cel.style.display = ‘none’; cel.className = ‘’;
+        if (card) card.classList.remove(‘closing’);
+      }, 490);
+    }
+    newBtn.addEventListener(‘click’, hideSetback);
+    cel.onclick = function (e) { if (e.target === cel) hideSetback(); };
   }
 
   // ── Public API ────────────────────────────────────────────
+  // Celebrations fire any time oldCount < milestone.n <= newCount.
+  // No hit-tracking — simple threshold crossing is all that’s needed.
   window.checkMilestones = function (oldCount, newCount) {
     if (newCount > oldCount) {
-      // Find the highest newly crossed milestone
       var toShow = null;
       for (var i = 0; i < MILESTONES.length; i++) {
         var m = MILESTONES[i];
-        if (newCount >= m.n && !wasHit(m.n)) {
-          markHit(m.n);
-          toShow = m;
-        }
+        if (newCount >= m.n && oldCount < m.n) toShow = m;
       }
       if (toShow) {
         var captured = toShow;
-        setTimeout(function () { showMilestone(captured); }, 700);
+        setTimeout(function () { showMilestone(captured); }, 400);
       }
     } else if (newCount < oldCount) {
-      // Find the highest milestone we've dropped below
       var dropped = null;
       for (var j = 0; j < MILESTONES.length; j++) {
         var m2 = MILESTONES[j];
-        if (oldCount >= m2.n && newCount < m2.n && wasHit(m2.n)) dropped = m2;
+        if (oldCount >= m2.n && newCount < m2.n) dropped = m2;
       }
-      if (dropped) showEncouragement(dropped);
+      if (dropped) showSetback(dropped);
     }
   };
 
-  // On page load: silently mark already-met milestones so they don't
-  // fire retroactively — only NEW crossings should celebrate.
-  window.initMilestones = function (count) {
-    for (var i = 0; i < MILESTONES.length; i++) {
-      if (count >= MILESTONES[i].n && !wasHit(MILESTONES[i].n)) {
-        markHit(MILESTONES[i].n);
-      }
-    }
-  };
+  // No-op: threshold-crossing logic in checkMilestones handles everything.
+  window.initMilestones = function () {};
 
 })();
 </script>
