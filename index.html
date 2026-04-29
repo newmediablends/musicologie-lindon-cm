@@ -959,6 +959,43 @@ html.is-dark .section-break-pill .sb-pill {
   color: var(--blue-light);
 }
 
+/* ── Dark mode: Encouragement Toast ──────────────────────── */
+html.is-dark #encourage-toast {
+  background: #1b2d42;
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.65);
+}
+
+/* ── Dark mode: Celebration (checklist complete) card ─────── */
+html.is-dark .cel-card {
+  background: #112035;
+  border: 1px solid rgba(255,255,255,0.10);
+}
+html.is-dark .cel-title { color: #e8f0f8; }
+html.is-dark .cel-sub   { color: rgba(255,255,255,0.58); }
+html.is-dark .cel-quote {
+  background: rgba(255,255,255,0.06);
+  border-left-color: var(--blue-mid);
+}
+html.is-dark .cel-quote-law  { color: var(--blue-light); }
+html.is-dark .cel-quote-text { color: rgba(255,255,255,0.80); }
+html.is-dark .cel-quote-book { color: rgba(255,255,255,0.42); }
+
+/* ── Dark mode: Milestone cards (base + major only; bonus/legendary already dark) */
+html.is-dark #milestone-cel.tier-base .mil-card,
+html.is-dark #milestone-cel.tier-major .mil-card {
+  background: #112035;
+  border: 1px solid rgba(255,255,255,0.10);
+}
+html.is-dark #milestone-cel.tier-base .mil-title,
+html.is-dark #milestone-cel.tier-major .mil-title { color: #e8f0f8; }
+html.is-dark #milestone-cel.tier-base .mil-sub,
+html.is-dark #milestone-cel.tier-major .mil-sub   { color: rgba(255,255,255,0.65); }
+html.is-dark #milestone-cel.tier-base .mil-count-badge,
+html.is-dark #milestone-cel.tier-major .mil-count-badge {
+  background: rgba(243,140,104,0.18); color: var(--orange);
+}
+
 /* ── Celebration Overlay ──────────────────────────────────── */
 #celebration {
   position: fixed; inset: 0; z-index: 9999;
