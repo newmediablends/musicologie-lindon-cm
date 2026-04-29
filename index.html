@@ -393,6 +393,7 @@ th                         { font-size: 12px; }
   .tracker-first { text-align: right; max-width: 200px; }
   .tracker-ring-wrap { width: 264px; height: 264px; }
   .tracker-current { font-size: 88px; letter-spacing: -5px; }
+  .ring-edit-input  { font-size: 88px; letter-spacing: -5px; width: 200px; }
   .tracker-slash-goal { font-size: 22px; }
   .tracker-stats { grid-template-columns: repeat(4, 1fr); gap: 12px; }
   .t-stat .t-val { font-size: 24px; }
@@ -421,6 +422,7 @@ th                         { font-size: 12px; }
   .tracker { padding: 24px 28px 20px; margin-bottom: 18px; }
   .tracker-ring-wrap { width: 300px; height: 300px; }
   .tracker-current { font-size: 104px; letter-spacing: -6px; }
+  .ring-edit-input  { font-size: 104px; letter-spacing: -6px; width: 240px; }
   .tracker-slash-goal { font-size: 26px; }
   .rule-num { font-size: 64px; }
   .rule-callout { min-width: 100px; padding: 24px 22px; }
@@ -460,6 +462,7 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
   .tracker { padding: 8px 10px 7px; margin-bottom: 7px; box-shadow: none; }
   .tracker-ring-wrap { width: 120px; height: 120px; margin-bottom: 8px; }
   .tracker-current { font-size: 36px; letter-spacing: -2px; }
+  .ring-edit-input  { font-size: 36px; letter-spacing: -2px; width: 80px; }
   .tracker-slash-goal { font-size: 13px; }
   .tracker-sublabel { font-size: 7px; margin-top: 2px; }
   .tracker-stats { gap: 4px; }
@@ -555,9 +558,9 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
   letter-spacing: 1.6px; color: rgba(255,255,255,0.38);
 }
 
-/* +/- stepper row (inside the panel) */
+/* +/- stepper row: [−] [Save] [+] */
 .edit-stepper-row {
-  display: flex; align-items: center; gap: 28px;
+  display: flex; align-items: stretch; gap: 10px; width: 100%;
 }
 .edit-step-btn {
   width: 66px; height: 66px; border-radius: 50%; border: none;
@@ -603,7 +606,7 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
 
 /* Save + Cancel */
 .edit-save-btn {
-  width: 100%;
+  flex: 1;
   background: linear-gradient(135deg, #e8784e 0%, var(--orange) 60%, #f5a080 100%);
   color: #fff; border: none; border-radius: 14px;
   padding: 16px; font-size: 16px; font-weight: 800; letter-spacing: 0.2px;
@@ -627,7 +630,22 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
   font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.48); min-height: 16px;
 }
 
-/* Count spring animations (shared by ring count + edit display) */
+/* Ring edit input — overlays the count number inside the ring */
+.ring-edit-wrap { display: none; }
+.tracker.edit-active .tracker-current { display: none; }
+.tracker.edit-active .ring-edit-wrap  { display: flex; align-items: center; justify-content: center; }
+.ring-edit-input {
+  font-size: 58px; font-weight: 900; color: var(--white);
+  line-height: 1; letter-spacing: -3px;
+  background: transparent; border: none; outline: none;
+  width: 140px; text-align: center; padding: 0;
+  font-family: inherit; -moz-appearance: textfield; appearance: textfield;
+  caret-color: var(--orange);
+}
+.ring-edit-input::-webkit-inner-spin-button,
+.ring-edit-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+
+/* Count spring animations */
 @keyframes count-bump-up {
   0%   { transform: scale(1); }
   30%  { transform: scale(1.30); }
@@ -643,9 +661,9 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
   100% { transform: scale(1); }
 }
 .tracker-current.bump-up,
-.edit-panel-count.bump-up   { animation: count-bump-up   0.40s cubic-bezier(0.34,1.56,0.64,1); }
+.ring-edit-wrap.bump-up   { animation: count-bump-up   0.40s cubic-bezier(0.34,1.56,0.64,1); }
 .tracker-current.bump-down,
-.edit-panel-count.bump-down { animation: count-bump-down 0.28s ease; }
+.ring-edit-wrap.bump-down { animation: count-bump-down 0.28s ease; }
 
 /* ── DARK MODE — activated by .is-dark on <html> ──────── */
 /* JS sets .is-dark from system preference OR manual toggle  */
@@ -691,6 +709,7 @@ html.is-dark .tracker::after {
 }
 html.is-dark .tracker-eyebrow   { color: var(--blue-dark); }
 html.is-dark .tracker-current   { color: #2e3a47; }
+html.is-dark .ring-edit-input   { color: #2e3a47; }
 html.is-dark .tracker-slash-goal { color: rgba(46,58,71,0.38); }
 html.is-dark .tracker-sublabel  { color: rgba(46,58,71,0.48); }
 html.is-dark .ring-track        { stroke: rgba(46,58,71,0.12); }
@@ -1400,6 +1419,9 @@ html.is-dark #milestone-cel.tier-major .mil-count-badge {
       </svg>
       <div class="tracker-ring-inner">
         <div class="tracker-current" id="tracker-count">0</div>
+        <div class="ring-edit-wrap" id="ring-edit-wrap">
+          <input class="ring-edit-input" id="ring-edit-input" type="number" min="0" max="9999" inputmode="numeric" pattern="[0-9]*">
+        </div>
         <div class="tracker-slash-goal">/&thinsp;200</div>
         <div class="tracker-sublabel">Founding<br>Members</div>
       </div>
@@ -1427,19 +1449,11 @@ html.is-dark #milestone-cel.tier-major .mil-count-badge {
     <div class="tracker-update-wrap">
       <button class="tracker-trigger-btn" id="trigger-btn">✎ Update Founders Count</button>
       <div class="count-edit-panel" id="count-edit-panel">
-        <div class="edit-display-wrap">
-          <div class="edit-panel-count" id="edit-display">0</div>
-          <div class="edit-panel-label">founders</div>
-        </div>
         <div class="edit-stepper-row">
           <button class="edit-step-btn edit-step-minus" id="edit-minus" aria-label="Remove one">−</button>
+          <button class="edit-save-btn" id="edit-save-btn">Save</button>
           <button class="edit-step-btn edit-step-plus"  id="edit-plus"  aria-label="Add one">+</button>
         </div>
-        <div class="edit-manual-row">
-          <span class="edit-manual-label">or type</span>
-          <input class="edit-manual-input" id="edit-manual-input" type="number" min="0" max="9999" inputmode="numeric" pattern="[0-9]*" placeholder="0">
-        </div>
-        <button class="edit-save-btn"   id="edit-save-btn">Save</button>
         <button class="edit-cancel-btn" id="edit-cancel-btn">Cancel</button>
         <div class="edit-save-status" id="edit-save-status"></div>
       </div>
@@ -2306,10 +2320,11 @@ function renderJourney(count) {
   // ── Count Edit UI ──────────────────────────────────────
   var triggerBtn  = document.getElementById('trigger-btn');
   var editPanel   = document.getElementById('count-edit-panel');
-  var editDisplay = document.getElementById('edit-display');
+  var ringWrap    = document.getElementById('ring-edit-wrap');
+  var ringInput   = document.getElementById('ring-edit-input');
+  var trackerEl   = document.querySelector('.tracker');
   var editMinus   = document.getElementById('edit-minus');
   var editPlus    = document.getElementById('edit-plus');
-  var editManual  = document.getElementById('edit-manual-input');
   var editSaveBtn = document.getElementById('edit-save-btn');
   var editCancel  = document.getElementById('edit-cancel-btn');
   var editStatus  = document.getElementById('edit-save-status');
@@ -2320,15 +2335,17 @@ function renderJourney(count) {
 
   function openPanel() {
     editCount = liveCount;
-    editDisplay.textContent = editCount;
-    editManual.value = '';
+    ringInput.value = liveCount;
+    trackerEl.classList.add('edit-active');
     editSaveBtn.disabled = false;
     editStatus.textContent = '';
     editPanel.classList.add('active');
     triggerBtn.style.display = 'none';
+    setTimeout(function () { ringInput.focus(); ringInput.select(); }, 60);
   }
 
   function closePanel() {
+    trackerEl.classList.remove('edit-active');
     editPanel.classList.remove('active');
     triggerBtn.style.display = '';
     editStatus.textContent = '';
@@ -2337,21 +2354,20 @@ function renderJourney(count) {
   triggerBtn.addEventListener('click', openPanel);
   editCancel.addEventListener('click', closePanel);
 
-  // Spring bounce on the edit display number
+  // Spring bounce on the ring number
   function bumpDisplay(up) {
-    editDisplay.classList.remove('bump-up', 'bump-down');
-    void editDisplay.offsetWidth;
-    editDisplay.classList.add(up ? 'bump-up' : 'bump-down');
-    editDisplay.addEventListener('animationend', function h() {
-      editDisplay.classList.remove('bump-up', 'bump-down');
-      editDisplay.removeEventListener('animationend', h);
+    ringWrap.classList.remove('bump-up', 'bump-down');
+    void ringWrap.offsetWidth;
+    ringWrap.classList.add(up ? 'bump-up' : 'bump-down');
+    ringWrap.addEventListener('animationend', function h() {
+      ringWrap.classList.remove('bump-up', 'bump-down');
+      ringWrap.removeEventListener('animationend', h);
     });
   }
 
   function adjustEdit(delta) {
     editCount = Math.max(0, Math.min(9999, editCount + delta));
-    editDisplay.textContent = editCount;
-    editManual.value = editCount;
+    ringInput.value = editCount;
     bumpDisplay(delta > 0);
   }
 
@@ -2374,17 +2390,16 @@ function renderJourney(count) {
   attachHold(editPlus,  +1);
   attachHold(editMinus, -1);
 
-  // Manual input syncs live to display
-  editManual.addEventListener('input', function () {
-    var val = parseInt(editManual.value, 10);
+  // Ring input — user types directly in the circle
+  ringInput.addEventListener('input', function () {
+    var val = parseInt(ringInput.value, 10);
     if (!isNaN(val) && val >= 0) {
       var prev = editCount;
       editCount = Math.min(9999, val);
-      editDisplay.textContent = editCount;
       if (editCount !== prev) bumpDisplay(editCount > prev);
     }
   });
-  editManual.addEventListener('keydown', function (e) {
+  ringInput.addEventListener('keydown', function (e) {
     if (e.key === 'Enter')  editSaveBtn.click();
     if (e.key === 'Escape') closePanel();
   });
@@ -2779,7 +2794,7 @@ window.GO_GIVER_QUOTES = [
       ‘The key to effective giving is staying open. Stay open. Keep going.’,
     ];
     document.getElementById(‘setback-badge’).textContent = ‘Below ‘ + mil.n;
-    document.getElementById(‘setback-title’).textContent = ‘You’ve been here before. Get back.’;
+    document.getElementById(‘setback-title’).textContent = "You’ve been here before. Get back.";
     document.getElementById(‘setback-sub’).textContent = goGiverLines[Math.floor(Math.random() * goGiverLines.length)];
     cel.style.display = ‘flex’;
     var oldBtn = document.getElementById(‘setback-dismiss’);
