@@ -2633,12 +2633,11 @@ window.GO_GIVER_QUOTES = [
     { n: 200, emoji: '🎆', title: '200 FOUNDING MEMBERS.',        sub: 'YOU. DID. IT.\n\nThe studio is full. The community is built. Go open your doors.',                   btn: 'WE DID IT! 🎊',        tier: 'legendary' },
   ];
 
-  var PREFIX = 'mil-hit-';
+  var hitSet = {};          // in-memory only — resets each page load
   var stopMilConfetti = null;
 
-  function hitKey(n) { return PREFIX + n; }
-  function wasHit(n) { return !!localStorage.getItem(hitKey(n)); }
-  function markHit(n) { localStorage.setItem(hitKey(n), '1'); }
+  function wasHit(n) { return !!hitSet[n]; }
+  function markHit(n) { hitSet[n] = true; }
 
   // ── Confetti for milestones ───────────────────────────────
   function launchMilConfetti(tier) {
