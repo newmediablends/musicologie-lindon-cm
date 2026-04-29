@@ -392,6 +392,7 @@ th                         { font-size: 12px; }
   .tracker-top { flex-direction: row; justify-content: space-between; align-items: flex-start; text-align: left; }
   .tracker-first { text-align: right; max-width: 200px; }
   .tracker-ring-wrap { width: 264px; height: 264px; }
+  .ring-controls-area { width: 264px; }
   .tracker-current { font-size: 88px; letter-spacing: -5px; }
   .ring-edit-input  { font-size: 88px; letter-spacing: -5px; width: 200px; }
   .tracker-slash-goal { font-size: 22px; }
@@ -421,6 +422,7 @@ th                         { font-size: 12px; }
   .page-body { padding: 24px 32px 40px; }
   .tracker { padding: 24px 28px 20px; margin-bottom: 18px; }
   .tracker-ring-wrap { width: 300px; height: 300px; }
+  .ring-controls-area { width: 300px; }
   .tracker-current { font-size: 104px; letter-spacing: -6px; }
   .ring-edit-input  { font-size: 104px; letter-spacing: -6px; width: 240px; }
   .tracker-slash-goal { font-size: 26px; }
@@ -525,7 +527,7 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
 /* Ring row: [−] [ring] [+] */
 .ring-area-wrap {
   display: flex; align-items: center; justify-content: center;
-  gap: 10px; margin-bottom: 10px;
+  gap: 4px; margin-bottom: 10px;
   position: relative; z-index: 2;
   transition: opacity 0.3s;
 }
@@ -560,7 +562,7 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
   display: flex; flex-direction: column; align-items: center;
   min-height: 46px; margin-bottom: 12px;
   position: relative; z-index: 2;
-  padding: 0 16px; width: 100%;
+  width: 180px;
 }
 
 /* Pencil trigger — circle icon, hidden in edit mode */
