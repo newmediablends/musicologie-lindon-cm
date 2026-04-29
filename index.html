@@ -1,8 +1,12 @@
 <!DOCTYPE html>
+<!-- v2026-04-28b -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>Lindon — Presales Targets, KPIs & Bonus · Musicologie</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%234c87c9'/><text x='16' y='24' text-anchor='middle' font-size='22' fill='%23f38c68'>♪</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -2385,24 +2389,19 @@ function renderJourney(count) {
     if (e.key === 'Escape') closePanel();
   });
 
-  // Save button
+  // Save button — optimistic UI: update + celebrate immediately, persist in background
   editSaveBtn.addEventListener('click', function () {
     var newCount = editCount;
     if (newCount === liveCount) { closePanel(); return; }
-    editSaveBtn.disabled = true;
-    editStatus.textContent = 'Saving…';
+    var from = liveCount;
+    liveCount = newCount;
+    render(newCount);
+    closePanel();
+    if (window.checkMilestones) window.checkMilestones(from, newCount);
     fetch(SCRIPT_URL + '?action=update&count=' + newCount)
       .then(function (r) { return r.json(); })
-      .then(function () {
-        var from = liveCount;
-        liveCount = newCount;
-        render(newCount);
-        closePanel();
-        if (window.checkMilestones) window.checkMilestones(from, newCount);
-      })
       .catch(function () {
-        editStatus.textContent = 'Error saving — try again.';
-        editSaveBtn.disabled = false;
+        // Save failed silently — count stays updated locally
       });
   });
 
