@@ -513,101 +513,117 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
 .t-val.projected-good  { color: #5dd48a; }
 .t-val.projected-short { color: #e07070; }
 
-/* ── COUNT STEPPER UI ─────────────────────────────────── */
-.tracker-update-wrap { margin-top: 16px; }
+/* ── COUNT EDIT UI ────────────────────────────────────── */
+.tracker-update-wrap { margin-top: 16px; text-align: center; }
 
-.count-stepper {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 12px; padding: 0 4px; margin-bottom: 10px;
+/* Trigger button (idle state) */
+.tracker-trigger-btn {
+  background: none; border: 1px solid rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.65); border-radius: 20px;
+  padding: 7px 20px; font-size: 12px; font-weight: 700; letter-spacing: 0.5px;
+  cursor: pointer; font-family: inherit; transition: all 0.2s;
 }
-.step-btn {
-  width: 62px; height: 62px; border-radius: 50%; border: none;
-  font-size: 30px; font-weight: 300; line-height: 1;
-  cursor: pointer; font-family: inherit; flex-shrink: 0;
+.tracker-trigger-btn:hover { background: rgba(255,255,255,0.10); color: #fff; border-color: rgba(255,255,255,0.50); }
+
+/* Expanded edit panel */
+.count-edit-panel {
+  display: none; flex-direction: column; align-items: center; gap: 14px;
+  padding: 22px 16px 18px;
+  background: rgba(0,0,0,0.28); border-radius: 18px; margin-top: 12px;
+}
+.count-edit-panel.active {
+  display: flex;
+  animation: panel-in 0.30s cubic-bezier(0.34,1.4,0.64,1);
+}
+@keyframes panel-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)   scale(1);    }
+}
+
+/* Large live count shown while editing */
+.edit-display-wrap { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.edit-panel-count {
+  font-size: 76px; font-weight: 900; color: #fff;
+  line-height: 1; letter-spacing: -4px;
+}
+.edit-panel-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.6px; color: rgba(255,255,255,0.38);
+}
+
+/* +/- stepper row (inside the panel) */
+.edit-stepper-row {
+  display: flex; align-items: center; gap: 28px;
+}
+.edit-step-btn {
+  width: 66px; height: 66px; border-radius: 50%; border: none;
+  font-size: 34px; font-weight: 300; line-height: 1;
+  cursor: pointer; font-family: inherit;
   display: flex; align-items: center; justify-content: center;
   user-select: none; -webkit-tap-highlight-color: transparent;
   transition: transform 0.14s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.14s;
 }
-.step-btn:active { transform: scale(0.80); }
+.edit-step-btn:active { transform: scale(0.80); }
 
-.step-minus {
-  background: rgba(255,255,255,0.10);
-  color: rgba(255,255,255,0.72);
+.edit-step-minus {
+  background: rgba(255,255,255,0.11); color: rgba(255,255,255,0.72);
   border: 1.5px solid rgba(255,255,255,0.22);
 }
-.step-minus:hover { background: rgba(255,255,255,0.17); color: #fff; }
+.edit-step-minus:hover { background: rgba(255,255,255,0.19); color: #fff; }
 
-.step-plus {
+.edit-step-plus {
   background: linear-gradient(135deg, #e8784e 0%, var(--orange) 60%, #f5a080 100%);
-  color: #fff;
-  box-shadow: 0 4px 22px rgba(243,140,104,0.52);
+  color: #fff; box-shadow: 0 4px 20px rgba(243,140,104,0.52);
 }
-.step-plus:hover  { box-shadow: 0 6px 30px rgba(243,140,104,0.65); }
-.step-plus:active { box-shadow: 0 2px 10px rgba(243,140,104,0.30); }
+.edit-step-plus:hover  { box-shadow: 0 6px 28px rgba(243,140,104,0.65); }
+.edit-step-plus:active { box-shadow: 0 2px 10px rgba(243,140,104,0.30); }
 
-.step-center { flex: 1; text-align: center; min-width: 0; }
-.step-status {
-  font-size: 11px; font-weight: 700; letter-spacing: 0.3px;
-  color: rgba(255,255,255,0.45); min-height: 16px; line-height: 1.5;
-  transition: color 0.2s;
+/* Manual entry row */
+.edit-manual-row {
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 12px; padding: 10px 14px;
 }
-.step-status.saving { color: rgba(255,255,255,0.38); }
-.step-status.saved  { color: #5dd48a; }
-.step-status.error  { color: #e07070; cursor: pointer; }
-.step-hint {
-  font-size: 8.5px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 1.1px; color: rgba(255,255,255,0.22); margin-top: 2px;
+.edit-manual-label {
+  font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.38);
+  white-space: nowrap; flex-shrink: 0;
 }
+.edit-manual-input {
+  flex: 1; min-width: 0; background: transparent; border: none; outline: none;
+  font-family: inherit; font-size: 20px; font-weight: 800;
+  color: #fff; text-align: right; padding: 0;
+}
+.edit-manual-input::placeholder { color: rgba(255,255,255,0.22); }
+.edit-manual-input::-webkit-inner-spin-button,
+.edit-manual-input::-webkit-outer-spin-button { -webkit-appearance: none; }
 
-/* Quick-adjust pills */
-.quick-pills {
-  display: flex; justify-content: center; gap: 8px; margin-bottom: 4px;
+/* Save + Cancel */
+.edit-save-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #e8784e 0%, var(--orange) 60%, #f5a080 100%);
+  color: #fff; border: none; border-radius: 14px;
+  padding: 16px; font-size: 16px; font-weight: 800; letter-spacing: 0.2px;
+  cursor: pointer; font-family: inherit;
+  box-shadow: 0 4px 18px rgba(243,140,104,0.46);
+  transition: transform 0.14s, box-shadow 0.14s, opacity 0.14s;
 }
-.quick-pill {
-  border-radius: 20px; padding: 5px 14px;
-  font-size: 12px; font-weight: 800; letter-spacing: 0.2px;
-  cursor: pointer; font-family: inherit; border: 1px solid;
-  user-select: none; -webkit-tap-highlight-color: transparent;
-  transition: all 0.14s;
-}
-.quick-pill:active { transform: scale(0.88); }
-.quick-pill.pill-neg {
-  background: rgba(255,255,255,0.07);
-  border-color: rgba(255,255,255,0.16);
-  color: rgba(255,255,255,0.48);
-}
-.quick-pill.pill-neg:hover { background: rgba(255,255,255,0.13); color: rgba(255,255,255,0.80); }
-.quick-pill.pill-pos {
-  background: rgba(243,140,104,0.10);
-  border-color: rgba(243,140,104,0.38);
-  color: rgba(243,140,104,0.85);
-}
-.quick-pill.pill-pos:hover { background: rgba(243,140,104,0.18); color: var(--orange); }
+.edit-save-btn:hover  { box-shadow: 0 6px 24px rgba(243,140,104,0.60); }
+.edit-save-btn:active { transform: scale(0.97); box-shadow: 0 2px 10px rgba(243,140,104,0.28); }
+.edit-save-btn:disabled { opacity: 0.50; cursor: default; transform: none; }
 
-/* Ring tap-to-edit */
-.tracker-ring-inner { cursor: pointer; transition: opacity 0.15s; }
-.tracker-ring-inner:hover { opacity: 0.88; }
-.tracker-ring-inner.ring-editing { cursor: default; opacity: 1; }
-.ring-edit-wrap { display: none; flex-direction: column; align-items: center; gap: 5px; }
-.tracker-ring-inner.ring-editing .ring-edit-wrap  { display: flex; }
-.tracker-ring-inner.ring-editing #tracker-count,
-.tracker-ring-inner.ring-editing .tracker-slash-goal,
-.tracker-ring-inner.ring-editing .tracker-sublabel { display: none; }
-.ring-edit-input {
-  width: 118px; background: transparent; border: none;
-  border-bottom: 2.5px solid var(--orange); outline: none;
-  text-align: center; font-family: inherit;
-  font-size: 52px; font-weight: 900; color: #fff;
-  letter-spacing: -2px; line-height: 1; padding: 0 4px;
+.edit-cancel-btn {
+  background: none; border: none; color: rgba(255,255,255,0.40);
+  font-size: 12px; font-weight: 700; letter-spacing: 0.3px;
+  cursor: pointer; font-family: inherit; padding: 2px 8px;
+  transition: color 0.15s;
 }
-.ring-edit-input::-webkit-inner-spin-button,
-.ring-edit-input::-webkit-outer-spin-button { -webkit-appearance: none; }
-.ring-edit-label {
-  font-size: 9.5px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 1.4px; color: rgba(255,255,255,0.42);
+.edit-cancel-btn:hover { color: rgba(255,255,255,0.68); }
+
+.edit-save-status {
+  font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.48); min-height: 16px;
 }
 
-/* Count spring animations */
+/* Count spring animations (shared by ring count + edit display) */
 @keyframes count-bump-up {
   0%   { transform: scale(1); }
   30%  { transform: scale(1.30); }
@@ -622,8 +638,10 @@ details[open] > div { animation: slideDown 0.22s ease-out; }
   80%  { transform: scale(0.96); }
   100% { transform: scale(1); }
 }
-.tracker-current.bump-up   { animation: count-bump-up   0.40s cubic-bezier(0.34,1.56,0.64,1); }
-.tracker-current.bump-down { animation: count-bump-down 0.28s ease; }
+.tracker-current.bump-up,
+.edit-panel-count.bump-up   { animation: count-bump-up   0.40s cubic-bezier(0.34,1.56,0.64,1); }
+.tracker-current.bump-down,
+.edit-panel-count.bump-down { animation: count-bump-down 0.28s ease; }
 
 /* ── DARK MODE — activated by .is-dark on <html> ──────── */
 /* JS sets .is-dark from system preference OR manual toggle  */
@@ -676,26 +694,32 @@ html.is-dark .t-stat            { background: rgba(255,255,255,0.55); }
 html.is-dark .t-stat .t-val     { color: #2e3a47; }
 html.is-dark .t-stat .t-lbl     { color: rgba(46,58,71,0.52); }
 html.is-dark .t-lbl-target      { color: #2e3a47; }
-/* Stepper dark mode — tracker inverts to light, so flip stepper colors to charcoal-based */
-html.is-dark .step-minus {
+/* Edit panel dark mode — tracker inverts to light, so flip edit panel colors to charcoal-based */
+html.is-dark .tracker-trigger-btn {
+  border-color: rgba(46,58,71,0.25); color: rgba(46,58,71,0.60);
+}
+html.is-dark .tracker-trigger-btn:hover {
+  background: rgba(46,58,71,0.08); color: #2e3a47; border-color: rgba(46,58,71,0.45);
+}
+html.is-dark .count-edit-panel {
+  background: rgba(46,58,71,0.10); border: 1px solid rgba(46,58,71,0.12);
+}
+html.is-dark .edit-panel-count  { color: #2e3a47; }
+html.is-dark .edit-panel-label  { color: rgba(46,58,71,0.42); }
+html.is-dark .edit-step-minus {
   background: rgba(46,58,71,0.10); color: rgba(46,58,71,0.65);
   border-color: rgba(46,58,71,0.22);
 }
-html.is-dark .step-minus:hover { background: rgba(46,58,71,0.18); color: #2e3a47; }
-html.is-dark .step-status         { color: rgba(46,58,71,0.55); }
-html.is-dark .step-status.saving  { color: rgba(46,58,71,0.38); }
-html.is-dark .step-status.saved   { color: #16a34a; }
-html.is-dark .step-status.error   { color: #c0392b; }
-html.is-dark .step-hint           { color: rgba(46,58,71,0.28); }
-html.is-dark .quick-pill.pill-neg {
-  background: rgba(46,58,71,0.07);
-  border-color: rgba(46,58,71,0.18); color: rgba(46,58,71,0.48);
+html.is-dark .edit-step-minus:hover { background: rgba(46,58,71,0.18); color: #2e3a47; }
+html.is-dark .edit-manual-row {
+  background: rgba(46,58,71,0.07); border-color: rgba(46,58,71,0.16);
 }
-html.is-dark .quick-pill.pill-neg:hover { background: rgba(46,58,71,0.14); color: rgba(46,58,71,0.80); }
-html.is-dark .quick-pill.pill-pos { border-color: rgba(200,100,60,0.38); color: rgba(190,90,50,0.85); }
-html.is-dark .quick-pill.pill-pos:hover { background: rgba(200,100,60,0.12); }
-html.is-dark .ring-edit-input     { color: #2e3a47; }
-html.is-dark .ring-edit-label     { color: rgba(46,58,71,0.45); }
+html.is-dark .edit-manual-label  { color: rgba(46,58,71,0.40); }
+html.is-dark .edit-manual-input  { color: #2e3a47; }
+html.is-dark .edit-manual-input::placeholder { color: rgba(46,58,71,0.28); }
+html.is-dark .edit-cancel-btn    { color: rgba(46,58,71,0.42); }
+html.is-dark .edit-cancel-btn:hover { color: rgba(46,58,71,0.68); }
+html.is-dark .edit-save-status   { color: rgba(46,58,71,0.50); }
 
 /* ── THEME TOGGLE BAR ────────────────────────────────────── */
 .theme-bar {
@@ -1360,14 +1384,10 @@ html.is-dark #milestone-cel.tier-major .mil-count-badge {
         <circle class="ring-track" cx="120" cy="120" r="100"/>
         <circle class="ring-progress" id="ring-progress" cx="120" cy="120" r="100"/>
       </svg>
-      <div class="tracker-ring-inner" id="ring-inner" title="Tap to set exact number">
+      <div class="tracker-ring-inner">
         <div class="tracker-current" id="tracker-count">0</div>
         <div class="tracker-slash-goal">/&thinsp;200</div>
         <div class="tracker-sublabel">Founding<br>Members</div>
-        <div class="ring-edit-wrap">
-          <input class="ring-edit-input" id="ring-edit-input" type="number" min="0" max="9999" inputmode="numeric" pattern="[0-9]*" placeholder="0">
-          <div class="ring-edit-label">↩ to confirm</div>
-        </div>
       </div>
     </div>
     <div class="tracker-stats">
@@ -1391,19 +1411,23 @@ html.is-dark #milestone-cel.tier-major .mil-count-badge {
       </div>
     </div>
     <div class="tracker-update-wrap">
-      <div class="count-stepper">
-        <button class="step-btn step-minus" id="btn-minus" aria-label="Decrease count">−</button>
-        <div class="step-center">
-          <div class="step-status" id="step-status"></div>
-          <div class="step-hint">tap number to set manually</div>
+      <button class="tracker-trigger-btn" id="trigger-btn">✎ Update Founders Count</button>
+      <div class="count-edit-panel" id="count-edit-panel">
+        <div class="edit-display-wrap">
+          <div class="edit-panel-count" id="edit-display">0</div>
+          <div class="edit-panel-label">founders</div>
         </div>
-        <button class="step-btn step-plus" id="btn-plus" aria-label="Increase count">+</button>
-      </div>
-      <div class="quick-pills">
-        <button class="quick-pill pill-neg" data-delta="-10">−10</button>
-        <button class="quick-pill pill-neg" data-delta="-5">−5</button>
-        <button class="quick-pill pill-pos" data-delta="5">+5</button>
-        <button class="quick-pill pill-pos" data-delta="10">+10</button>
+        <div class="edit-stepper-row">
+          <button class="edit-step-btn edit-step-minus" id="edit-minus" aria-label="Remove one">−</button>
+          <button class="edit-step-btn edit-step-plus"  id="edit-plus"  aria-label="Add one">+</button>
+        </div>
+        <div class="edit-manual-row">
+          <span class="edit-manual-label">or type</span>
+          <input class="edit-manual-input" id="edit-manual-input" type="number" min="0" max="9999" inputmode="numeric" pattern="[0-9]*" placeholder="0">
+        </div>
+        <button class="edit-save-btn"   id="edit-save-btn">Save</button>
+        <button class="edit-cancel-btn" id="edit-cancel-btn">Cancel</button>
+        <div class="edit-save-status" id="edit-save-status"></div>
       </div>
     </div>
   </div>
@@ -2265,82 +2289,63 @@ function renderJourney(count) {
     renderJourney(count);
   }
 
-  // ── Stepper UI ─────────────────────────────────────────
-  var btnPlus      = document.getElementById('btn-plus');
-  var btnMinus     = document.getElementById('btn-minus');
-  var statusEl     = document.getElementById('step-status');
-  var ringInner    = document.getElementById('ring-inner');
-  var ringEditInp  = document.getElementById('ring-edit-input');
-  var countEl      = document.getElementById('tracker-count');
-  var liveCount    = 0;
-  var saveTimer    = null;
-  var pendingFrom  = null;
-  var repeatTimer  = null;
-  var repeatIv     = null;
+  // ── Count Edit UI ──────────────────────────────────────
+  var triggerBtn  = document.getElementById('trigger-btn');
+  var editPanel   = document.getElementById('count-edit-panel');
+  var editDisplay = document.getElementById('edit-display');
+  var editMinus   = document.getElementById('edit-minus');
+  var editPlus    = document.getElementById('edit-plus');
+  var editManual  = document.getElementById('edit-manual-input');
+  var editSaveBtn = document.getElementById('edit-save-btn');
+  var editCancel  = document.getElementById('edit-cancel-btn');
+  var editStatus  = document.getElementById('edit-save-status');
+  var liveCount   = 0;
+  var editCount   = 0;
+  var repeatTimer = null;
+  var repeatIv    = null;
 
-  // Status display
-  function setStatus(msg, cls) {
-    statusEl.textContent = msg;
-    statusEl.className = 'step-status' + (cls ? ' ' + cls : '');
-    if (cls === 'saved') {
-      clearTimeout(statusEl._t);
-      statusEl._t = setTimeout(function () {
-        statusEl.textContent = ''; statusEl.className = 'step-status';
-      }, 2500);
-    }
+  function openPanel() {
+    editCount = liveCount;
+    editDisplay.textContent = editCount;
+    editManual.value = '';
+    editSaveBtn.disabled = false;
+    editStatus.textContent = '';
+    editPanel.classList.add('active');
+    triggerBtn.style.display = 'none';
   }
 
-  // Remote save
-  function doSave() {
-    var from = pendingFrom;
-    var to   = liveCount;
-    pendingFrom = null; saveTimer = null;
-    fetch(SCRIPT_URL + '?action=update&count=' + to)
-      .then(function (r) { return r.json(); })
-      .then(function () {
-        if (window.checkMilestones) window.checkMilestones(from, to);
-        setStatus('saved ✓', 'saved');
-      })
-      .catch(function () {
-        setStatus('error — tap to retry', 'error');
-        statusEl.onclick = function () { if (saveTimer === null) { pendingFrom = from; queueSave(); } };
-      });
+  function closePanel() {
+    editPanel.classList.remove('active');
+    triggerBtn.style.display = '';
+    editStatus.textContent = '';
   }
 
-  // Debounced save — batches rapid taps into one network call
-  function queueSave() {
-    setStatus('saving…', 'saving');
-    clearTimeout(saveTimer);
-    saveTimer = setTimeout(doSave, 1200);
-  }
+  triggerBtn.addEventListener('click', openPanel);
+  editCancel.addEventListener('click', closePanel);
 
-  // Spring bounce on the big count number
-  function bumpCount(up) {
-    countEl.classList.remove('bump-up', 'bump-down');
-    void countEl.offsetWidth;
-    countEl.classList.add(up ? 'bump-up' : 'bump-down');
-    countEl.addEventListener('animationend', function h() {
-      countEl.classList.remove('bump-up', 'bump-down');
-      countEl.removeEventListener('animationend', h);
+  // Spring bounce on the edit display number
+  function bumpDisplay(up) {
+    editDisplay.classList.remove('bump-up', 'bump-down');
+    void editDisplay.offsetWidth;
+    editDisplay.classList.add(up ? 'bump-up' : 'bump-down');
+    editDisplay.addEventListener('animationend', function h() {
+      editDisplay.classList.remove('bump-up', 'bump-down');
+      editDisplay.removeEventListener('animationend', h);
     });
   }
 
-  // Core step function
-  function stepBy(delta) {
-    var before = liveCount;
-    liveCount = Math.max(0, Math.min(9999, liveCount + delta));
-    if (liveCount === before) return;
-    if (pendingFrom === null) pendingFrom = before;
-    bumpCount(delta > 0);
-    render(liveCount);
-    queueSave();
+  function adjustEdit(delta) {
+    editCount = Math.max(0, Math.min(9999, editCount + delta));
+    editDisplay.textContent = editCount;
+    editManual.value = editCount;
+    bumpDisplay(delta > 0);
   }
 
-  // Hold-to-repeat: tap fires once immediately, holds repeat after 480ms
+  // Hold-to-repeat on +/- buttons
   function startRepeat(delta) {
-    stepBy(delta);
+    adjustEdit(delta);
     repeatTimer = setTimeout(function () {
-      repeatIv = setInterval(function () { stepBy(delta); }, 95);
+      repeatIv = setInterval(function () { adjustEdit(delta); }, 95);
     }, 480);
   }
   function stopRepeat() { clearTimeout(repeatTimer); clearInterval(repeatIv); }
@@ -2348,50 +2353,84 @@ function renderJourney(count) {
   function attachHold(btn, delta) {
     btn.addEventListener('mousedown', function (e) { e.preventDefault(); startRepeat(delta); });
     btn.addEventListener('touchstart', function (e) { e.preventDefault(); startRepeat(delta); }, { passive: false });
-    ['mouseup','mouseleave','touchend','touchcancel'].forEach(function (ev) {
+    ['mouseup', 'mouseleave', 'touchend', 'touchcancel'].forEach(function (ev) {
       btn.addEventListener(ev, stopRepeat);
     });
   }
-  attachHold(btnPlus,  +1);
-  attachHold(btnMinus, -1);
+  attachHold(editPlus,  +1);
+  attachHold(editMinus, -1);
 
-  // Quick pills
-  document.querySelectorAll('.quick-pill').forEach(function (pill) {
-    pill.addEventListener('click', function () {
-      stepBy(parseInt(pill.dataset.delta, 10));
-    });
-  });
-
-  // Ring tap-to-edit: tap the big number to type directly
-  ringInner.addEventListener('click', function (e) {
-    if (ringInner.classList.contains('ring-editing')) return;
-    if (e.target === ringEditInp) return;
-    ringEditInp.value = liveCount;
-    ringInner.classList.add('ring-editing');
-    setTimeout(function () { ringEditInp.focus(); ringEditInp.select(); }, 30);
-  });
-  ringEditInp.addEventListener('click', function (e) { e.stopPropagation(); });
-
-  function confirmRingEdit() {
-    var val = parseInt(ringEditInp.value, 10);
-    ringInner.classList.remove('ring-editing');
+  // Manual input syncs live to display
+  editManual.addEventListener('input', function () {
+    var val = parseInt(editManual.value, 10);
     if (!isNaN(val) && val >= 0) {
-      var before = liveCount;
-      liveCount = Math.min(9999, val);
-      render(liveCount);
-      if (liveCount !== before) {
-        bumpCount(liveCount > before);
-        if (pendingFrom === null) pendingFrom = before;
-        queueSave();
-      }
+      var prev = editCount;
+      editCount = Math.min(9999, val);
+      editDisplay.textContent = editCount;
+      if (editCount !== prev) bumpDisplay(editCount > prev);
     }
-  }
-  ringEditInp.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter')  { e.preventDefault(); confirmRingEdit(); }
-    if (e.key === 'Escape') { ringInner.classList.remove('ring-editing'); }
   });
-  ringEditInp.addEventListener('blur', function () {
-    if (ringInner.classList.contains('ring-editing')) confirmRingEdit();
+  editManual.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter')  editSaveBtn.click();
+    if (e.key === 'Escape') closePanel();
+  });
+
+  // Save toast — fires after a successful save
+  function showSaveToast(from, to) {
+    var MILESTONE_NS = [1, 10, 25, 50, 75, 100, 125, 150, 200];
+    var delta = to - from;
+    // If dropping below a milestone, checkMilestones already shows the encouragement toast
+    if (delta < 0) {
+      var milDropped = MILESTONE_NS.some(function (n) { return from >= n && to < n; });
+      if (milDropped) return;
+    }
+    var toast   = document.getElementById('encourage-toast');
+    if (!toast) return;
+    var emojiEl = toast.querySelector('.toast-emoji');
+    var titleEl = document.getElementById('toast-title');
+    var subEl   = document.getElementById('toast-sub');
+    var closeBtn = document.getElementById('toast-close');
+    if (delta > 0) {
+      if (emojiEl) emojiEl.textContent = '🎉';
+      titleEl.textContent = '+' + delta + ' — now at ' + to + ' founders!';
+      var lines = [
+        'Every founder is a family choosing Lindon before the doors open.',
+        'That\'s ' + to + ' people who believed first. Keep going.',
+        'Momentum is real. ' + (200 - to) + ' to go.',
+      ];
+      subEl.textContent = lines[Math.floor(Math.random() * lines.length)];
+    } else {
+      if (emojiEl) emojiEl.textContent = '✓';
+      titleEl.textContent = 'Updated — ' + to + ' founders.';
+      subEl.textContent = 'Accurate numbers are how you know exactly what to do next.';
+    }
+    toast.classList.add('visible');
+    function dismiss() { toast.classList.remove('visible'); }
+    closeBtn.onclick = dismiss;
+    clearTimeout(toast._t);
+    toast._t = setTimeout(dismiss, 6000);
+  }
+
+  // Save button
+  editSaveBtn.addEventListener('click', function () {
+    var newCount = editCount;
+    if (newCount === liveCount) { closePanel(); return; }
+    editSaveBtn.disabled = true;
+    editStatus.textContent = 'Saving…';
+    fetch(SCRIPT_URL + '?action=update&count=' + newCount)
+      .then(function (r) { return r.json(); })
+      .then(function () {
+        var from = liveCount;
+        liveCount = newCount;
+        render(newCount);
+        closePanel();
+        if (window.checkMilestones) window.checkMilestones(from, newCount);
+        showSaveToast(from, newCount);
+      })
+      .catch(function () {
+        editStatus.textContent = 'Error saving — try again.';
+        editSaveBtn.disabled = false;
+      });
   });
 
   // ── Bootstrap: fetch count from Apps Script ────────────
